@@ -15,6 +15,19 @@ if (!String.prototype.format) {
 
 var JThree;
 (function (JThree) {
+    var Collection = (function () {
+        function Collection() {
+        }
+        Collection.foreach = function (collection, act) {
+            var enumerator = collection.getEnumrator();
+            while (enumerator.next()) {
+                act(enumerator.getCurrent());
+            }
+        };
+        return Collection;
+    })();
+    JThree.Collection = Collection;
+
     var JThreeError = (function () {
         function JThreeError(name, message) {
             this.message = message;
@@ -148,6 +161,40 @@ var JThree;
         return JThreeMath;
     })(JThreeObject);
     JThree.JThreeMath = JThreeMath;
+
+    var VectorBase = (function () {
+        function VectorBase() {
+            this.magnitudeSquaredCache = -1;
+            this.magnitudeCache = -1;
+        }
+        VectorBase.prototype.elementCount = function () {
+            return 0;
+        };
+
+        VectorBase.prototype.magnitudeSquared = function () {
+            if (this.magnitudeSquaredCache < 0) {
+                var sum = 0;
+                Collection.foreach(this, function (t) {
+                    sum += t * t;
+                });
+                this.magnitudeSquaredCache = sum;
+            }
+            return this.magnitudeSquaredCache;
+        };
+
+        VectorBase.prototype.magnitude = function () {
+            if (this.magnitudeCache < 0) {
+                this.magnitudeCache = Math.sqrt(this.magnitudeSquared());
+            }
+            return this.magnitudeCache;
+        };
+
+        VectorBase.prototype.getEnumrator = function () {
+            throw new Error("Not implemented");
+        };
+        return VectorBase;
+    })();
+
     var Vector2Enumerator = (function () {
         function Vector2Enumerator(vec) {
             this.currentIndex = -1;

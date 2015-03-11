@@ -16,7 +16,7 @@ if (!String.prototype.format) {
 
 module JThree
 {
-    interface Action<T>
+    export interface Action<T>
     {
         (arg:T):void;
     }
@@ -31,7 +31,17 @@ module JThree
         ():R;
     }
 
-    export interface IEnumrator<T> {
+    export class Collection {
+        public static foreach<T>(collection:IEnumerable<T>,act:Action<T>): void {
+            var enumerator:IEnumrator<T> = collection.getEnumrator();
+            while (enumerator.next()) {
+                act(enumerator.getCurrent());
+            }
+        }
+    }
+
+    export interface IEnumrator<T>
+    {
         getCurrent(): T;
         next():boolean;
     }
@@ -196,6 +206,38 @@ module JThree
         }
 
     }
+
+    class VectorBase implements IEnumerable<number> {
+
+        public elementCount(): number {
+            return 0;
+        }
+
+        private magnitudeSquaredCache: number = -1;
+
+        magnitudeSquared() {
+            if (this.magnitudeSquaredCache < 0) {
+                var sum: number = 0;
+                Collection.foreach(this, (t) => {
+                    sum += t * t;
+                });
+                this.magnitudeSquaredCache = sum;
+            }
+            return this.magnitudeSquaredCache;
+        }
+
+        private magnitudeCache: number = -1;
+
+        magnitude() {
+            if (this.magnitudeCache < 0) {
+                this.magnitudeCache = Math.sqrt(this.magnitudeSquared());
+            }
+            return this.magnitudeCache;
+        }
+
+        getEnumrator(): IEnumrator<number> { throw new Error("Not implemented"); }
+    }
+
     class Vector2Enumerator implements IEnumrator<number> {
 
         private currentIndex: number = -1;
@@ -213,7 +255,7 @@ module JThree
             case 1:
                 return this.vec.getY();
                 default:
-                    throw new JThreeError("","");
+                    throw new JThreeError("","");//TODO Fill error
             }
         }
 
