@@ -31,6 +31,27 @@ module JThree
         ():R;
     }
 
+    export interface IEnumrator<T> {
+        getCurrent(): T;
+        next():boolean;
+    }
+
+    export class JThreeError implements Error {
+        constructor(name: string, message: string) {
+            this.message = message;
+            this.name = name;
+        }
+        name: string;
+        message: string;
+        toString(): string {
+            return "{0}:\nName:{1}\nMessage{2}".format(JsHack.getObjectName(this),this.name,this.message);
+        }
+    }
+
+    export interface IEnumerable<T> {
+        getEnumrator():IEnumrator<T>;
+    }
+
     class JsHack
     {
         public static getObjectName(obj:any): string
@@ -166,25 +187,93 @@ module JThree
             });
         }
 
+        public static range(val:number,lower:number,higher:number): boolean {
+            if (val >= lower && val < higher) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    }
+    class Vector2Enumerator implements IEnumrator<number> {
+
+        private currentIndex: number = -1;
+
+        private vec:Vector2;
+
+        constructor(vec: Vector2) {
+            this.vec = vec;
+        }
+
+        getCurrent(): number {
+            switch (this.currentIndex) {
+            case 0:
+                return this.vec.getX();
+            case 1:
+                return this.vec.getY();
+                default:
+                    throw new JThreeError("","");
+            }
+        }
+
+        next(): boolean {
+            this.currentIndex++;
+            return JThreeMath.range(this.currentIndex, 0, 2);
+        }
     }
 
-    export class Vector2 extends JThreeObject
-    {
+    export class Vector2 extends JThreeObject implements IEnumerable<number> {
         private x: number;
         private y:number;
 
+        getX(): number {
+            return this.x;
+        }
 
+        getY(): number {
+            return this.y;
+        }
 
         toString(): string
         {
             return "Vector2(x={0},y={1})".format(this.x,this.y);
+        }
+
+        getEnumrator(): IEnumrator<number> {
+            return new Vector2Enumerator(this);
+        }
+    }
+
+    export class JThreeContext extends JThreeObject
+    {
+        
+    }
+
+    export class CanvasRenderer extends JThreeObject
+    {
+        public static fromCanvas(canvas:HTMLCanvasElement): CanvasRenderer {
+            var gl: WebGLRenderingContext;
+            try {
+            gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+                return new CanvasRenderer(gl);
+            } catch(e){
+                if (!gl) {
+                    //Processing for this error
+                }
+            }
+        }
+
+        private glContext: WebGLRenderingContext;
+
+        constructor(glContext?:WebGLRenderingContext) {
+            super();
+            this.glContext = glContext;
         }
     }
 }
 
 window.onload = (e) =>
 {
-    var converter = new JThree.DegreeMilliSecoundUnitConverter();
-    var m = new JThree.JThreeMath(converter);
-    alert("Test{0},{1}".format(100,"Hello World"));
+   
 };
