@@ -21,6 +21,10 @@ module JThree
         (arg:T):void;
     }
 
+    export interface Action2<T1, T2> {
+        (arg1:T1,arg2:T2):void;
+    }
+
     interface Func1<T, R>
     {
         (arg:T):R;
@@ -36,6 +40,14 @@ module JThree
             var enumerator:IEnumrator<T> = collection.getEnumrator();
             while (enumerator.next()) {
                 act(enumerator.getCurrent());
+            }
+        }
+
+        public static foreachPair<T>(col1: IEnumerable<T>, col2: IEnumerable<T>, act: Action2<T, T>) {
+            var en1: IEnumrator<T> = col1.getEnumrator();
+            var en2: IEnumrator<T> = col2.getEnumrator();
+            while (en1.next()&&en2.next()) {
+                act(en1.getCurrent(), en2.getCurrent());
             }
         }
     }
@@ -207,7 +219,7 @@ module JThree
 
     }
 
-    class VectorBase implements IEnumerable<number> {
+    export class VectorBase implements IEnumerable<number> {
 
         public elementCount(): number {
             return 0;
@@ -235,37 +247,106 @@ module JThree
             return this.magnitudeCache;
         }
 
+        protected static elementDot(a:VectorBase,b:VectorBase): number {
+            var dot: number = 0;
+            Collection.foreachPair(a, b, (a, b) => {
+                dot += a * b;
+            });
+            return dot;
+        }
+
         getEnumrator(): IEnumrator<number> { throw new Error("Not implemented"); }
     }
 
-    class Vector2Enumerator implements IEnumrator<number> {
+    class VectorEnumeratorBase<T extends VectorBase> implements IEnumrator<number>
+    {
+        private elementCount:number=0;
 
-        private currentIndex: number = -1;
+        constructor(vec:T) {
+            this.vector = vec;
+            this.elementCount = vec.elementCount();
+        }
 
-        private vec:Vector2;
+        protected currentIndex: number = -1;
+
+        protected vector: T;
+
+        getCurrent(): number { throw new Error("Not implemented"); }
+
+        next(): boolean {
+            this.currentIndex++;
+            return JThreeMath.range(this.currentIndex, 0, this.elementCount);
+        }
+    }
+
+    class Vector2Enumerator extends VectorEnumeratorBase<Vector2>{
 
         constructor(vec: Vector2) {
-            this.vec = vec;
+            super(vec);
         }
 
         getCurrent(): number {
             switch (this.currentIndex) {
             case 0:
-                return this.vec.getX();
+                return this.vector.getX();
             case 1:
-                return this.vec.getY();
-                default:
-                    throw new JThreeError("","");//TODO Fill error
+                return this.vector.getY();
+            default:
+                throw new JThreeError("", ""); //TODO Fill error
             }
         }
 
-        next(): boolean {
-            this.currentIndex++;
-            return JThreeMath.range(this.currentIndex, 0, 2);
+    }
+
+    class Vector3Enumerator extends VectorEnumeratorBase<Vector3>{
+
+        constructor(vec: Vector3) {
+            super(vec);
+        }
+
+        getCurrent(): number {
+            switch (this.currentIndex) {
+                case 0:
+                    return this.vector.getX();
+                case 1:
+                    return this.vector.getY();
+                case 2:
+                    return this.vector.getZ();
+                default:
+                    throw new JThreeError("", "");//TODO Fill error
+            }
         }
     }
 
-    export class Vector2 extends JThreeObject implements IEnumerable<number> {
+    class Vector4Enumerator extends VectorEnumeratorBase<Vector4> {
+        constructor(vec: Vector4) {
+            super(vec);
+        }
+
+
+        getCurrent(): number {
+            switch (this.currentIndex) {
+                case 0:
+                    return this.vector.getX();
+                case 1:
+                    return this.vector.getY();
+                case 2:
+                    return this.vector.getZ();
+                case 3:
+                    return this.vector.getW();
+                default:
+                    throw new JThreeError("", "");//TODO Fill error
+            }
+        }
+    }
+
+    export class Vector2 extends VectorBase  {
+        constructor(x: number, y: number) {
+            super();
+            this.x = x;
+            this.y = y;
+        }
+
         private x: number;
         private y:number;
 
@@ -277,6 +358,10 @@ module JThree
             return this.y;
         }
 
+        static dot(v1: Vector2, v2: Vector2):number {
+            return VectorBase.elementDot(v1, v2);
+        }
+
         toString(): string
         {
             return "Vector2(x={0},y={1})".format(this.x,this.y);
@@ -284,6 +369,90 @@ module JThree
 
         getEnumrator(): IEnumrator<number> {
             return new Vector2Enumerator(this);
+        }
+
+        elementCount(): number { return 2; }
+    }
+
+    export class Vector3 extends VectorBase {
+        constructor(x: number, z: number, y: number) {
+            super();
+            this.x = x;
+            this.z = z;
+            this.y = y;
+        }
+
+        private x: number;
+        private y: number;
+        private z:number;
+
+        getX(): number {
+            return this.x;
+        }
+
+        getY(): number {
+            return this.y;
+        }
+
+        getZ(): number {
+            return this.z;
+        }
+
+        static dot(v1: Vector3, v2: Vector3): number {
+            return VectorBase.elementDot(v1, v2);
+        }
+
+        toString(): string {
+            return "Vector3(x={0},y={1},z={2})".format(this.x, this.y,this.z);
+        }
+
+        getEnumrator(): IEnumrator<number> {
+            return new Vector3Enumerator(this);
+        }
+
+        elementCount(): number { return 3; }
+    }
+
+    export class Vector4 extends VectorBase {
+        constructor(x: number, y: number, z: number, w: number) {
+            super();
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.w = w;
+        }
+
+        private x: number;
+        private y: number;
+        private z: number;
+        private w: number;
+
+        getX() {
+            return this.x;
+        }
+
+        getY() {
+            return this.y;
+        }
+
+        getZ() {
+            return this.z;
+        }
+
+        getW() {
+            return this.w;
+        }
+
+        static dot(v1: Vector4, v2: Vector4) {
+            return this.elementDot(v1, v2);
+        }
+
+        getEnumrator(): IEnumrator<number> { return new Vector4Enumerator(this); }
+
+        elementCount(): number { return 4; }
+
+        toString(): string {
+            return "Vector4(x={0},y={1},z={2},w={3}".format(this.x,this.y,this.z,this.w);
         }
     }
 
