@@ -4,16 +4,24 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
+///<reference path="jThree/references.ts"/>
 if (!String.prototype.format) {
     String.prototype.format = function () {
         var args = arguments;
-        return this.replace(/{(\d+)}/g, function (match, number) {
-            return typeof args[number] != 'undefined' ? args[number] : match;
+        return this.replace(/{(\d+)}/g, function (match, num) {
+            if (typeof args[num] != 'undefined') {
+                return args[num];
+            }
+            else {
+                return match;
+            }
         });
     };
 }
-var JThree;
-(function (JThree) {
+var jThree;
+(function (jThree) {
+    var JThreeException = jThree.Exceptions.jThreeException;
+    var jThreeObject = jThree.Base.jThreeObject;
     var Collection = (function () {
         function Collection() {
         }
@@ -32,37 +40,7 @@ var JThree;
         };
         return Collection;
     })();
-    JThree.Collection = Collection;
-    var JThreeError = (function () {
-        function JThreeError(name, message) {
-            this.message = message;
-            this.name = name;
-        }
-        JThreeError.prototype.toString = function () {
-            return "{0}:\nName:{1}\nMessage{2}".format(JsHack.getObjectName(this), this.name, this.message);
-        };
-        return JThreeError;
-    })();
-    JThree.JThreeError = JThreeError;
-    var JsHack = (function () {
-        function JsHack() {
-        }
-        JsHack.getObjectName = function (obj) {
-            var funcNameRegex = /function (.{1,})\(/;
-            var result = (funcNameRegex).exec((obj).constructor.toString());
-            return (result && result.length > 1) ? result[1] : "";
-        };
-        return JsHack;
-    })();
-    var JThreeObject = (function () {
-        function JThreeObject() {
-        }
-        JThreeObject.prototype.toString = function () {
-            return JsHack.getObjectName(this);
-        };
-        return JThreeObject;
-    })();
-    JThree.JThreeObject = JThreeObject;
+    jThree.Collection = Collection;
     var DegreeMilliSecoundUnitConverter = (function (_super) {
         __extends(DegreeMilliSecoundUnitConverter, _super);
         function DegreeMilliSecoundUnitConverter() {
@@ -81,8 +59,8 @@ var JThree;
             return milliSecound / 1000;
         };
         return DegreeMilliSecoundUnitConverter;
-    })(JThreeObject);
-    JThree.DegreeMilliSecoundUnitConverter = DegreeMilliSecoundUnitConverter;
+    })(jThreeObject);
+    jThree.DegreeMilliSecoundUnitConverter = DegreeMilliSecoundUnitConverter;
     var JThreeMath = (function (_super) {
         __extends(JThreeMath, _super);
         function JThreeMath(unitConverter) {
@@ -148,8 +126,8 @@ var JThree;
         JThreeMath.PI = Math.PI;
         JThreeMath.E = Math.E;
         return JThreeMath;
-    })(JThreeObject);
-    JThree.JThreeMath = JThreeMath;
+    })(jThreeObject);
+    jThree.JThreeMath = JThreeMath;
     var VectorBase = (function () {
         function VectorBase() {
             this.magnitudeSquaredCache = -1;
@@ -186,7 +164,7 @@ var JThree;
         };
         return VectorBase;
     })();
-    JThree.VectorBase = VectorBase;
+    jThree.VectorBase = VectorBase;
     var VectorEnumeratorBase = (function () {
         function VectorEnumeratorBase(vec) {
             this.elementCount = 0;
@@ -215,7 +193,7 @@ var JThree;
                 case 1:
                     return this.vector.getY();
                 default:
-                    throw new JThreeError("", "");
+                    throw new JThreeException("", "");
             }
         };
         return Vector2Enumerator;
@@ -234,7 +212,7 @@ var JThree;
                 case 2:
                     return this.vector.getZ();
                 default:
-                    throw new JThreeError("", "");
+                    throw new JThreeException("", "");
             }
         };
         return Vector3Enumerator;
@@ -255,7 +233,7 @@ var JThree;
                 case 3:
                     return this.vector.getW();
                 default:
-                    throw new JThreeError("", "");
+                    throw new JThreeException("", "");
             }
         };
         return Vector4Enumerator;
@@ -287,7 +265,7 @@ var JThree;
         };
         return Vector2;
     })(VectorBase);
-    JThree.Vector2 = Vector2;
+    jThree.Vector2 = Vector2;
     var Vector3 = (function (_super) {
         __extends(Vector3, _super);
         function Vector3(x, z, y) {
@@ -319,7 +297,7 @@ var JThree;
         };
         return Vector3;
     })(VectorBase);
-    JThree.Vector3 = Vector3;
+    jThree.Vector3 = Vector3;
     var Vector4 = (function (_super) {
         __extends(Vector4, _super);
         function Vector4(x, y, z, w) {
@@ -355,15 +333,15 @@ var JThree;
         };
         return Vector4;
     })(VectorBase);
-    JThree.Vector4 = Vector4;
+    jThree.Vector4 = Vector4;
     var JThreeContext = (function (_super) {
         __extends(JThreeContext, _super);
         function JThreeContext() {
             _super.apply(this, arguments);
         }
         return JThreeContext;
-    })(JThreeObject);
-    JThree.JThreeContext = JThreeContext;
+    })(jThreeObject);
+    jThree.JThreeContext = JThreeContext;
     var CanvasRenderer = (function (_super) {
         __extends(CanvasRenderer, _super);
         function CanvasRenderer(glContext) {
@@ -382,9 +360,10 @@ var JThree;
             }
         };
         return CanvasRenderer;
-    })(JThreeObject);
-    JThree.CanvasRenderer = CanvasRenderer;
-})(JThree || (JThree = {}));
+    })(jThreeObject);
+    jThree.CanvasRenderer = CanvasRenderer;
+})(jThree || (jThree = {}));
 window.onload = function (e) {
+    alert("{0}".format(new jThree.Exceptions.jThreeException("TEST", "TEST MESSAGE")));
 };
 //# sourceMappingURL=glLib.js.map

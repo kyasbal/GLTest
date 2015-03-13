@@ -1,42 +1,32 @@
-﻿interface String {
+﻿///<reference path="jThree/references.ts"/>
+interface String {
     format(...replacements: any[]): string;
 }
 
 if (!String.prototype.format) {
     String.prototype.format = function () {
         var args = arguments;
-        return this.replace(/{(\d+)}/g, function (match, number) {
-            return typeof args[number] != 'undefined'
-                ? args[number]
-                : match
-                ;
+        return this.replace(/{(\d+)}/g, function (match, num) {
+            if (typeof args[num] != 'undefined') {
+                return args[num];
+            } else {
+                return match;
+            }
         });
     };
 }
 
-module JThree
+module jThree
 {
-    export interface Action<T>
-    {
-        (arg:T):void;
-    }
-
-    export interface Action2<T1, T2> {
-        (arg1:T1,arg2:T2):void;
-    }
-
-    interface Func1<T, R>
-    {
-        (arg:T):R;
-    }
-
-    interface Func0<R>
-    {
-        ():R;
-    }
+    import Action1 = jThree.Delegates.Action1;
+    import Action2 = jThree.Delegates.Action2;
+    import Func0 = jThree.Delegates.Func0;
+    import Func1 = jThree.Delegates.Func1;
+    import JThreeException = jThree.Exceptions.jThreeException;
+    import jThreeObject = jThree.Base.jThreeObject;
 
     export class Collection {
-        public static foreach<T>(collection:IEnumerable<T>,act:Action<T>): void {
+        public static foreach<T>(collection:IEnumerable<T>,act:Action1<T>): void {
             var enumerator:IEnumrator<T> = collection.getEnumrator();
             while (enumerator.next()) {
                 act(enumerator.getCurrent());
@@ -51,6 +41,10 @@ module JThree
             }
         }
     }
+    export interface IVectorFactory<T extends VectorBase> {
+        fromEnumerable(en: IEnumerable<number>): T;
+        fromArray(arr:number[]):T;
+    }
 
     export interface IEnumrator<T>
     {
@@ -58,32 +52,11 @@ module JThree
         next():boolean;
     }
 
-    export class JThreeError implements Error {
-        constructor(name: string, message: string) {
-            this.message = message;
-            this.name = name;
-        }
-        name: string;
-        message: string;
-        toString(): string {
-            return "{0}:\nName:{1}\nMessage{2}".format(JsHack.getObjectName(this),this.name,this.message);
-        }
-    }
-
     export interface IEnumerable<T> {
         getEnumrator():IEnumrator<T>;
     }
 
-    class JsHack
-    {
-        public static getObjectName(obj:any): string
-        {
-            var funcNameRegex = /function (.{1,})\(/;
-            var result = (funcNameRegex).exec((obj).constructor.toString());
-            return (result && result.length > 1) ? result[1] : "";
-        }
 
-    }
 
     export interface IUnitConverter
     {
@@ -92,21 +65,8 @@ module JThree
         toMilliSecound(val:number): number;
         fromMilliSecound(milliSecound:number):number;
     }
-
-    export interface IStringConvertable
-    {
-        toString():string;
-    }
-
-    export class JThreeObject implements IStringConvertable
-    {
-        toString(): string
-        {
-            return JsHack.getObjectName(this);
-        }
-    }
     
-    export class DegreeMilliSecoundUnitConverter extends JThreeObject implements IUnitConverter
+    export class DegreeMilliSecoundUnitConverter extends jThreeObject implements IUnitConverter
     {
         toRadian(val: number): number
         {
@@ -129,7 +89,7 @@ module JThree
         }
     }
 
-    export class JThreeMath extends JThreeObject
+    export class JThreeMath extends jThreeObject
     {
         public static PI:number = Math.PI;
 
@@ -292,7 +252,7 @@ module JThree
             case 1:
                 return this.vector.getY();
             default:
-                throw new JThreeError("", ""); //TODO Fill error
+                throw new JThreeException("", ""); //TODO Fill error
             }
         }
 
@@ -313,7 +273,7 @@ module JThree
                 case 2:
                     return this.vector.getZ();
                 default:
-                    throw new JThreeError("", "");//TODO Fill error
+                    throw new JThreeException("", "");//TODO Fill error
             }
         }
     }
@@ -335,7 +295,7 @@ module JThree
                 case 3:
                     return this.vector.getW();
                 default:
-                    throw new JThreeError("", "");//TODO Fill error
+                    throw new JThreeException("", "");//TODO Fill error
             }
         }
     }
@@ -456,12 +416,12 @@ module JThree
         }
     }
 
-    export class JThreeContext extends JThreeObject
+    export class JThreeContext extends jThreeObject
     {
         
     }
 
-    export class CanvasRenderer extends JThreeObject
+    export class CanvasRenderer extends jThreeObject
     {
         public static fromCanvas(canvas:HTMLCanvasElement): CanvasRenderer {
             var gl: WebGLRenderingContext;
@@ -484,7 +444,6 @@ module JThree
     }
 }
 
-window.onload = (e) =>
-{
-   
+window.onload = (e) => {
+    alert("{0}".format(new jThree.Exceptions.jThreeException("TEST", "TEST MESSAGE")));
 };

@@ -75,6 +75,11 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="glLib.ts" />
+    <TypeScriptCompile Include="JThreeMath.ts" />
+    <TypeScriptCompile Include="jThree\Base.ts" />
+    <TypeScriptCompile Include="jThree\Delegates.ts" />
+    <TypeScriptCompile Include="jThree\Exceptions.ts" />
+    <TypeScriptCompile Include="jThree\references.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
