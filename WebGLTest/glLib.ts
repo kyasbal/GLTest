@@ -42,6 +42,10 @@ module jThree
             }
         }
     }
+    export interface IVectorFactory<T extends VectorBase> {
+        fromEnumerable(en: IEnumerable<number>): T;
+        fromArray(arr:number[]):T;
+    }
 
 
     export interface IEnumrator<T>
@@ -53,8 +57,6 @@ module jThree
     export interface IEnumerable<T> {
         getEnumrator():IEnumrator<T>;
     }
-
-
 
     export class JThreeContext extends jThreeObject
     {
