@@ -1,0 +1,15 @@
+{
+	"author":"LimeStreem",
+	"name":"jThree-experimental",
+	"description":"experimental jThree",
+	"version":"0.0.1",
+	"scripts":{
+		"test":"node_modules/.bin/buster-test"
+	},
+	"dependencies":{
+		"buster":"~0.5.0"
+	},
+	"engines":{
+		"node":"~0.6"
+	}
+}
