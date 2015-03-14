@@ -3,4 +3,4 @@
 ///<reference path="Base.ts"/>
 ///<reference path="Math.ts"/>
 ///<reference path="Vector.ts"/>
-//# sourceMappingURL=references.js.map
+//# sourceMappingURL=_references.js.map

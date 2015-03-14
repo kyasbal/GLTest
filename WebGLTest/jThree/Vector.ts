@@ -1,10 +1,12 @@
 ﻿module jThree.Mathematics.Vector {
     import jThreeMath=jThree.Mathematics.jThreeMath;
     import jThreeException = jThree.Exceptions.jThreeException;
-
     export interface IVectorFactory<T extends VectorBase> {
-        fromEnumerable(en: IEnumerable<number>): T;
-        fromArray(arr: number[]): T;
+        fromArray(array:number[]):T;
+    }
+
+    export interface IVectorGenerator<T extends VectorBase> {
+        getFactory():IVectorFactory<T>;
     }
 
     export class VectorBase implements IEnumerable<number> {
@@ -42,6 +44,31 @@
             });
             return dot;
         }
+
+        protected static elementAdd<T extends VectorBase>(a: T, b: T, factory: IVectorFactory<T>): T {
+            var result: number[];
+            Collection.foreachPair<number>(a, b, (a, b) => {
+                result.push(a + b);
+            });
+            return factory.fromArray(result);
+        }
+
+        protected static elementSubtract<T extends VectorBase>(a: T, b: T, factory: IVectorFactory<T>): T {
+            var result: number[];
+            Collection.foreachPair<number>(a, b,(a, b) => {
+                result.push(a - b);
+            });
+            return factory.fromArray(result);
+        }
+
+        protected static elementScholarMultiply<T extends VectorBase>(a: T, s: number, factory: IVectorFactory<T>): T {
+            var result: number[];
+            Collection.foreach<number>(a, a => {
+                result.push(a * s);
+            });
+            return factory.fromArray(result);
+        }
+
 
         getEnumrator(): IEnumrator<number> { throw new Error("Not implemented"); }
     }
@@ -126,7 +153,46 @@
         }
     }
 
-    export class Vector2 extends VectorBase {
+    class Vector2Factory implements IVectorFactory<Vector2> {
+        static instance:Vector2Factory;
+
+        static getInstance(): Vector2Factory {
+            this.instance = this.instance || new Vector2Factory();
+            return this.instance;
+        }
+
+        fromArray(array: number[]): Vector2 {
+            return new Vector2(array[0], array[1]);
+        }
+    }
+
+    class Vector3Factory implements IVectorFactory<Vector3> {
+        static instance: Vector3Factory;
+
+        static getInstance(): Vector3Factory {
+            this.instance = this.instance || new Vector3Factory();
+            return this.instance;
+        }
+
+        fromArray(array: number[]): Vector3 {
+            return new Vector3(array[0], array[1],array[2]);
+        }
+    }
+
+    class Vector4Factory implements IVectorFactory<Vector4> {
+        static instance: Vector4Factory;
+
+        static getInstance(): Vector4Factory {
+            this.instance = this.instance || new Vector4Factory();
+            return this.instance;
+        }
+
+        fromArray(array: number[]): Vector4 {
+            return new Vector4(array[0], array[1],array[2],array[3]);
+        }
+    }
+
+    export class Vector2 extends VectorBase implements IVectorGenerator<Vector2>{
         constructor(x: number, y: number) {
             super();
             this.x = x;
@@ -148,6 +214,18 @@
             return VectorBase.elementDot(v1, v2);
         }
 
+        static add(v1: Vector2, v2: Vector2): Vector2 {
+            return VectorBase.elementAdd(v1, v2, v1.getFactory());
+        }
+
+        static subtract(v1: Vector2, v2: Vector2): Vector2 {
+            return VectorBase.elementSubtract(v1, v2, v1.getFactory());
+        }
+
+        static multiply(s: number, v: Vector2): Vector2 {
+            return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+        }
+
         toString(): string {
             return "Vector2(x={0},y={1})".format(this.x, this.y);
         }
@@ -157,9 +235,11 @@
         }
 
         elementCount(): number { return 2; }
+
+        getFactory(): IVectorFactory<Vector2> { return Vector2Factory.getInstance(); }
     }
 
-    export class Vector3 extends VectorBase {
+    export class Vector3 extends VectorBase implements IVectorGenerator<Vector3> {
         constructor(x: number, z: number, y: number) {
             super();
             this.x = x;
@@ -187,6 +267,19 @@
             return VectorBase.elementDot(v1, v2);
         }
 
+        static add(v1: Vector3, v2: Vector3): Vector3 {
+            return VectorBase.elementAdd(v1, v2, v1.getFactory());
+        }
+
+        static subtract(v1: Vector3, v2: Vector3): Vector3 {
+            return VectorBase.elementSubtract(v1, v2, v1.getFactory());
+        }
+
+        static multiply(s: number, v: Vector3): Vector3 {
+            return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+        }
+
+
         toString(): string {
             return "Vector3(x={0},y={1},z={2})".format(this.x, this.y, this.z);
         }
@@ -196,9 +289,11 @@
         }
 
         elementCount(): number { return 3; }
+
+        getFactory(): IVectorFactory<Vector3> { return Vector3Factory.getInstance(); }
     }
 
-    export class Vector4 extends VectorBase {
+    export class Vector4 extends VectorBase implements IVectorGenerator<Vector4>{
         constructor(x: number, y: number, z: number, w: number) {
             super();
             this.x = x;
@@ -232,6 +327,19 @@
             return this.elementDot(v1, v2);
         }
 
+        static add(v1: Vector4, v2: Vector4): Vector4 {
+            return VectorBase.elementAdd(v1, v2, v1.getFactory());
+        }
+
+        static subtract(v1: Vector4, v2: Vector4): Vector4 {
+            return VectorBase.elementSubtract(v1, v2, v1.getFactory());
+        }
+
+        static multiply(s: number, v: Vector4): Vector4 {
+            return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+        }
+
+
         getEnumrator(): IEnumrator<number> { return new Vector4Enumerator(this); }
 
         elementCount(): number { return 4; }
@@ -239,5 +347,7 @@
         toString(): string {
             return "Vector4(x={0},y={1},z={2},w={3}".format(this.x, this.y, this.z, this.w);
         }
+
+        getFactory(): IVectorFactory<Vector4> { return Vector4Factory.getInstance(); }
     }
 }

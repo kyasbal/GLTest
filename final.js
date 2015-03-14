@@ -1,9 +1,131 @@
+var jThree;
+(function (jThree) {
+    var Base;
+    (function (Base) {
+        var JsHack = (function () {
+            function JsHack() {
+            }
+            JsHack.getObjectName = function (obj) {
+                var funcNameRegex = /function (.{1,})\(/;
+                var result = (funcNameRegex).exec((obj).constructor.toString());
+                return (result && result.length > 1) ? result[1] : "";
+            };
+            return JsHack;
+        })();
+        /**
+         *This class indicate the class extends this class is added by jThree.
+         */
+        var jThreeObject = (function () {
+            function jThreeObject() {
+            }
+            jThreeObject.prototype.toString = function () {
+                return JsHack.getObjectName(this);
+            };
+            return jThreeObject;
+        })();
+        Base.jThreeObject = jThreeObject;
+    })(Base = jThree.Base || (jThree.Base = {}));
+})(jThree || (jThree = {}));
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
 };
+var jThree;
+(function (jThree) {
+    var Mathematics;
+    (function (Mathematics) {
+        var jThreeObject = jThree.Base.jThreeObject;
+        var DegreeMilliSecoundUnitConverter = (function (_super) {
+            __extends(DegreeMilliSecoundUnitConverter, _super);
+            function DegreeMilliSecoundUnitConverter() {
+                _super.apply(this, arguments);
+            }
+            DegreeMilliSecoundUnitConverter.prototype.toRadian = function (val) {
+                return jThreeMath.PI / 180 * val;
+            };
+            DegreeMilliSecoundUnitConverter.prototype.fromRadian = function (radian) {
+                return 180 / jThreeMath.PI * radian;
+            };
+            DegreeMilliSecoundUnitConverter.prototype.toMilliSecound = function (val) {
+                return val * 1000;
+            };
+            DegreeMilliSecoundUnitConverter.prototype.fromMilliSecound = function (milliSecound) {
+                return milliSecound / 1000;
+            };
+            return DegreeMilliSecoundUnitConverter;
+        })(jThreeObject);
+        Mathematics.DegreeMilliSecoundUnitConverter = DegreeMilliSecoundUnitConverter;
+        var jThreeMath = (function (_super) {
+            __extends(jThreeMath, _super);
+            function jThreeMath(unitConverter) {
+                _super.call(this);
+                this.converter = unitConverter || new DegreeMilliSecoundUnitConverter();
+            }
+            jThreeMath.prototype.radianResult = function (f) {
+                return this.converter.fromRadian(f());
+            };
+            jThreeMath.prototype.radianRequest = function (v, f) {
+                return f(this.converter.toRadian(v));
+            };
+            jThreeMath.prototype.getCurrentConverter = function () {
+                return this.converter;
+            };
+            /**
+             * 正弦
+             */
+            jThreeMath.prototype.sin = function (val) {
+                return this.radianRequest(val, function (val) {
+                    return Math.sin(val);
+                });
+            };
+            /**
+             * 余弦
+             */
+            jThreeMath.prototype.cos = function (val) {
+                return this.radianRequest(val, function (val) {
+                    return Math.cos(val);
+                });
+            };
+            /**
+             * 正接
+             */
+            jThreeMath.prototype.tan = function (val) {
+                return this.radianRequest(val, function (val) {
+                    return Math.tan(val);
+                });
+            };
+            jThreeMath.prototype.asin = function (val) {
+                return this.radianResult(function () {
+                    return Math.asin(val);
+                });
+            };
+            jThreeMath.prototype.acos = function (val) {
+                return this.radianResult(function () {
+                    return Math.acos(val);
+                });
+            };
+            jThreeMath.prototype.atan = function (val) {
+                return this.radianResult(function () {
+                    return Math.atan(val);
+                });
+            };
+            jThreeMath.range = function (val, lower, higher) {
+                if (val >= lower && val < higher) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            };
+            jThreeMath.PI = Math.PI;
+            jThreeMath.E = Math.E;
+            return jThreeMath;
+        })(jThreeObject);
+        Mathematics.jThreeMath = jThreeMath;
+    })(Mathematics = jThree.Mathematics || (jThree.Mathematics = {}));
+})(jThree || (jThree = {}));
 var jThree;
 (function (jThree) {
     var Mathematics;
@@ -313,3 +435,108 @@ var jThree;
         })(Vector = Mathematics.Vector || (Mathematics.Vector = {}));
     })(Mathematics = jThree.Mathematics || (jThree.Mathematics = {}));
 })(jThree || (jThree = {}));
+var jThree;
+(function (jThree) {
+    var Exceptions;
+    (function (Exceptions) {
+        var jThreeObject = jThree.Base.jThreeObject;
+        /**
+         * This class is root class perform as exception arguments in jThree.
+         */
+        var jThreeException = (function (_super) {
+            __extends(jThreeException, _super);
+            function jThreeException(name, message) {
+                _super.call(this);
+                this.name = name;
+                this.message = message;
+            }
+            jThreeException.prototype.toString = function () {
+                return "Exception:{0}\nName:{1}\nMessage:{2}".format(_super.prototype.toString.call(this), this.name, this.message);
+            };
+            return jThreeException;
+        })(jThreeObject);
+        Exceptions.jThreeException = jThreeException;
+        var IrregularElementAccessException = (function (_super) {
+            __extends(IrregularElementAccessException, _super);
+            function IrregularElementAccessException(accessIndex) {
+                _super.call(this, "Irregular vector element was accessed.", "You attempted to access {0} element. But,this vector have enough dimension.".format(accessIndex));
+            }
+            return IrregularElementAccessException;
+        })(jThreeException);
+        Exceptions.IrregularElementAccessException = IrregularElementAccessException;
+    })(Exceptions = jThree.Exceptions || (jThree.Exceptions = {}));
+})(jThree || (jThree = {}));
+///<reference path="jThree/Delegates.ts"/> 
+///<reference path="glLib.ts"/>
+///<reference path="jThree/Base.ts"/>
+///<reference path="jThree/Math.ts"/>
+///<reference path="jThree/Vector.ts"/>
+///<reference path="jThree/Exceptions.ts"/>
+///<reference path="_references.ts"/>
+if (!String.prototype.format) {
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, num) {
+            if (typeof args[num] != 'undefined') {
+                return args[num];
+            }
+            else {
+                return match;
+            }
+        });
+    };
+}
+var jThree;
+(function (jThree) {
+    var jThreeObject = jThree.Base.jThreeObject;
+    var Collection = (function () {
+        function Collection() {
+        }
+        Collection.foreach = function (collection, act) {
+            var enumerator = collection.getEnumrator();
+            while (enumerator.next()) {
+                act(enumerator.getCurrent());
+            }
+        };
+        Collection.foreachPair = function (col1, col2, act) {
+            var en1 = col1.getEnumrator();
+            var en2 = col2.getEnumrator();
+            while (en1.next() && en2.next()) {
+                act(en1.getCurrent(), en2.getCurrent());
+            }
+        };
+        return Collection;
+    })();
+    jThree.Collection = Collection;
+    var JThreeContext = (function (_super) {
+        __extends(JThreeContext, _super);
+        function JThreeContext() {
+            _super.apply(this, arguments);
+        }
+        return JThreeContext;
+    })(jThreeObject);
+    jThree.JThreeContext = JThreeContext;
+    var CanvasRenderer = (function (_super) {
+        __extends(CanvasRenderer, _super);
+        function CanvasRenderer(glContext) {
+            _super.call(this);
+            this.glContext = glContext;
+        }
+        CanvasRenderer.fromCanvas = function (canvas) {
+            var gl;
+            try {
+                gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+                return new CanvasRenderer(gl);
+            }
+            catch (e) {
+                if (!gl) {
+                }
+            }
+        };
+        return CanvasRenderer;
+    })(jThreeObject);
+    jThree.CanvasRenderer = CanvasRenderer;
+})(jThree || (jThree = {}));
+window.onload = function (e) {
+    alert("{0}".format(new jThree.Exceptions.jThreeException("TEST", "TEST MESSAGE")));
+};

@@ -79,7 +79,9 @@
     <TypeScriptCompile Include="jThree\Base.ts" />
     <TypeScriptCompile Include="jThree\Delegates.ts" />
     <TypeScriptCompile Include="jThree\Exceptions.ts" />
-    <TypeScriptCompile Include="jThree\references.ts" />
+    <TypeScriptCompile Include="jThree\Math.ts" />
+    <TypeScriptCompile Include="_references.ts" />
+    <TypeScriptCompile Include="jThree\Vector.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

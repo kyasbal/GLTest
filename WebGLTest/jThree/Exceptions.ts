@@ -1,5 +1,4 @@
-﻿///<reference path="references.ts"/>
-
+﻿
 module jThree.Exceptions {
     import jThreeObject = Base.jThreeObject;
     /**

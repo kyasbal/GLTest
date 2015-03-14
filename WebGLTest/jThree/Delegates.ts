@@ -1,5 +1,4 @@
-﻿///<reference path="references.ts"/>
-module jThree.Delegates {
+﻿module jThree.Delegates {
 // ReSharper disable InconsistentNaming
     export interface Action0 {
         (): void;

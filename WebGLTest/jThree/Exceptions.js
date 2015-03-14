@@ -1,4 +1,3 @@
-///<reference path="references.ts"/>
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -26,7 +25,6 @@ var jThree;
             return jThreeException;
         })(jThreeObject);
         Exceptions.jThreeException = jThreeException;
-<<<<<<< HEAD
         var IrregularElementAccessException = (function (_super) {
             __extends(IrregularElementAccessException, _super);
             function IrregularElementAccessException(accessIndex) {
@@ -35,8 +33,5 @@ var jThree;
             return IrregularElementAccessException;
         })(jThreeException);
         Exceptions.IrregularElementAccessException = IrregularElementAccessException;
-=======
->>>>>>> cee5eabfe474bde94e70a6f2a8c7558066f7b754
     })(Exceptions = jThree.Exceptions || (jThree.Exceptions = {}));
 })(jThree || (jThree = {}));
-//# sourceMappingURL=Exceptions.js.map

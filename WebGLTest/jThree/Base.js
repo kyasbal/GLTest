@@ -26,4 +26,3 @@ var jThree;
         Base.jThreeObject = jThreeObject;
     })(Base = jThree.Base || (jThree.Base = {}));
 })(jThree || (jThree = {}));
-//# sourceMappingURL=Base.js.map

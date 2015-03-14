@@ -1,4 +1,4 @@
-﻿///<reference path="jThree/references.ts"/>
+﻿///<reference path="_references.ts"/>
 interface String {
     format(...replacements: any[]): string;
 }
@@ -25,6 +25,7 @@ module jThree
     import JThreeException = jThree.Exceptions.jThreeException;
     import jThreeObject = jThree.Base.jThreeObject;
     import JThreeMath = jThree.Mathematics.jThreeMath;
+    import VectorBase = jThree.Mathematics.Vector.VectorBase;
 
     export class Collection {
         public static foreach<T>(collection:IEnumerable<T>,act:Action1<T>): void {
