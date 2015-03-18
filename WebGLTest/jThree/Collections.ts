@@ -49,12 +49,19 @@ module jThree.Collections {
      * Containing some of methods use for IEnumerable generic interfaces.
      */
     export class Collection {
+        /**
+         * provides simple collection iteration like C# foreach syntax.
+         */
         public static foreach<T>(collection: IEnumerable<T>, act: Action1<T>): void {
             var enumerator: IEnumrator<T> = collection.getEnumrator();
             while (enumerator.next()) {
                 act(enumerator.getCurrent());
             }
         }
+        /**
+         * provide the iteration that iterate 2 collections same time.
+         * if the length of passed collection is different with the other collection, this method will stop when run out all elements in short collection.
+         */
 
         public static foreachPair<T>(col1: IEnumerable<T>, col2: IEnumerable<T>, act: Action2<T, T>) {
             var en1: IEnumrator<T> = col1.getEnumrator();

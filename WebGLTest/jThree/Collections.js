@@ -40,12 +40,19 @@ var jThree;
         var Collection = (function () {
             function Collection() {
             }
+            /**
+             * provides simple collection iteration like C# foreach syntax.
+             */
             Collection.foreach = function (collection, act) {
                 var enumerator = collection.getEnumrator();
                 while (enumerator.next()) {
                     act(enumerator.getCurrent());
                 }
             };
+            /**
+             * provide the iteration that iterate 2 collections same time.
+             * if the length of passed collection is different with the other collection, this method will stop when run out all elements in short collection.
+             */
             Collection.foreachPair = function (col1, col2, act) {
                 var en1 = col1.getEnumrator();
                 var en2 = col2.getEnumrator();
