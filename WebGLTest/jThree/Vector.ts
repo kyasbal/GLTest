@@ -254,6 +254,30 @@
             return VectorBase.elementEqual(v1, v2, v1.getFactory());
         }
 
+        dotWith(v: Vector2): number {
+            return Vector2.dot(this, v);
+        }
+
+        addWith(v: Vector2): Vector2 {
+            return Vector2.add(this, v);
+        }
+
+        subtractWith(v: Vector2): Vector2 {
+            return Vector2.subtract(v, this);
+        }
+
+        multiplyWith(s: number): Vector2 {
+            return Vector2.multiply(s, this);
+        }
+
+        invertThis(): Vector2 {
+            return Vector2.invert(this);
+        }
+
+        equalWith(v: Vector2): boolean {
+            return Vector2.equal(this, v);
+        }
+
         toString(): string {
             return "Vector2(x={0},y={1})".format(this.x, this.y);
         }
@@ -300,9 +324,7 @@
         }
 
         static subtract(v1: Vector3, v2: Vector3): Vector3 {
-            var d = VectorBase.elementSubtract(v1, v2, v1.getFactory());
-            console.log(d.toString());
-            return d;
+            return VectorBase.elementSubtract(v1, v2, v1.getFactory());
         }
 
         static multiply(s: number, v: Vector3): Vector3 {
@@ -311,13 +333,35 @@
 
         static invert(v1: Vector3):Vector3 {
             return VectorBase.elementInvert(v1, v1.getFactory());
-
         }
 
         static equal(v1: Vector3, v2: Vector3): boolean {
             return VectorBase.elementEqual(v1, v2, v1.getFactory());
         }
 
+        dotWith(v: Vector3): number {
+            return Vector3.dot(this, v);
+        }
+
+        addWith(v: Vector3): Vector3 {
+            return Vector3.add(this, v);
+        }
+
+        subtractWith(v: Vector3): Vector3 {
+            return Vector3.subtract(v, this);
+        }
+
+        multiplyWith(s: number): Vector3 {
+            return Vector3.multiply(s, this);
+        }
+
+        invertThis(): Vector3 {
+            return Vector3.invert(this);
+        }
+
+        equalWith(v: Vector3): boolean {
+            return Vector3.equal(this, v);
+        }
 
         toString(): string {
             return "Vector3(x={0},y={1},z={2})".format(this.x, this.y, this.z);
@@ -384,6 +428,31 @@
 
         static equal(v1: Vector4, v2: Vector4): boolean {
             return VectorBase.elementEqual(v1, v2, v1.getFactory());
+        }
+
+
+        dotWith(v: Vector4): number {
+            return Vector4.dot(this, v);
+        }
+
+        addWith(v: Vector4): Vector4 {
+            return Vector4.add(this, v);
+        }
+
+        subtractWith(v: Vector4): Vector4 {
+            return Vector4.subtract(v, this);
+        }
+
+        multiplyWith(s: number): Vector4 {
+            return Vector4.multiply(s, this);
+        }
+
+        invertThis(): Vector4 {
+            return Vector4.invert(this);
+        }
+
+        equalWith(v: Vector4): boolean {
+            return Vector4.equal(this, v);
         }
 
 

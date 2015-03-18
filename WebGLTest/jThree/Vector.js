@@ -225,6 +225,24 @@ var jThree;
                 Vector2.equal = function (v1, v2) {
                     return VectorBase.elementEqual(v1, v2, v1.getFactory());
                 };
+                Vector2.prototype.dotWith = function (v) {
+                    return Vector2.dot(this, v);
+                };
+                Vector2.prototype.addWith = function (v) {
+                    return Vector2.add(this, v);
+                };
+                Vector2.prototype.subtractWith = function (v) {
+                    return Vector2.subtract(v, this);
+                };
+                Vector2.prototype.multiplyWith = function (s) {
+                    return Vector2.multiply(s, this);
+                };
+                Vector2.prototype.invertThis = function () {
+                    return Vector2.invert(this);
+                };
+                Vector2.prototype.equalWith = function (v) {
+                    return Vector2.equal(this, v);
+                };
                 Vector2.prototype.toString = function () {
                     return "Vector2(x={0},y={1})".format(this.x, this.y);
                 };
@@ -264,9 +282,7 @@ var jThree;
                     return VectorBase.elementAdd(v1, v2, v1.getFactory());
                 };
                 Vector3.subtract = function (v1, v2) {
-                    var d = VectorBase.elementSubtract(v1, v2, v1.getFactory());
-                    console.log(d.toString());
-                    return d;
+                    return VectorBase.elementSubtract(v1, v2, v1.getFactory());
                 };
                 Vector3.multiply = function (s, v) {
                     return VectorBase.elementScholarMultiply(v, s, v.getFactory());
@@ -276,6 +292,24 @@ var jThree;
                 };
                 Vector3.equal = function (v1, v2) {
                     return VectorBase.elementEqual(v1, v2, v1.getFactory());
+                };
+                Vector3.prototype.dotWith = function (v) {
+                    return Vector3.dot(this, v);
+                };
+                Vector3.prototype.addWith = function (v) {
+                    return Vector3.add(this, v);
+                };
+                Vector3.prototype.subtractWith = function (v) {
+                    return Vector3.subtract(v, this);
+                };
+                Vector3.prototype.multiplyWith = function (s) {
+                    return Vector3.multiply(s, this);
+                };
+                Vector3.prototype.invertThis = function () {
+                    return Vector3.invert(this);
+                };
+                Vector3.prototype.equalWith = function (v) {
+                    return Vector3.equal(this, v);
                 };
                 Vector3.prototype.toString = function () {
                     return "Vector3(x={0},y={1},z={2})".format(this.x, this.y, this.z);
@@ -330,6 +364,24 @@ var jThree;
                 };
                 Vector4.equal = function (v1, v2) {
                     return VectorBase.elementEqual(v1, v2, v1.getFactory());
+                };
+                Vector4.prototype.dotWith = function (v) {
+                    return Vector4.dot(this, v);
+                };
+                Vector4.prototype.addWith = function (v) {
+                    return Vector4.add(this, v);
+                };
+                Vector4.prototype.subtractWith = function (v) {
+                    return Vector4.subtract(v, this);
+                };
+                Vector4.prototype.multiplyWith = function (s) {
+                    return Vector4.multiply(s, this);
+                };
+                Vector4.prototype.invertThis = function () {
+                    return Vector4.invert(this);
+                };
+                Vector4.prototype.equalWith = function (v) {
+                    return Vector4.equal(this, v);
                 };
                 Vector4.prototype.getEnumrator = function () {
                     return new Vector4Enumerator(this);
