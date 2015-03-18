@@ -50,7 +50,7 @@
         }
 
         protected static elementAdd<T extends VectorBase>(a: T, b: T, factory: IVectorFactory<T>): T {
-            var result: number[];
+            var result: number[]=[];
             Collection.foreachPair<number>(a, b, (a, b) => {
                 result.push(a + b);
             });
@@ -58,7 +58,7 @@
         }
 
         protected static elementSubtract<T extends VectorBase>(a: T, b: T, factory: IVectorFactory<T>): T {
-            var result: number[];
+            var result: number[]=[];
             Collection.foreachPair<number>(a, b,(a, b) => {
                 result.push(a - b);
             });
@@ -66,7 +66,7 @@
         }
 
         protected static elementScholarMultiply<T extends VectorBase>(a: T, s: number, factory: IVectorFactory<T>): T {
-            var result: number[];
+            var result: number[]=[];
             Collection.foreach<number>(a, a => {
                 result.push(a * s);
             });
@@ -79,6 +79,14 @@
                 if (a != b)result = false;
             });
             return result;
+        }
+
+        protected static elementInvert<T extends VectorBase>(a: T,factory:IVectorFactory<T>) {
+            var result: number[] = [];
+            Collection.foreach<Number>(a, a => {
+                result.push(-a);
+            });
+            return factory.fromArray(result);
         }
 
 
@@ -238,6 +246,10 @@
             return VectorBase.elementScholarMultiply(v, s, v.getFactory());
         }
 
+        static invert(v1: Vector2):Vector2 {
+            return VectorBase.elementInvert(v1, v1.getFactory());
+        }
+
         static equal(v1: Vector2, v2: Vector2): boolean {
             return VectorBase.elementEqual(v1, v2, v1.getFactory());
         }
@@ -256,11 +268,11 @@
     }
 
     export class Vector3 extends VectorBase implements IVectorGenerator<Vector3> {
-        constructor(x: number, z: number, y: number) {
+        constructor(x: number, y: number,z:number) {
             super();
             this.x = x;
-            this.z = z;
             this.y = y;
+            this.z = z;
         }
 
         private x: number;
@@ -288,11 +300,18 @@
         }
 
         static subtract(v1: Vector3, v2: Vector3): Vector3 {
-            return VectorBase.elementSubtract(v1, v2, v1.getFactory());
+            var d = VectorBase.elementSubtract(v1, v2, v1.getFactory());
+            console.log(d.toString());
+            return d;
         }
 
         static multiply(s: number, v: Vector3): Vector3 {
             return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+        }
+
+        static invert(v1: Vector3):Vector3 {
+            return VectorBase.elementInvert(v1, v1.getFactory());
+
         }
 
         static equal(v1: Vector3, v2: Vector3): boolean {
@@ -357,6 +376,10 @@
 
         static multiply(s: number, v: Vector4): Vector4 {
             return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+        }
+
+        static invert(v1: Vector4): Vector4 {
+            return VectorBase.elementInvert(v1, v1.getFactory());
         }
 
         static equal(v1: Vector4, v2: Vector4): boolean {

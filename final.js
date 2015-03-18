@@ -1,3 +1,16 @@
+if (!String.prototype.format) {
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, num) {
+            if (typeof args[num] != 'undefined') {
+                return args[num];
+            }
+            else {
+                return match;
+            }
+        });
+    };
+}
 var jThree;
 (function (jThree) {
     var Base;
@@ -133,6 +146,7 @@ var jThree;
         var Vector;
         (function (Vector) {
             var jThreeMath = jThree.Mathematics.jThreeMath;
+            var Collection = jThree.Collections.Collection;
             var VectorBase = (function () {
                 function VectorBase() {
                     this.magnitudeSquaredCache = -1;
@@ -144,7 +158,7 @@ var jThree;
                 VectorBase.prototype.magnitudeSquared = function () {
                     if (this.magnitudeSquaredCache < 0) {
                         var sum = 0;
-                        jThree.Collection.foreach(this, function (t) {
+                        Collection.foreach(this, function (t) {
                             sum += t * t;
                         });
                         this.magnitudeSquaredCache = sum;
@@ -159,31 +173,41 @@ var jThree;
                 };
                 VectorBase.elementDot = function (a, b) {
                     var dot = 0;
-                    jThree.Collection.foreachPair(a, b, function (a, b) {
+                    Collection.foreachPair(a, b, function (a, b) {
                         dot += a * b;
                     });
                     return dot;
                 };
                 VectorBase.elementAdd = function (a, b, factory) {
-                    var result;
-                    jThree.Collection.foreachPair(a, b, function (a, b) {
+                    var result = [];
+                    console.log("element add fir");
+                    Collection.foreachPair(a, b, function (a, b) {
                         result.push(a + b);
                     });
+                    console.log("element add fin");
                     return factory.fromArray(result);
                 };
                 VectorBase.elementSubtract = function (a, b, factory) {
-                    var result;
-                    jThree.Collection.foreachPair(a, b, function (a, b) {
+                    var result = [];
+                    Collection.foreachPair(a, b, function (a, b) {
                         result.push(a - b);
                     });
                     return factory.fromArray(result);
                 };
                 VectorBase.elementScholarMultiply = function (a, s, factory) {
                     var result;
-                    jThree.Collection.foreach(a, function (a) {
+                    Collection.foreach(a, function (a) {
                         result.push(a * s);
                     });
                     return factory.fromArray(result);
+                };
+                VectorBase.elementEqual = function (a, b, factory) {
+                    var result = true;
+                    Collection.foreachPair(a, b, function (a, b) {
+                        if (a != b)
+                            result = false;
+                    });
+                    return result;
                 };
                 VectorBase.prototype.getEnumrator = function () {
                     throw new Error("Not implemented");
@@ -317,13 +341,21 @@ var jThree;
                     return VectorBase.elementDot(v1, v2);
                 };
                 Vector2.add = function (v1, v2) {
-                    return VectorBase.elementAdd(v1, v2, v1.getFactory());
+                    console.log("add");
+                    console.log(v1);
+                    console.log(v2.toString());
+                    console.log("v1{0}+v2{1}".format(v1.toString(), v2.toString()));
+                    var d = VectorBase.elementAdd(v1, v2, v1.getFactory());
+                    return d;
                 };
                 Vector2.subtract = function (v1, v2) {
                     return VectorBase.elementSubtract(v1, v2, v1.getFactory());
                 };
                 Vector2.multiply = function (s, v) {
                     return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+                };
+                Vector2.equal = function (v1, v2) {
+                    return VectorBase.elementEqual(v1, v2, v1.getFactory());
                 };
                 Vector2.prototype.toString = function () {
                     return "Vector2(x={0},y={1})".format(this.x, this.y);
@@ -368,6 +400,9 @@ var jThree;
                 };
                 Vector3.multiply = function (s, v) {
                     return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+                };
+                Vector3.equal = function (v1, v2) {
+                    return VectorBase.elementEqual(v1, v2, v1.getFactory());
                 };
                 Vector3.prototype.toString = function () {
                     return "Vector3(x={0},y={1},z={2})".format(this.x, this.y, this.z);
@@ -416,6 +451,9 @@ var jThree;
                 };
                 Vector4.multiply = function (s, v) {
                     return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+                };
+                Vector4.equal = function (v1, v2) {
+                    return VectorBase.elementEqual(v1, v2, v1.getFactory());
                 };
                 Vector4.prototype.getEnumrator = function () {
                     return new Vector4Enumerator(this);
@@ -473,41 +511,9 @@ var jThree;
 ///<reference path="jThree/Vector.ts"/>
 ///<reference path="jThree/Exceptions.ts"/>
 ///<reference path="_references.ts"/>
-if (!String.prototype.format) {
-    String.prototype.format = function () {
-        var args = arguments;
-        return this.replace(/{(\d+)}/g, function (match, num) {
-            if (typeof args[num] != 'undefined') {
-                return args[num];
-            }
-            else {
-                return match;
-            }
-        });
-    };
-}
 var jThree;
 (function (jThree) {
     var jThreeObject = jThree.Base.jThreeObject;
-    var Collection = (function () {
-        function Collection() {
-        }
-        Collection.foreach = function (collection, act) {
-            var enumerator = collection.getEnumrator();
-            while (enumerator.next()) {
-                act(enumerator.getCurrent());
-            }
-        };
-        Collection.foreachPair = function (col1, col2, act) {
-            var en1 = col1.getEnumrator();
-            var en2 = col2.getEnumrator();
-            while (en1.next() && en2.next()) {
-                act(en1.getCurrent(), en2.getCurrent());
-            }
-        };
-        return Collection;
-    })();
-    jThree.Collection = Collection;
     var JThreeContext = (function (_super) {
         __extends(JThreeContext, _super);
         function JThreeContext() {

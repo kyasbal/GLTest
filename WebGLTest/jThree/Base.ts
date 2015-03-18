@@ -1,4 +1,22 @@
-﻿module jThree.Base {
+﻿interface String {
+    format(...replacements: any[]): string;
+}
+
+if (!String.prototype.format) {
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, num) {
+            if (typeof args[num] != 'undefined') {
+                return args[num];
+            } else {
+                return match;
+            }
+        });
+    };
+}
+
+
+module jThree.Base {
     class JsHack {
         public static getObjectName(obj: any): string {
             var funcNameRegex = /function (.{1,})\(/;
