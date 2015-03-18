@@ -6,7 +6,7 @@ module jThreeTest.Collection {
 
     export class CollectionTest extends tsUnit.TestClass {
         testArray1: number[] = [1, 2, 3, 4, 5];
-        testArray2: number[]=[6, 7, 8, 9, 10];
+        testArray2: number[]=[6, 7, 8, 9, 10,11,23];
 
         foreachTest() {
             var result: number = 0;

@@ -16,7 +16,7 @@ var jThreeTest;
             function CollectionTest() {
                 _super.apply(this, arguments);
                 this.testArray1 = [1, 2, 3, 4, 5];
-                this.testArray2 = [6, 7, 8, 9, 10];
+                this.testArray2 = [6, 7, 8, 9, 10, 11, 23];
             }
             CollectionTest.prototype.foreachTest = function () {
                 var result = 0;

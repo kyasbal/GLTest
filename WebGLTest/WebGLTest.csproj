@@ -80,6 +80,7 @@
     <TypeScriptCompile Include="glLib.ts" />
     <TypeScriptCompile Include="jThree.Test\CollectionTest.ts" />
     <TypeScriptCompile Include="jThree.Test\TestMain.ts" />
+    <TypeScriptCompile Include="jThree.Test\VectorTest.ts" />
     <TypeScriptCompile Include="jThree.Test\_testReferences.ts" />
     <TypeScriptCompile Include="JThreeMath.ts" />
     <TypeScriptCompile Include="jThree\Base.ts" />
