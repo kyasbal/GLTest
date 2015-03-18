@@ -180,11 +180,9 @@ var jThree;
                 };
                 VectorBase.elementAdd = function (a, b, factory) {
                     var result = [];
-                    console.log("element add fir");
                     Collection.foreachPair(a, b, function (a, b) {
                         result.push(a + b);
                     });
-                    console.log("element add fin");
                     return factory.fromArray(result);
                 };
                 VectorBase.elementSubtract = function (a, b, factory) {
@@ -195,7 +193,7 @@ var jThree;
                     return factory.fromArray(result);
                 };
                 VectorBase.elementScholarMultiply = function (a, s, factory) {
-                    var result;
+                    var result = [];
                     Collection.foreach(a, function (a) {
                         result.push(a * s);
                     });
@@ -208,6 +206,13 @@ var jThree;
                             result = false;
                     });
                     return result;
+                };
+                VectorBase.elementInvert = function (a, factory) {
+                    var result = [];
+                    Collection.foreach(a, function (a) {
+                        result.push(-a);
+                    });
+                    return factory.fromArray(result);
                 };
                 VectorBase.prototype.getEnumrator = function () {
                     throw new Error("Not implemented");
@@ -341,12 +346,7 @@ var jThree;
                     return VectorBase.elementDot(v1, v2);
                 };
                 Vector2.add = function (v1, v2) {
-                    console.log("add");
-                    console.log(v1);
-                    console.log(v2.toString());
-                    console.log("v1{0}+v2{1}".format(v1.toString(), v2.toString()));
-                    var d = VectorBase.elementAdd(v1, v2, v1.getFactory());
-                    return d;
+                    return VectorBase.elementAdd(v1, v2, v1.getFactory());
                 };
                 Vector2.subtract = function (v1, v2) {
                     return VectorBase.elementSubtract(v1, v2, v1.getFactory());
@@ -354,8 +354,29 @@ var jThree;
                 Vector2.multiply = function (s, v) {
                     return VectorBase.elementScholarMultiply(v, s, v.getFactory());
                 };
+                Vector2.invert = function (v1) {
+                    return VectorBase.elementInvert(v1, v1.getFactory());
+                };
                 Vector2.equal = function (v1, v2) {
                     return VectorBase.elementEqual(v1, v2, v1.getFactory());
+                };
+                Vector2.prototype.dotWith = function (v) {
+                    return Vector2.dot(this, v);
+                };
+                Vector2.prototype.addWith = function (v) {
+                    return Vector2.add(this, v);
+                };
+                Vector2.prototype.subtractWith = function (v) {
+                    return Vector2.subtract(v, this);
+                };
+                Vector2.prototype.multiplyWith = function (s) {
+                    return Vector2.multiply(s, this);
+                };
+                Vector2.prototype.invertThis = function () {
+                    return Vector2.invert(this);
+                };
+                Vector2.prototype.equalWith = function (v) {
+                    return Vector2.equal(this, v);
                 };
                 Vector2.prototype.toString = function () {
                     return "Vector2(x={0},y={1})".format(this.x, this.y);
@@ -374,11 +395,11 @@ var jThree;
             Vector.Vector2 = Vector2;
             var Vector3 = (function (_super) {
                 __extends(Vector3, _super);
-                function Vector3(x, z, y) {
+                function Vector3(x, y, z) {
                     _super.call(this);
                     this.x = x;
-                    this.z = z;
                     this.y = y;
+                    this.z = z;
                 }
                 Vector3.prototype.getX = function () {
                     return this.x;
@@ -401,8 +422,29 @@ var jThree;
                 Vector3.multiply = function (s, v) {
                     return VectorBase.elementScholarMultiply(v, s, v.getFactory());
                 };
+                Vector3.invert = function (v1) {
+                    return VectorBase.elementInvert(v1, v1.getFactory());
+                };
                 Vector3.equal = function (v1, v2) {
                     return VectorBase.elementEqual(v1, v2, v1.getFactory());
+                };
+                Vector3.prototype.dotWith = function (v) {
+                    return Vector3.dot(this, v);
+                };
+                Vector3.prototype.addWith = function (v) {
+                    return Vector3.add(this, v);
+                };
+                Vector3.prototype.subtractWith = function (v) {
+                    return Vector3.subtract(v, this);
+                };
+                Vector3.prototype.multiplyWith = function (s) {
+                    return Vector3.multiply(s, this);
+                };
+                Vector3.prototype.invertThis = function () {
+                    return Vector3.invert(this);
+                };
+                Vector3.prototype.equalWith = function (v) {
+                    return Vector3.equal(this, v);
                 };
                 Vector3.prototype.toString = function () {
                     return "Vector3(x={0},y={1},z={2})".format(this.x, this.y, this.z);
@@ -452,8 +494,29 @@ var jThree;
                 Vector4.multiply = function (s, v) {
                     return VectorBase.elementScholarMultiply(v, s, v.getFactory());
                 };
+                Vector4.invert = function (v1) {
+                    return VectorBase.elementInvert(v1, v1.getFactory());
+                };
                 Vector4.equal = function (v1, v2) {
                     return VectorBase.elementEqual(v1, v2, v1.getFactory());
+                };
+                Vector4.prototype.dotWith = function (v) {
+                    return Vector4.dot(this, v);
+                };
+                Vector4.prototype.addWith = function (v) {
+                    return Vector4.add(this, v);
+                };
+                Vector4.prototype.subtractWith = function (v) {
+                    return Vector4.subtract(v, this);
+                };
+                Vector4.prototype.multiplyWith = function (s) {
+                    return Vector4.multiply(s, this);
+                };
+                Vector4.prototype.invertThis = function () {
+                    return Vector4.invert(this);
+                };
+                Vector4.prototype.equalWith = function (v) {
+                    return Vector4.equal(this, v);
                 };
                 Vector4.prototype.getEnumrator = function () {
                     return new Vector4Enumerator(this);
@@ -502,7 +565,94 @@ var jThree;
             return IrregularElementAccessException;
         })(jThreeException);
         Exceptions.IrregularElementAccessException = IrregularElementAccessException;
+        var InvalidArgumentException = (function (_super) {
+            __extends(InvalidArgumentException, _super);
+            function InvalidArgumentException(message) {
+                _super.call(this, "Invalid argument was passed.", message);
+            }
+            return InvalidArgumentException;
+        })(jThreeException);
+        Exceptions.InvalidArgumentException = InvalidArgumentException;
     })(Exceptions = jThree.Exceptions || (jThree.Exceptions = {}));
+})(jThree || (jThree = {}));
+///<reference path="../_references.ts"/>
+var jThree;
+(function (jThree) {
+    var Matrix;
+    (function (_Matrix) {
+        var JThreeObject = jThree.Base.jThreeObject;
+        var MatrixEnumerator = (function (_super) {
+            __extends(MatrixEnumerator, _super);
+            function MatrixEnumerator(targetMat) {
+                _super.call(this);
+                this.currentIndex = -1;
+                this.targetMat = targetMat;
+            }
+            MatrixEnumerator.prototype.getCurrent = function () {
+                return this.targetMat.getBySingleIndex(this.currentIndex);
+            };
+            MatrixEnumerator.prototype.next = function () {
+                this.currentIndex++;
+                if (this.currentIndex >= 0 && this.currentIndex < 16)
+                    return true;
+                return false;
+            };
+            return MatrixEnumerator;
+        })(JThreeObject);
+        var MatrixBase = (function (_super) {
+            __extends(MatrixBase, _super);
+            function MatrixBase() {
+                _super.apply(this, arguments);
+            }
+            MatrixBase.prototype.getEnumrator = function () {
+                throw new Error("Not implemented");
+            };
+            return MatrixBase;
+        })(JThreeObject);
+        _Matrix.MatrixBase = MatrixBase;
+        var Matrix = (function (_super) {
+            __extends(Matrix, _super);
+            function Matrix(arr) {
+                _super.call(this);
+                this.elements = Matrix.zeroElements();
+                if (!this.isValidArray(arr))
+                    throw new jThree.Exceptions.InvalidArgumentException("Invalid matrix source was passed.");
+                this.elements = new Float32Array(arr);
+            }
+            Matrix.zero = function () {
+                return new Matrix(this.zeroElements());
+            };
+            Matrix.identity = function () {
+                return new Matrix(this.identityElements());
+            };
+            Matrix.zeroElements = function () {
+                return new Float32Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+            };
+            Matrix.identityElements = function () {
+                return new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+            };
+            Matrix.prototype.isValidArray = function (arr) {
+                if (arr.length !== 16)
+                    return false;
+                return true;
+            };
+            Matrix.prototype.getAt = function (colmun, row) {
+                return this.elements[colmun + row * 4];
+            };
+            Matrix.prototype.getBySingleIndex = function (index) {
+                return this.elements[index];
+            };
+            Matrix.prototype.toString = function () {
+                var f = this.getBySingleIndex;
+                return "|{0} {1} {2} {3}|\n|{4} {5} {6} {7}|\n|{8} {9} {10} {11}|\n|{12} {13} {14} {15}|".format(f(0), f(1), f(2), f(3), f(4), f(5), f(6), f(7), f(8), f(9), f(10), f(11), f(12), f(13), f(14), f(15));
+            };
+            Matrix.prototype.getEnumrator = function () {
+                return new MatrixEnumerator(this);
+            };
+            return Matrix;
+        })(MatrixBase);
+        _Matrix.Matrix = Matrix;
+    })(Matrix = jThree.Matrix || (jThree.Matrix = {}));
 })(jThree || (jThree = {}));
 ///<reference path="jThree/Delegates.ts"/> 
 ///<reference path="glLib.ts"/>
@@ -510,6 +660,7 @@ var jThree;
 ///<reference path="jThree/Math.ts"/>
 ///<reference path="jThree/Vector.ts"/>
 ///<reference path="jThree/Exceptions.ts"/>
+///<reference path="jThree/Matrix.ts"/>
 ///<reference path="_references.ts"/>
 var jThree;
 (function (jThree) {
@@ -544,5 +695,5 @@ var jThree;
     jThree.CanvasRenderer = CanvasRenderer;
 })(jThree || (jThree = {}));
 window.onload = function (e) {
-    alert("{0}".format(new jThree.Exceptions.jThreeException("TEST", "TEST MESSAGE")));
+    alert("{0}".format(new jThree.Exceptions.jThreeException("TEST", jThree.Matrix.Matrix.identity().toString())));
 };

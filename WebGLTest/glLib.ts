@@ -40,6 +40,7 @@ module jThree
     }
 }
 
-window.onload = (e) => {
-    alert("{0}".format(new jThree.Exceptions.jThreeException("TEST", "TEST MESSAGE")));
+window.onload = (e) => 
+{
+    alert("{0}".format(jThree.Matrix.Matrix.identity()));
 };

@@ -88,6 +88,7 @@
     <TypeScriptCompile Include="jThree\Delegates.ts" />
     <TypeScriptCompile Include="jThree\Exceptions.ts" />
     <TypeScriptCompile Include="jThree\Math.ts" />
+    <TypeScriptCompile Include="jThree\Matrix.ts" />
     <TypeScriptCompile Include="tsUnit\tsUnit.ts" />
     <TypeScriptCompile Include="_references.ts" />
     <TypeScriptCompile Include="jThree\Vector.ts" />

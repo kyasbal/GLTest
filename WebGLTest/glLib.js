@@ -38,6 +38,6 @@ var jThree;
     jThree.CanvasRenderer = CanvasRenderer;
 })(jThree || (jThree = {}));
 window.onload = function (e) {
-    alert("{0}".format(new jThree.Exceptions.jThreeException("TEST", "TEST MESSAGE")));
+    alert("{0}".format(jThree.Matrix.Matrix.identity()));
 };
 //# sourceMappingURL=glLib.js.map
