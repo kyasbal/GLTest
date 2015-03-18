@@ -21,25 +21,6 @@ if (!String.prototype.format) {
 var jThree;
 (function (jThree) {
     var jThreeObject = jThree.Base.jThreeObject;
-    var Collection = (function () {
-        function Collection() {
-        }
-        Collection.foreach = function (collection, act) {
-            var enumerator = collection.getEnumrator();
-            while (enumerator.next()) {
-                act(enumerator.getCurrent());
-            }
-        };
-        Collection.foreachPair = function (col1, col2, act) {
-            var en1 = col1.getEnumrator();
-            var en2 = col2.getEnumrator();
-            while (en1.next() && en2.next()) {
-                act(en1.getCurrent(), en2.getCurrent());
-            }
-        };
-        return Collection;
-    })();
-    jThree.Collection = Collection;
     var JThreeContext = (function (_super) {
         __extends(JThreeContext, _super);
         function JThreeContext() {
@@ -72,3 +53,4 @@ var jThree;
 window.onload = function (e) {
     alert("{0}".format(new jThree.Exceptions.jThreeException("TEST", "TEST MESSAGE")));
 };
+//# sourceMappingURL=glLib.js.map
