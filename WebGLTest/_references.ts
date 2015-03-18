@@ -4,3 +4,4 @@
 ///<reference path="jThree/Math.ts"/>
 ///<reference path="jThree/Vector.ts"/>
 ///<reference path="jThree/Exceptions.ts"/>
+///<reference path="jThree/Matrix.ts"/>

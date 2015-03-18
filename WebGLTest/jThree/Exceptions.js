@@ -33,6 +33,14 @@ var jThree;
             return IrregularElementAccessException;
         })(jThreeException);
         Exceptions.IrregularElementAccessException = IrregularElementAccessException;
+        var InvalidArgumentException = (function (_super) {
+            __extends(InvalidArgumentException, _super);
+            function InvalidArgumentException(message) {
+                _super.call(this, "Invalid argument was passed.", message);
+            }
+            return InvalidArgumentException;
+        })(jThreeException);
+        Exceptions.InvalidArgumentException = InvalidArgumentException;
     })(Exceptions = jThree.Exceptions || (jThree.Exceptions = {}));
 })(jThree || (jThree = {}));
 //# sourceMappingURL=Exceptions.js.map

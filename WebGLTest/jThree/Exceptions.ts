@@ -24,4 +24,10 @@ module jThree.Exceptions {
             super("Irregular vector element was accessed.", "You attempted to access {0} element. But,this vector have enough dimension.".format(accessIndex));
         }
     }
+
+    export class InvalidArgumentException extends jThreeException {
+        constructor(message: string) {
+            super("Invalid argument was passed.", message);
+        }
+    }
  }
