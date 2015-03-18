@@ -59,6 +59,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="jThree.Test\Test.css" />
+    <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -68,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Index.html" />
+    <Content Include="Test.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -75,11 +78,14 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="glLib.ts" />
+    <TypeScriptCompile Include="jThree.Test\TestMain.ts" />
     <TypeScriptCompile Include="JThreeMath.ts" />
     <TypeScriptCompile Include="jThree\Base.ts" />
+    <TypeScriptCompile Include="jThree\Collections.ts" />
     <TypeScriptCompile Include="jThree\Delegates.ts" />
     <TypeScriptCompile Include="jThree\Exceptions.ts" />
     <TypeScriptCompile Include="jThree\Math.ts" />
+    <TypeScriptCompile Include="tsUnit\tsUnit.ts" />
     <TypeScriptCompile Include="_references.ts" />
     <TypeScriptCompile Include="jThree\Vector.ts" />
   </ItemGroup>

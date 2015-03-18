@@ -1,6 +1,10 @@
 ﻿module jThree.Mathematics.Vector {
     import jThreeMath=jThree.Mathematics.jThreeMath;
     import jThreeException = jThree.Exceptions.jThreeException;
+    import Enumerable = jThree.Collections.IEnumerable;
+    import Collection = jThree.Collections.Collection;
+    import Enumrator = jThree.Collections.IEnumrator;
+
     export interface IVectorFactory<T extends VectorBase> {
         fromArray(array:number[]):T;
     }
@@ -9,7 +13,7 @@
         getFactory():IVectorFactory<T>;
     }
 
-    export class VectorBase implements IEnumerable<number> {
+    export class VectorBase implements Enumerable<number> {
 
         public elementCount(): number {
             return 0;
@@ -69,11 +73,19 @@
             return factory.fromArray(result);
         }
 
+        protected static elementEqual<T extends VectorBase>(a: T, b: T, factory: IVectorFactory<T>) {
+            var result: boolean = true;
+            Collection.foreachPair<number>(a,b,(a, b) => {
+                if (a != b)result = false;
+            });
+            return result;
+        }
 
-        getEnumrator(): IEnumrator<number> { throw new Error("Not implemented"); }
+
+        getEnumrator(): Enumrator<number> { throw new Error("Not implemented"); }
     }
 
-    class VectorEnumeratorBase<T extends VectorBase> implements IEnumrator<number>
+    class VectorEnumeratorBase<T extends VectorBase> implements Enumrator<number>
     {
         private elementCount: number = 0;
 
@@ -226,11 +238,15 @@
             return VectorBase.elementScholarMultiply(v, s, v.getFactory());
         }
 
+        static equal(v1: Vector2, v2: Vector2): boolean {
+            return VectorBase.elementEqual(v1, v2, v1.getFactory());
+        }
+
         toString(): string {
             return "Vector2(x={0},y={1})".format(this.x, this.y);
         }
 
-        getEnumrator(): IEnumrator<number> {
+        getEnumrator(): Enumrator<number> {
             return new Vector2Enumerator(this);
         }
 
@@ -279,12 +295,16 @@
             return VectorBase.elementScholarMultiply(v, s, v.getFactory());
         }
 
+        static equal(v1: Vector3, v2: Vector3): boolean {
+            return VectorBase.elementEqual(v1, v2, v1.getFactory());
+        }
+
 
         toString(): string {
             return "Vector3(x={0},y={1},z={2})".format(this.x, this.y, this.z);
         }
 
-        getEnumrator(): IEnumrator<number> {
+        getEnumrator(): Enumrator<number> {
             return new Vector3Enumerator(this);
         }
 
@@ -339,8 +359,12 @@
             return VectorBase.elementScholarMultiply(v, s, v.getFactory());
         }
 
+        static equal(v1: Vector4, v2: Vector4): boolean {
+            return VectorBase.elementEqual(v1, v2, v1.getFactory());
+        }
 
-        getEnumrator(): IEnumrator<number> { return new Vector4Enumerator(this); }
+
+        getEnumrator(): Enumrator<number> { return new Vector4Enumerator(this); }
 
         elementCount(): number { return 4; }
 

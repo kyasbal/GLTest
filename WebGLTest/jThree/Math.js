@@ -98,3 +98,4 @@ var jThree;
         Mathematics.jThreeMath = jThreeMath;
     })(Mathematics = jThree.Mathematics || (jThree.Mathematics = {}));
 })(jThree || (jThree = {}));
+//# sourceMappingURL=Math.js.map

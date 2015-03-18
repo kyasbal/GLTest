@@ -35,3 +35,4 @@ var jThree;
         Exceptions.IrregularElementAccessException = IrregularElementAccessException;
     })(Exceptions = jThree.Exceptions || (jThree.Exceptions = {}));
 })(jThree || (jThree = {}));
+//# sourceMappingURL=Exceptions.js.map
