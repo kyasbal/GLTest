@@ -3,6 +3,40 @@ var jThree;
 (function (jThree) {
     var Collections;
     (function (Collections) {
+        /**
+         * The class for wrap basic javascript arrays as collection type implementing IEnumerator.
+         */
+        var ArrayEnumratorFactory = (function () {
+            function ArrayEnumratorFactory(targetArray) {
+                this.targetArray = targetArray;
+            }
+            ArrayEnumratorFactory.prototype.getEnumrator = function () {
+                return new ArrayEnumerable(this.targetArray);
+            };
+            return ArrayEnumratorFactory;
+        })();
+        Collections.ArrayEnumratorFactory = ArrayEnumratorFactory;
+        var ArrayEnumerable = (function () {
+            function ArrayEnumerable(targetArrary) {
+                this.currentIndex = -1;
+                this.targetArrary = targetArrary;
+            }
+            ArrayEnumerable.prototype.getCurrent = function () {
+                if (this.targetArrary.length > this.currentIndex && this.currentIndex >= 0) {
+                    return this.targetArrary[this.currentIndex];
+                }
+            };
+            ArrayEnumerable.prototype.next = function () {
+                this.currentIndex++;
+                if (this.currentIndex >= this.targetArrary.length)
+                    return false;
+                return true;
+            };
+            return ArrayEnumerable;
+        })();
+        /**
+         * Containing some of methods use for IEnumerable generic interfaces.
+         */
         var Collection = (function () {
             function Collection() {
             }

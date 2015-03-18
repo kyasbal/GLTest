@@ -1,4 +1,5 @@
 ﻿///<reference path="../_references.ts"/>
+///<reference path="_testReferences.ts"/>
 ///<reference path="../tsUnit/tsUnit.ts"/>
 module jThreeTest {
     
@@ -16,6 +17,7 @@ module jThreeTest {
 }
 
 window.onload = (e) => {
-    var test = new tsUnit.Test(jThreeTest);
+    var test = new tsUnit.Test();
+    test.addTestClass(new jThreeTest.Collection.CollectionTest(),"CollectionTest");
     test.showResults(document.getElementById("test-display"), test.run());
 };
