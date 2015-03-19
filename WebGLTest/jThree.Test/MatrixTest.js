@@ -15,9 +15,85 @@ var jThreeTest;
         function MatrixTest() {
             _super.apply(this, arguments);
             this.m1 = new Matrix(new Float32Array([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
-            this.m2 = new Matrix(new Float32Array([3, 5, 7, 9, 3, 5, 7, 9, 3, 5, 7, 9, 3, 5, 7, 9]));
+            this.m2 = new Matrix(new Float32Array([3, 5, 7, 9, 3, 5, 7, 9, 3, 5, 7, 9, 3, 6, 8, 9]));
         }
         MatrixTest.prototype.eqaulTest = function () {
+            this.isTrue(Matrix.eqaul(this.m1, new Matrix(new Float32Array([
+                1,
+                2,
+                3,
+                4,
+                1,
+                2,
+                3,
+                4,
+                1,
+                2,
+                3,
+                4,
+                1,
+                2,
+                3,
+                4
+            ]))));
+            this.isFalse(Matrix.eqaul(this.m1, new Matrix(new Float32Array([
+                1,
+                2,
+                3,
+                4,
+                1,
+                2,
+                3,
+                4,
+                1,
+                2,
+                4,
+                4,
+                1,
+                2,
+                3,
+                4
+            ]))));
+        };
+        MatrixTest.prototype.addTest = function () {
+            this.isTrue(Matrix.eqaul(Matrix.add(this.m1, this.m2), new Matrix(new Float32Array([
+                4,
+                7,
+                10,
+                13,
+                4,
+                7,
+                10,
+                13,
+                4,
+                7,
+                10,
+                13,
+                4,
+                8,
+                11,
+                13
+            ]))));
+        };
+        MatrixTest.prototype.subtractTest = function () {
+            this.isTrue(Matrix.eqaul(Matrix.subtract(this.m1, this.m2), new Matrix(new Float32Array([
+                -2,
+                -3,
+                -4,
+                -5,
+                -2,
+                -3,
+                -4,
+                -5,
+                -2,
+                -3,
+                -4,
+                -5,
+                -2,
+                -4,
+                -5,
+                -5
+            ]))));
         };
         return MatrixTest;
     })(TestClass);

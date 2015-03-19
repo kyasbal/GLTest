@@ -28,6 +28,7 @@ window.onload = function (e) {
     var test = new tsUnit.Test();
     test.addTestClass(new jThreeTest.Collection.CollectionTest(), "CollectionTest");
     test.addTestClass(new jThreeTest.VectorTest(), "VectorTest");
+    test.addTestClass(new jThreeTest.MatrixTest(), "MatrixTest");
     test.showResults(document.getElementById("test-display"), test.run());
 };
 //# sourceMappingURL=TestMain.js.map

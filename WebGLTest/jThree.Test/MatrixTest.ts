@@ -15,11 +15,40 @@ module jThreeTest {
             [3, 5, 7, 9,
             3, 5, 7, 9,
             3, 5, 7, 9,
-            3, 5, 7, 9
+            3, 6, 8, 9
             ]));
 
         eqaulTest() {
-            
+            this.isTrue(Matrix.eqaul(this.m1, new Matrix(new Float32Array([
+                1, 2, 3, 4,
+                1, 2, 3, 4,
+                1, 2, 3, 4,
+                1, 2, 3, 4
+            ]))));
+            this.isFalse(Matrix.eqaul(this.m1, new Matrix(new Float32Array([
+                1, 2, 3, 4,
+                1, 2, 3, 4,
+                1, 2, 4, 4,
+                1, 2, 3, 4
+            ]))));
+        }
+
+        addTest() {
+            this.isTrue(Matrix.eqaul(Matrix.add(this.m1, this.m2), new Matrix(new Float32Array([
+                4, 7, 10, 13,
+                4, 7, 10, 13,
+                4, 7, 10, 13,
+                4, 8, 11, 13
+            ]))));
+        }
+
+        subtractTest() {
+            this.isTrue(Matrix.eqaul(Matrix.subtract(this.m1, this.m2), new Matrix(new Float32Array([
+                -2, -3, -4, -5,
+                -2, -3, -4, -5,
+                -2, -3, -4, -5,
+                -2, -4, -5, -5
+            ]))));
         }
     }
 } 
