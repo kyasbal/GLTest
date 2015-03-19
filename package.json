@@ -1,15 +1,39 @@
 {
-	"author":"LimeStreem",
-	"name":"jThree-experimental",
-	"description":"experimental jThree",
-	"version":"0.0.1",
-	"scripts":{
-		"test":"node_modules/.bin/buster-test"
-	},
-	"dependencies":{
-		"buster":"~0.5.0"
-	},
-	"engines":{
-		"node":"~0.6"
-	}
+  "name": "GLTest",
+  "description": "The best project ever.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/LimeStreem/GLTest",
+  "author": {
+    "name": "LimeStreem",
+    "email": "LimeStreem@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LimeStreem/GLTest"
+  },
+  "bugs": {
+    "url": "https://github.com/LimeStreem/GLTest/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/LimeStreem/GLTest/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "lib/GLTest",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt": "~0.4.5"
+  },
+  "keywords": []
 }

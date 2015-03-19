@@ -1,0 +1,6 @@
+C:\Users\LimeStreem\Source\Repos\GLTest\GLTest\WebGLTest\bin\WebGLTest.dll.config
+C:\Users\LimeStreem\Source\Repos\GLTest\GLTest\WebGLTest\bin\WebGLTest.dll
+C:\Users\LimeStreem\Source\Repos\GLTest\GLTest\WebGLTest\bin\WebGLTest.pdb
+C:\Users\LimeStreem\Source\Repos\GLTest\GLTest\WebGLTest\obj\Debug\WebGLTest.csprojResolveAssemblyReference.cache
+C:\Users\LimeStreem\Source\Repos\GLTest\GLTest\WebGLTest\obj\Debug\WebGLTest.dll
+C:\Users\LimeStreem\Source\Repos\GLTest\GLTest\WebGLTest\obj\Debug\WebGLTest.pdb
