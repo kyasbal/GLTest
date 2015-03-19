@@ -138,9 +138,13 @@ var jThree;
             Matrix.prototype.getEnumrator = function () {
                 return new MatrixEnumerator(this);
             };
-            Matrix.prototype.elementCount = function () {
-                return 16;
-            };
+            Object.defineProperty(Matrix.prototype, "ElementCount", {
+                get: function () {
+                    return 16;
+                },
+                enumerable: true,
+                configurable: true
+            });
             Matrix.prototype.getFactory = function () {
                 Matrix.factoryCache = Matrix.factoryCache || new MatrixFactory();
                 return Matrix.factoryCache;

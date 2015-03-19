@@ -3,9 +3,6 @@ module jThree.Matrix {
     import JThreeObject = jThree.Base.jThreeObject;
     import Enumerable = jThree.Collections.IEnumerable;
     import Enumrator = jThree.Collections.IEnumrator;
-    import Func1 = jThree.Delegates.Func1;
-
-    import Vector4 = jThree.Matrix
     import Func2 = jThree.Delegates.Func2;
 
     export interface IMatrixFactory<T> {
@@ -169,7 +166,7 @@ module jThree.Matrix {
             return new MatrixEnumerator(this);
         }
 
-        elementCount(): number { return 16; }
+        get ElementCount(): number { return 16; }
 
         private static factoryCache:MatrixFactory;
 
