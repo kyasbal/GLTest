@@ -57,7 +57,7 @@ var jThree;
                     });
                     return factory.fromArray(result);
                 };
-                VectorBase.elementScholarMultiply = function (a, s, factory) {
+                VectorBase.elementScalarMultiply = function (a, s, factory) {
                     var result = new Float32Array(a.elementCount());
                     Collection.foreach(a, function (a, i) {
                         result[i] = a * s;
@@ -217,7 +217,7 @@ var jThree;
                     return VectorBase.elementSubtract(v1, v2, v1.getFactory());
                 };
                 Vector2.multiply = function (s, v) {
-                    return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+                    return VectorBase.elementScalarMultiply(v, s, v.getFactory());
                 };
                 Vector2.invert = function (v1) {
                     return VectorBase.elementInvert(v1, v1.getFactory());
@@ -285,7 +285,7 @@ var jThree;
                     return VectorBase.elementSubtract(v1, v2, v1.getFactory());
                 };
                 Vector3.multiply = function (s, v) {
-                    return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+                    return VectorBase.elementScalarMultiply(v, s, v.getFactory());
                 };
                 Vector3.invert = function (v1) {
                     return VectorBase.elementInvert(v1, v1.getFactory());
@@ -357,7 +357,7 @@ var jThree;
                     return VectorBase.elementSubtract(v1, v2, v1.getFactory());
                 };
                 Vector4.multiply = function (s, v) {
-                    return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+                    return VectorBase.elementScalarMultiply(v, s, v.getFactory());
                 };
                 Vector4.invert = function (v1) {
                     return VectorBase.elementInvert(v1, v1.getFactory());

@@ -64,8 +64,8 @@
             });
             return factory.fromArray(result);
         }
-
-        protected static elementScholarMultiply<T extends VectorBase>(a: T, s: number, factory: ILinearObjectFactory<T>): T {
+         
+        protected static elementScalarMultiply<T extends VectorBase>(a: T, s: number, factory: ILinearObjectFactory<T>): T {
             var result: Float32Array = new Float32Array(a.elementCount());
             Collection.foreach<number>(a,( a,i) => {
                 result[i] = a * s;
@@ -243,7 +243,7 @@
         }
 
         static multiply(s: number, v: Vector2): Vector2 {
-            return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+            return VectorBase.elementScalarMultiply(v, s, v.getFactory());
         }
 
         static invert(v1: Vector2):Vector2 {
@@ -328,7 +328,7 @@
         }
 
         static multiply(s: number, v: Vector3): Vector3 {
-            return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+            return VectorBase.elementScalarMultiply(v, s, v.getFactory());
         }
 
         static invert(v1: Vector3):Vector3 {
@@ -419,7 +419,7 @@
         }
 
         static multiply(s: number, v: Vector4): Vector4 {
-            return VectorBase.elementScholarMultiply(v, s, v.getFactory());
+            return VectorBase.elementScalarMultiply(v, s, v.getFactory());
         }
 
         static invert(v1: Vector4): Vector4 {

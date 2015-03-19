@@ -113,6 +113,10 @@ module jThree.Matrix {
             return this.elementSubtract(m1, m2, m1.getFactory());
         }
 
+        static scalarMultiply(s:number,m:Matrix): Matrix {
+            return this.elementScholarMultiply(m, s,m.getFactory());
+        }
+
         toString(): string {
             return "|{0} {1} {2} {3}|\n|{4} {5} {6} {7}|\n|{8} {9} {10} {11}|\n|{12} {13} {14} {15}|".format(this.getBySingleIndex(0),this.getBySingleIndex(1),this.getBySingleIndex(2),this.getBySingleIndex(3),this.getBySingleIndex(4),this.getBySingleIndex(5),this.getBySingleIndex(6),this.getBySingleIndex(7),this.getBySingleIndex(8),this.getBySingleIndex(9),this.getBySingleIndex(10),this.getBySingleIndex(11),this.getBySingleIndex(12),this.getBySingleIndex(13),this.getBySingleIndex(14),this.getBySingleIndex(15));
         }
