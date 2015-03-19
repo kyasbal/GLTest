@@ -50,5 +50,23 @@ module jThreeTest {
                 -2, -4, -5, -5
             ]))));
         }
+
+        scalarMultiplyTest() {
+            this.isTrue(Matrix.eqaul(Matrix.scalarMultiply(2, this.m1), new Matrix(new Float32Array([
+                2, 4, 6, 8,
+                2, 4, 6, 8,
+                2, 4,6, 8,
+                2, 4, 6, 8
+            ]))));
+        }
+
+        invertTest() {
+            this.isTrue(Matrix.eqaul(Matrix.invert(this.m1), new Matrix(new Float32Array([
+                -1, -2, -3, -4,
+                -1, -2, -3, -4,
+                -1, -2, -3, -4,
+                -1, -2, -3, -4
+            ]))));
+        }
     }
 } 
