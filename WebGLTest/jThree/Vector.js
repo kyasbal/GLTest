@@ -12,14 +12,76 @@ var jThree;
         (function (Vector) {
             var jThreeMath = jThree.Mathematics.jThreeMath;
             var Collection = jThree.Collections.Collection;
-            var VectorBase = (function () {
+            var LinearBase = (function () {
+                function LinearBase() {
+                }
+                LinearBase.elementDot = function (a, b) {
+                    var dot = 0;
+                    Collection.foreachPair(a, b, function (a, b) {
+                        dot += a * b;
+                    });
+                    return dot;
+                };
+                LinearBase.elementAdd = function (a, b, factory) {
+                    var result = new Float32Array(a.elementCount());
+                    Collection.foreachPair(a, b, function (a, b, i) {
+                        result[i] = a + b;
+                    });
+                    return factory.fromArray(result);
+                };
+                LinearBase.elementSubtract = function (a, b, factory) {
+                    var result = new Float32Array(a.elementCount());
+                    Collection.foreachPair(a, b, function (a, b, i) {
+                        result[i] = a - b;
+                    });
+                    return factory.fromArray(result);
+                };
+                LinearBase.elementScalarMultiply = function (a, s, factory) {
+                    var result = new Float32Array(a.elementCount());
+                    Collection.foreach(a, function (a, i) {
+                        result[i] = a * s;
+                    });
+                    return factory.fromArray(result);
+                };
+                LinearBase.elementEqual = function (a, b) {
+                    var result = true;
+                    Collection.foreachPair(a, b, function (a, b, i) {
+                        if (a != b)
+                            result = false;
+                    });
+                    return result;
+                };
+                LinearBase.elementInvert = function (a, factory) {
+                    var result = new Float32Array(a.elementCount());
+                    Collection.foreach(a, function (a, i) {
+                        result[i] = -a;
+                    });
+                    return factory.fromArray(result);
+                };
+                LinearBase.elementNaN = function (a) {
+                    var result = false;
+                    Collection.foreach(a, function (a, i) {
+                        if (isNaN(a))
+                            result = true;
+                    });
+                    return result;
+                };
+                LinearBase.prototype.elementCount = function () {
+                    return 0;
+                };
+                LinearBase.prototype.getEnumrator = function () {
+                    throw new Error("Not implemented");
+                };
+                return LinearBase;
+            })();
+            Vector.LinearBase = LinearBase;
+            var VectorBase = (function (_super) {
+                __extends(VectorBase, _super);
                 function VectorBase() {
+                    _super.apply(this, arguments);
                     this.magnitudeSquaredCache = -1;
                     this.magnitudeCache = -1;
                 }
-                VectorBase.prototype.elementCount = function () {
-                    return 0;
-                };
                 VectorBase.prototype.magnitudeSquared = function () {
                     if (this.magnitudeSquaredCache < 0) {
                         var sum = 0;
@@ -36,54 +98,8 @@ var jThree;
                     }
                     return this.magnitudeCache;
                 };
-                VectorBase.elementDot = function (a, b) {
-                    var dot = 0;
-                    Collection.foreachPair(a, b, function (a, b) {
-                        dot += a * b;
-                    });
-                    return dot;
-                };
-                VectorBase.elementAdd = function (a, b, factory) {
-                    var result = new Float32Array(a.elementCount());
-                    Collection.foreachPair(a, b, function (a, b, i) {
-                        result[i] = a + b;
-                    });
-                    return factory.fromArray(result);
-                };
-                VectorBase.elementSubtract = function (a, b, factory) {
-                    var result = new Float32Array(a.elementCount());
-                    Collection.foreachPair(a, b, function (a, b, i) {
-                        result[i] = a - b;
-                    });
-                    return factory.fromArray(result);
-                };
-                VectorBase.elementScalarMultiply = function (a, s, factory) {
-                    var result = new Float32Array(a.elementCount());
-                    Collection.foreach(a, function (a, i) {
-                        result[i] = a * s;
-                    });
-                    return factory.fromArray(result);
-                };
-                VectorBase.elementEqual = function (a, b) {
-                    var result = true;
-                    Collection.foreachPair(a, b, function (a, b, i) {
-                        if (a != b)
-                            result = false;
-                    });
-                    return result;
-                };
-                VectorBase.elementInvert = function (a, factory) {
-                    var result = new Float32Array(a.elementCount());
-                    Collection.foreach(a, function (a, i) {
-                        result[i] = -a;
-                    });
-                    return factory.fromArray(result);
-                };
-                VectorBase.prototype.getEnumrator = function () {
-                    throw new Error("Not implemented");
-                };
                 return VectorBase;
-            })();
+            })(LinearBase);
             Vector.VectorBase = VectorBase;
             var VectorEnumeratorBase = (function () {
                 function VectorEnumeratorBase(vec) {

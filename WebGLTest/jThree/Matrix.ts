@@ -34,7 +34,7 @@ module jThree.Matrix {
         }
     }
 
-    export class MatrixBase extends jThree.Mathematics.Vector.VectorBase implements Enumerable<number> {
+    export class MatrixBase extends jThree.Mathematics.Vector.LinearBase implements Enumerable<number> {
         getEnumrator(): jThree.Collections.IEnumrator<number> { throw new Error("Not implemented"); }
     }
 
@@ -114,7 +114,7 @@ module jThree.Matrix {
         }
 
         static scalarMultiply(s:number,m:Matrix): Matrix {
-            return this.elementScholarMultiply(m, s,m.getFactory());
+            return this.elementScalarMultiply(m, s,m.getFactory());
         }
 
         toString(): string {

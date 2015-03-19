@@ -5,19 +5,81 @@
     import Collection = jThree.Collections.Collection;
     import Enumrator = jThree.Collections.IEnumrator;
 
-    export interface ILinearObjectFactory<T extends VectorBase> {
+    export interface ILinearObjectFactory<T extends LinearBase> {
         fromArray(array:Float32Array):T;
     }
 
-    export interface ILinearObjectGenerator<T extends VectorBase> {
+    export interface ILinearObjectGenerator<T extends LinearBase> {
         getFactory():ILinearObjectFactory<T>;
     }
 
-    export class VectorBase implements Enumerable<number> {
+    export class LinearBase implements Enumerable<number> {
+        protected static elementDot(a: LinearBase, b: LinearBase): number {
+            var dot: number = 0;
+            Collection.foreachPair(a, b,(a, b) => {
+                dot += a * b;
+            });
+            return dot;
+        }
+
+        protected static elementAdd<T extends LinearBase>(a: T, b: T, factory: ILinearObjectFactory<T>): T {
+            var result: Float32Array = new Float32Array(a.elementCount());
+            Collection.foreachPair<number>(a, b,(a, b, i) => {
+                result[i] = a + b;
+            });
+            return factory.fromArray(result);
+        }
+
+        protected static elementSubtract<T extends LinearBase>(a: T, b: T, factory: ILinearObjectFactory<T>): T {
+            var result: Float32Array = new Float32Array(a.elementCount());
+            Collection.foreachPair<number>(a, b,(a, b, i) => {
+                result[i] = a - b;
+            });
+            return factory.fromArray(result);
+        }
+
+        protected static elementScalarMultiply<T extends LinearBase>(a: T, s: number, factory: ILinearObjectFactory<T>): T {
+            var result: Float32Array = new Float32Array(a.elementCount());
+            Collection.foreach<number>(a,(a, i) => {
+                result[i] = a * s;
+            });
+            return factory.fromArray(result);
+        }
+
+        protected static elementEqual<T extends LinearBase>(a: T, b: T) {
+            var result: boolean = true;
+            Collection.foreachPair<number>(a, b,(a, b, i) => {
+                if (a != b) result = false;
+            });
+            return result;
+        }
+
+        protected static elementInvert<T extends LinearBase>(a: T, factory: ILinearObjectFactory<T>) {
+            var result: Float32Array = new Float32Array(a.elementCount());
+            Collection.foreach<Number>(a,(a, i) => {
+                result[i] = -a;
+            });
+            return factory.fromArray(result);
+        }
+
+        protected static elementNaN<T extends LinearBase>(a: T): boolean {
+            var result: boolean = false;
+            Collection.foreach<number>(a,(a, i) => {
+                if (isNaN(a)) result = true;
+            });
+            return result;
+        }
 
         public elementCount(): number {
             return 0;
         }
+
+        getEnumrator(): Enumrator<number> { throw new Error("Not implemented"); }
+    }
+
+    export class VectorBase extends LinearBase{
+
+
 
         private magnitudeSquaredCache: number = -1;
 
@@ -41,56 +103,7 @@
             return this.magnitudeCache;
         }
 
-        protected static elementDot(a: VectorBase, b: VectorBase): number {
-            var dot: number = 0;
-            Collection.foreachPair(a, b,(a, b) => {
-                dot += a * b;
-            });
-            return dot;
-        }
 
-        protected static elementAdd<T extends VectorBase>(a: T, b: T, factory: ILinearObjectFactory<T>): T {
-            var result: Float32Array = new Float32Array(a.elementCount());
-            Collection.foreachPair<number>(a, b, (a, b,i) => {
-                result[i] = a + b;
-            });
-            return factory.fromArray(result);
-        }
-
-        protected static elementSubtract<T extends VectorBase>(a: T, b: T, factory: ILinearObjectFactory<T>): T {
-            var result: Float32Array = new Float32Array(a.elementCount());
-            Collection.foreachPair<number>(a, b,(a, b,i) => {
-                result[i] = a - b;
-            });
-            return factory.fromArray(result);
-        }
-         
-        protected static elementScalarMultiply<T extends VectorBase>(a: T, s: number, factory: ILinearObjectFactory<T>): T {
-            var result: Float32Array = new Float32Array(a.elementCount());
-            Collection.foreach<number>(a,( a,i) => {
-                result[i] = a * s;
-            });
-            return factory.fromArray(result);
-        }
-
-        protected static elementEqual<T extends VectorBase>(a: T, b: T) {
-            var result: boolean = true;
-            Collection.foreachPair<number>(a,b,(a, b,i) => {
-                if (a != b)result = false;
-            });
-            return result;
-        }
-
-        protected static elementInvert<T extends VectorBase>(a: T,factory:ILinearObjectFactory<T>) {
-            var result: Float32Array = new Float32Array(a.elementCount());
-            Collection.foreach<Number>(a, (a,i) => {
-                result[i] = -a;
-            });
-            return factory.fromArray(result);
-        }
-
-
-        getEnumrator(): Enumrator<number> { throw new Error("Not implemented"); }
     }
 
     class VectorEnumeratorBase<T extends VectorBase> implements Enumrator<number>
