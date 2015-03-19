@@ -23,21 +23,21 @@ var jThree;
                     return dot;
                 };
                 LinearBase.elementAdd = function (a, b, factory) {
-                    var result = new Float32Array(a.elementCount());
+                    var result = new Float32Array(a.ElementCount);
                     Collection.foreachPair(a, b, function (a, b, i) {
                         result[i] = a + b;
                     });
                     return factory.fromArray(result);
                 };
                 LinearBase.elementSubtract = function (a, b, factory) {
-                    var result = new Float32Array(a.elementCount());
+                    var result = new Float32Array(a.ElementCount);
                     Collection.foreachPair(a, b, function (a, b, i) {
                         result[i] = a - b;
                     });
                     return factory.fromArray(result);
                 };
                 LinearBase.elementScalarMultiply = function (a, s, factory) {
-                    var result = new Float32Array(a.elementCount());
+                    var result = new Float32Array(a.ElementCount);
                     Collection.foreach(a, function (a, i) {
                         result[i] = a * s;
                     });
@@ -52,7 +52,7 @@ var jThree;
                     return result;
                 };
                 LinearBase.elementInvert = function (a, factory) {
-                    var result = new Float32Array(a.elementCount());
+                    var result = new Float32Array(a.ElementCount);
                     Collection.foreach(a, function (a, i) {
                         result[i] = -a;
                     });
@@ -66,9 +66,13 @@ var jThree;
                     });
                     return result;
                 };
-                LinearBase.prototype.elementCount = function () {
-                    return 0;
-                };
+                Object.defineProperty(LinearBase.prototype, "ElementCount", {
+                    get: function () {
+                        return 0;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 LinearBase.prototype.getEnumrator = function () {
                     throw new Error("Not implemented");
                 };
@@ -114,7 +118,7 @@ var jThree;
                     this.elementCount = 0;
                     this.currentIndex = -1;
                     this.vector = vec;
-                    this.elementCount = vec.elementCount();
+                    this.elementCount = vec.ElementCount;
                 }
                 VectorEnumeratorBase.prototype.getCurrent = function () {
                     throw new Error("Not implemented");
@@ -281,9 +285,13 @@ var jThree;
                 Vector2.prototype.getEnumrator = function () {
                     return new Vector2Enumerator(this);
                 };
-                Vector2.prototype.elementCount = function () {
-                    return 2;
-                };
+                Object.defineProperty(Vector2.prototype, "ElementCount", {
+                    get: function () {
+                        return 2;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Vector2.prototype.getFactory = function () {
                     return Vector2Factory.getInstance();
                 };
@@ -361,9 +369,13 @@ var jThree;
                 Vector3.prototype.getEnumrator = function () {
                     return new Vector3Enumerator(this);
                 };
-                Vector3.prototype.elementCount = function () {
-                    return 3;
-                };
+                Object.defineProperty(Vector3.prototype, "ElementCount", {
+                    get: function () {
+                        return 3;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Vector3.prototype.getFactory = function () {
                     return Vector3Factory.getInstance();
                 };
@@ -446,9 +458,13 @@ var jThree;
                 Vector4.prototype.getEnumrator = function () {
                     return new Vector4Enumerator(this);
                 };
-                Vector4.prototype.elementCount = function () {
-                    return 4;
-                };
+                Object.defineProperty(Vector4.prototype, "ElementCount", {
+                    get: function () {
+                        return 4;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Vector4.prototype.toString = function () {
                     return "Vector4(x={0},y={1},z={2},w={3}".format(this.x, this.y, this.z, this.w);
                 };

@@ -23,7 +23,7 @@
         }
 
         protected static elementAdd<T extends LinearBase>(a: T, b: T, factory: ILinearObjectFactory<T>): T {
-            var result: Float32Array = new Float32Array(a.elementCount());
+            var result: Float32Array = new Float32Array(a.ElementCount);
             Collection.foreachPair<number>(a, b,(a, b, i) => {
                 result[i] = a + b;
             });
@@ -31,7 +31,7 @@
         }
 
         protected static elementSubtract<T extends LinearBase>(a: T, b: T, factory: ILinearObjectFactory<T>): T {
-            var result: Float32Array = new Float32Array(a.elementCount());
+            var result: Float32Array = new Float32Array(a.ElementCount);
             Collection.foreachPair<number>(a, b,(a, b, i) => {
                 result[i] = a - b;
             });
@@ -39,7 +39,7 @@
         }
 
         protected static elementScalarMultiply<T extends LinearBase>(a: T, s: number, factory: ILinearObjectFactory<T>): T {
-            var result: Float32Array = new Float32Array(a.elementCount());
+            var result: Float32Array = new Float32Array(a.ElementCount);
             Collection.foreach<number>(a,(a, i) => {
                 result[i] = a * s;
             });
@@ -55,7 +55,7 @@
         }
 
         protected static elementInvert<T extends LinearBase>(a: T, factory: ILinearObjectFactory<T>) {
-            var result: Float32Array = new Float32Array(a.elementCount());
+            var result: Float32Array = new Float32Array(a.ElementCount);
             Collection.foreach<Number>(a,(a, i) => {
                 result[i] = -a;
             });
@@ -70,7 +70,7 @@
             return result;
         }
 
-        public elementCount(): number {
+        get ElementCount(): number {
             return 0;
         }
 
@@ -112,7 +112,7 @@
 
         constructor(vec: T) {
             this.vector = vec;
-            this.elementCount = vec.elementCount();
+            this.elementCount = vec.ElementCount;
         }
 
         protected currentIndex: number = -1;
@@ -299,7 +299,7 @@
             return new Vector2Enumerator(this);
         }
 
-        elementCount(): number { return 2; }
+        get ElementCount(): number { return 2; }
 
         getFactory(): ILinearObjectFactory<Vector2> { return Vector2Factory.getInstance(); }
     }
@@ -384,7 +384,7 @@
             return new Vector3Enumerator(this);
         }
 
-        elementCount(): number { return 3; }
+        get ElementCount(): number { return 3; }
 
         getFactory(): ILinearObjectFactory<Vector3> { return Vector3Factory.getInstance(); }
     }
@@ -471,7 +471,7 @@
 
         getEnumrator(): Enumrator<number> { return new Vector4Enumerator(this); }
 
-        elementCount(): number { return 4; }
+        get ElementCount(): number { return 4; }
 
         toString(): string {
             return "Vector4(x={0},y={1},z={2},w={3}".format(this.x, this.y, this.z, this.w);
