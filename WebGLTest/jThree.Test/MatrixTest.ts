@@ -68,5 +68,14 @@ module jThreeTest {
                 -1, -2, -3, -4
             ]))));
         }
+
+        transposeTest() {
+            this.isTrue(Matrix.eqaul(Matrix.transpose(this.m1), new Matrix(new Float32Array(
+                [1, 1, 1, 1,
+                    2, 2, 2, 2,
+                    3, 3, 3, 3,
+                    4, 4, 4, 4
+                ]))));
+        }
     }
 } 

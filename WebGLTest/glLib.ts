@@ -42,5 +42,5 @@ module jThree
 
 window.onload = (e) => 
 {
-    alert("{0}".format(jThree.Matrix.Matrix.identity()));
+    alert("{0}".format(jThree.Matrix.Matrix.transpose(jThree.Matrix.Matrix.identity())));
 };

@@ -82,22 +82,30 @@ var jThree;
                     this.magnitudeSquaredCache = -1;
                     this.magnitudeCache = -1;
                 }
-                VectorBase.prototype.magnitudeSquared = function () {
-                    if (this.magnitudeSquaredCache < 0) {
-                        var sum = 0;
-                        Collection.foreach(this, function (t) {
-                            sum += t * t;
-                        });
-                        this.magnitudeSquaredCache = sum;
-                    }
-                    return this.magnitudeSquaredCache;
-                };
-                VectorBase.prototype.magnitude = function () {
-                    if (this.magnitudeCache < 0) {
-                        this.magnitudeCache = Math.sqrt(this.magnitudeSquared());
-                    }
-                    return this.magnitudeCache;
-                };
+                Object.defineProperty(VectorBase.prototype, "magnitudeSquared", {
+                    get: function () {
+                        if (this.magnitudeSquaredCache < 0) {
+                            var sum = 0;
+                            Collection.foreach(this, function (t) {
+                                sum += t * t;
+                            });
+                            this.magnitudeSquaredCache = sum;
+                        }
+                        return this.magnitudeSquaredCache;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(VectorBase.prototype, "magnitude", {
+                    get: function () {
+                        if (this.magnitudeCache < 0) {
+                            this.magnitudeCache = Math.sqrt(this.magnitudeSquared);
+                        }
+                        return this.magnitudeCache;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 return VectorBase;
             })(LinearBase);
             Vector.VectorBase = VectorBase;

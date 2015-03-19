@@ -4,11 +4,26 @@ module jThree.Matrix {
     import Enumerable = jThree.Collections.IEnumerable;
     import Enumrator = jThree.Collections.IEnumrator;
     import Func1 = jThree.Delegates.Func1;
-    import Vector4 = jThree.Mathematics.Vector.Vector4;
 
-    class MatrixFactory implements Mathematics.Vector.ILinearObjectFactory<Matrix> {
+    import Vector4 = jThree.Matrix
+    import Func2 = jThree.Delegates.Func2;
+
+    export interface IMatrixFactory<T> {
+        fromFunc(f:Func2<number,number, number>): T;
+    }
+
+    export class MatrixFactory implements Mathematics.Vector.ILinearObjectFactory<Matrix>,IMatrixFactory<Matrix> {
         fromArray(array: Float32Array): Matrix {
             return new Matrix(array);
+        }
+
+        fromFunc(f: Func2<number, number, number>): Matrix {
+            return new Matrix(new Float32Array(
+                [f(0, 0), f(0, 1), f(0, 2), f(0, 3),
+                    f(1, 0), f(1, 1), f(1, 2), f(1, 3),
+                    f(2, 0), f(2, 1), f(2, 2), f(2, 3),
+                    f(3,0),f(3,1),f(3,2),f(3,3)
+            ]));
         }
     }
 
@@ -36,6 +51,28 @@ module jThree.Matrix {
 
     export class MatrixBase extends jThree.Mathematics.Vector.LinearBase implements Enumerable<number> {
         getEnumrator(): jThree.Collections.IEnumrator<number> { throw new Error("Not implemented"); }
+
+        protected static elementTranspose<T extends MatrixBase>(a: T, factory: IMatrixFactory<T>): T {
+            return factory.fromFunc((i, j) => {
+                return a.getAt(j, i);
+            });
+        }
+
+        getRowCount(): number {
+            return 0;
+        }
+
+        getColmunCount(): number {
+            return 0;
+        }
+
+        getAt(colmun: number, row: number): number {
+            throw new Error("Not implemented");
+        }
+
+        getBySingleIndex(index: number): number {
+            throw new Error("Not implemented");
+        }
     }
 
     export class Matrix extends MatrixBase implements Mathematics.Vector.ILinearObjectGenerator<Matrix> {
@@ -77,7 +114,6 @@ module jThree.Matrix {
             if (!this.isValidArray(arr))throw new jThree.Exceptions.InvalidArgumentException("Invalid matrix source was passed.");
             this.elements = arr;
         }
-
         getAt(colmun: number, row: number): number {
             return this.elements.get(colmun + row * 4);
         }
@@ -86,12 +122,12 @@ module jThree.Matrix {
             return this.elements[index];
         }
 
-        getColmun(col: number):Vector4 {
-            return new Vector4(this.elements[col],this.elements[col+4],this.elements[col+8],this.elements[col+12]);
+        getColmun(col: number):jThree.Mathematics.Vector.Vector4 {
+            return new jThree.Mathematics.Vector.Vector4(this.elements[col],this.elements[col+4],this.elements[col+8],this.elements[col+12]);
         }
 
-        getRow(row: number): Vector4 {
-            return new Vector4(this.elements[row * 4], this.elements[row * 4 + 1], this.elements[row * 4 + 2], this.elements[row * 4 + 3]);
+        getRow(row: number): jThree.Mathematics.Vector.Vector4 {
+            return new jThree.Mathematics.Vector.Vector4(this.elements[row * 4], this.elements[row * 4 + 1], this.elements[row * 4 + 2], this.elements[row * 4 + 3]);
         }
 
         isNaN(): boolean {
@@ -121,6 +157,10 @@ module jThree.Matrix {
             return this.elementInvert(m, m.getFactory());
         }
 
+        static transpose(m: Matrix): Matrix {
+            return this.elementTranspose(m,m.getFactory());
+        }
+
         toString(): string {
             return "|{0} {1} {2} {3}|\n|{4} {5} {6} {7}|\n|{8} {9} {10} {11}|\n|{12} {13} {14} {15}|".format(this.getBySingleIndex(0),this.getBySingleIndex(1),this.getBySingleIndex(2),this.getBySingleIndex(3),this.getBySingleIndex(4),this.getBySingleIndex(5),this.getBySingleIndex(6),this.getBySingleIndex(7),this.getBySingleIndex(8),this.getBySingleIndex(9),this.getBySingleIndex(10),this.getBySingleIndex(11),this.getBySingleIndex(12),this.getBySingleIndex(13),this.getBySingleIndex(14),this.getBySingleIndex(15));
         }
@@ -133,9 +173,13 @@ module jThree.Matrix {
 
         private static factoryCache:MatrixFactory;
 
-        getFactory(): jThree.Mathematics.Vector.ILinearObjectFactory<Matrix> {
+        getFactory():MatrixFactory {
             Matrix.factoryCache = Matrix.factoryCache || new MatrixFactory();
             return Matrix.factoryCache;
         }
+
+        getRowCount(): number { return 4; }
+
+        getColmunCount(): number { return 4; }
     }
 } 

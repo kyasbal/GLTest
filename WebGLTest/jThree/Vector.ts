@@ -83,7 +83,7 @@
 
         private magnitudeSquaredCache: number = -1;
 
-        magnitudeSquared() {
+       get magnitudeSquared() :number{
             if (this.magnitudeSquaredCache < 0) {
                 var sum: number = 0;
                 Collection.foreach(this,(t) => {
@@ -96,9 +96,9 @@
 
         private magnitudeCache: number = -1;
 
-        magnitude() {
+        get magnitude() {
             if (this.magnitudeCache < 0) {
-                this.magnitudeCache = Math.sqrt(this.magnitudeSquared());
+                this.magnitudeCache = Math.sqrt(this.magnitudeSquared);
             }
             return this.magnitudeCache;
         }

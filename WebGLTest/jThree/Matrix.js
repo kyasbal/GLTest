@@ -10,15 +10,18 @@ var jThree;
     var Matrix;
     (function (_Matrix) {
         var JThreeObject = jThree.Base.jThreeObject;
-        var Vector4 = jThree.Mathematics.Vector.Vector4;
         var MatrixFactory = (function () {
             function MatrixFactory() {
             }
             MatrixFactory.prototype.fromArray = function (array) {
                 return new Matrix(array);
             };
+            MatrixFactory.prototype.fromFunc = function (f) {
+                return new Matrix(new Float32Array([f(0, 0), f(0, 1), f(0, 2), f(0, 3), f(1, 0), f(1, 1), f(1, 2), f(1, 3), f(2, 0), f(2, 1), f(2, 2), f(2, 3), f(3, 0), f(3, 1), f(3, 2), f(3, 3)]));
+            };
             return MatrixFactory;
         })();
+        _Matrix.MatrixFactory = MatrixFactory;
         var MatrixEnumerator = (function (_super) {
             __extends(MatrixEnumerator, _super);
             function MatrixEnumerator(targetMat) {
@@ -43,6 +46,23 @@ var jThree;
                 _super.apply(this, arguments);
             }
             MatrixBase.prototype.getEnumrator = function () {
+                throw new Error("Not implemented");
+            };
+            MatrixBase.elementTranspose = function (a, factory) {
+                return factory.fromFunc(function (i, j) {
+                    return a.getAt(j, i);
+                });
+            };
+            MatrixBase.prototype.getRowCount = function () {
+                return 0;
+            };
+            MatrixBase.prototype.getColmunCount = function () {
+                return 0;
+            };
+            MatrixBase.prototype.getAt = function (colmun, row) {
+                throw new Error("Not implemented");
+            };
+            MatrixBase.prototype.getBySingleIndex = function (index) {
                 throw new Error("Not implemented");
             };
             return MatrixBase;
@@ -81,10 +101,10 @@ var jThree;
                 return this.elements[index];
             };
             Matrix.prototype.getColmun = function (col) {
-                return new Vector4(this.elements[col], this.elements[col + 4], this.elements[col + 8], this.elements[col + 12]);
+                return new jThree.Mathematics.Vector.Vector4(this.elements[col], this.elements[col + 4], this.elements[col + 8], this.elements[col + 12]);
             };
             Matrix.prototype.getRow = function (row) {
-                return new Vector4(this.elements[row * 4], this.elements[row * 4 + 1], this.elements[row * 4 + 2], this.elements[row * 4 + 3]);
+                return new jThree.Mathematics.Vector.Vector4(this.elements[row * 4], this.elements[row * 4 + 1], this.elements[row * 4 + 2], this.elements[row * 4 + 3]);
             };
             Matrix.prototype.isNaN = function () {
                 var result = false;
@@ -109,6 +129,9 @@ var jThree;
             Matrix.invert = function (m) {
                 return this.elementInvert(m, m.getFactory());
             };
+            Matrix.transpose = function (m) {
+                return this.elementTranspose(m, m.getFactory());
+            };
             Matrix.prototype.toString = function () {
                 return "|{0} {1} {2} {3}|\n|{4} {5} {6} {7}|\n|{8} {9} {10} {11}|\n|{12} {13} {14} {15}|".format(this.getBySingleIndex(0), this.getBySingleIndex(1), this.getBySingleIndex(2), this.getBySingleIndex(3), this.getBySingleIndex(4), this.getBySingleIndex(5), this.getBySingleIndex(6), this.getBySingleIndex(7), this.getBySingleIndex(8), this.getBySingleIndex(9), this.getBySingleIndex(10), this.getBySingleIndex(11), this.getBySingleIndex(12), this.getBySingleIndex(13), this.getBySingleIndex(14), this.getBySingleIndex(15));
             };
@@ -121,6 +144,12 @@ var jThree;
             Matrix.prototype.getFactory = function () {
                 Matrix.factoryCache = Matrix.factoryCache || new MatrixFactory();
                 return Matrix.factoryCache;
+            };
+            Matrix.prototype.getRowCount = function () {
+                return 4;
+            };
+            Matrix.prototype.getColmunCount = function () {
+                return 4;
             };
             return Matrix;
         })(MatrixBase);

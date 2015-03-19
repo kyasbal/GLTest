@@ -135,6 +135,9 @@ var jThreeTest;
                 -4
             ]))));
         };
+        MatrixTest.prototype.transposeTest = function () {
+            this.isTrue(Matrix.eqaul(Matrix.transpose(this.m1), new Matrix(new Float32Array([1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4]))));
+        };
         return MatrixTest;
     })(TestClass);
     jThreeTest.MatrixTest = MatrixTest;

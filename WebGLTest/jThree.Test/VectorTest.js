@@ -51,20 +51,20 @@ var jThreeTest;
             this.isTrue(Vector4.equal(Vector4.multiply(2, this.testVec41), new Vector4(2, 4, 6, 8)));
         };
         VectorTest.prototype.magnitudeTest = function () {
-            this.areIdentical(Math.sqrt(5), this.testVec21.magnitude());
-            this.areIdentical(Math.sqrt(14), this.testVec31.magnitude());
-            this.areIdentical(Math.sqrt(30), this.testVec41.magnitude());
-            this.areIdentical(Math.sqrt(5), this.testVec21.magnitude());
-            this.areIdentical(Math.sqrt(14), this.testVec31.magnitude());
-            this.areIdentical(Math.sqrt(30), this.testVec41.magnitude());
+            this.areIdentical(Math.sqrt(5), this.testVec21.magnitude);
+            this.areIdentical(Math.sqrt(14), this.testVec31.magnitude);
+            this.areIdentical(Math.sqrt(30), this.testVec41.magnitude);
+            this.areIdentical(Math.sqrt(5), this.testVec21.magnitude);
+            this.areIdentical(Math.sqrt(14), this.testVec31.magnitude);
+            this.areIdentical(Math.sqrt(30), this.testVec41.magnitude);
         };
         VectorTest.prototype.magnitudeSquaredTest = function () {
-            this.areIdentical(5, this.testVec21.magnitudeSquared());
-            this.areIdentical(14, this.testVec31.magnitudeSquared());
-            this.areIdentical(30, this.testVec41.magnitudeSquared());
-            this.areIdentical(5, this.testVec21.magnitudeSquared());
-            this.areIdentical(14, this.testVec31.magnitudeSquared());
-            this.areIdentical(30, this.testVec41.magnitudeSquared());
+            this.areIdentical(5, this.testVec21.magnitudeSquared);
+            this.areIdentical(14, this.testVec31.magnitudeSquared);
+            this.areIdentical(30, this.testVec41.magnitudeSquared);
+            this.areIdentical(5, this.testVec21.magnitudeSquared);
+            this.areIdentical(14, this.testVec31.magnitudeSquared);
+            this.areIdentical(30, this.testVec41.magnitudeSquared);
         };
         VectorTest.prototype.invertTest = function () {
             this.isTrue(Vector2.equal(Vector2.invert(this.testVec21), new Vector2(-1, -2)));

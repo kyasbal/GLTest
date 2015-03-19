@@ -50,21 +50,21 @@ module jThreeTest {
         }
 
         magnitudeTest() {
-            this.areIdentical(Math.sqrt(5), this.testVec21.magnitude());
-            this.areIdentical(Math.sqrt(14), this.testVec31.magnitude());
-            this.areIdentical(Math.sqrt(30), this.testVec41.magnitude());
-            this.areIdentical(Math.sqrt(5), this.testVec21.magnitude());
-            this.areIdentical(Math.sqrt(14), this.testVec31.magnitude());
-            this.areIdentical(Math.sqrt(30), this.testVec41.magnitude());
+            this.areIdentical(Math.sqrt(5), this.testVec21.magnitude);
+            this.areIdentical(Math.sqrt(14), this.testVec31.magnitude);
+            this.areIdentical(Math.sqrt(30), this.testVec41.magnitude);
+            this.areIdentical(Math.sqrt(5), this.testVec21.magnitude);
+            this.areIdentical(Math.sqrt(14), this.testVec31.magnitude);
+            this.areIdentical(Math.sqrt(30), this.testVec41.magnitude);
         }
 
         magnitudeSquaredTest() {
-            this.areIdentical(5, this.testVec21.magnitudeSquared());
-            this.areIdentical(14, this.testVec31.magnitudeSquared());
-            this.areIdentical(30, this.testVec41.magnitudeSquared());
-            this.areIdentical(5, this.testVec21.magnitudeSquared());
-            this.areIdentical(14, this.testVec31.magnitudeSquared());
-            this.areIdentical(30, this.testVec41.magnitudeSquared());
+            this.areIdentical(5, this.testVec21.magnitudeSquared);
+            this.areIdentical(14, this.testVec31.magnitudeSquared);
+            this.areIdentical(30, this.testVec41.magnitudeSquared);
+            this.areIdentical(5, this.testVec21.magnitudeSquared);
+            this.areIdentical(14, this.testVec31.magnitudeSquared);
+            this.areIdentical(30, this.testVec41.magnitudeSquared);
         }
 
         invertTest() {
