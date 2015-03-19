@@ -101,6 +101,9 @@ module jThree.Matrix {
             });
             return result;
         }
+        static eqaul(m1: Matrix, m2: Matrix): boolean {
+            return this.elementEqual(m1, m2);
+        }
 
         static add(m1: Matrix, m2: Matrix): Matrix {
             return this.elementAdd(m1, m2,m1.getFactory());

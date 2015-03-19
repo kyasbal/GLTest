@@ -64,7 +64,7 @@ var jThree;
                     });
                     return factory.fromArray(result);
                 };
-                VectorBase.elementEqual = function (a, b, factory) {
+                VectorBase.elementEqual = function (a, b) {
                     var result = true;
                     Collection.foreachPair(a, b, function (a, b, i) {
                         if (a != b)
@@ -223,7 +223,7 @@ var jThree;
                     return VectorBase.elementInvert(v1, v1.getFactory());
                 };
                 Vector2.equal = function (v1, v2) {
-                    return VectorBase.elementEqual(v1, v2, v1.getFactory());
+                    return VectorBase.elementEqual(v1, v2);
                 };
                 Vector2.prototype.dotWith = function (v) {
                     return Vector2.dot(this, v);
@@ -291,7 +291,7 @@ var jThree;
                     return VectorBase.elementInvert(v1, v1.getFactory());
                 };
                 Vector3.equal = function (v1, v2) {
-                    return VectorBase.elementEqual(v1, v2, v1.getFactory());
+                    return VectorBase.elementEqual(v1, v2);
                 };
                 Vector3.prototype.dotWith = function (v) {
                     return Vector3.dot(this, v);
@@ -363,7 +363,7 @@ var jThree;
                     return VectorBase.elementInvert(v1, v1.getFactory());
                 };
                 Vector4.equal = function (v1, v2) {
-                    return VectorBase.elementEqual(v1, v2, v1.getFactory());
+                    return VectorBase.elementEqual(v1, v2);
                 };
                 Vector4.prototype.dotWith = function (v) {
                     return Vector4.dot(this, v);

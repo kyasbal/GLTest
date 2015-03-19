@@ -94,6 +94,9 @@ var jThree;
                 });
                 return result;
             };
+            Matrix.eqaul = function (m1, m2) {
+                return this.elementEqual(m1, m2);
+            };
             Matrix.add = function (m1, m2) {
                 return this.elementAdd(m1, m2, m1.getFactory());
             };

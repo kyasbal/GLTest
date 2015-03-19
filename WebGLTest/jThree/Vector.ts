@@ -73,7 +73,7 @@
             return factory.fromArray(result);
         }
 
-        protected static elementEqual<T extends VectorBase>(a: T, b: T, factory: ILinearObjectFactory<T>) {
+        protected static elementEqual<T extends VectorBase>(a: T, b: T) {
             var result: boolean = true;
             Collection.foreachPair<number>(a,b,(a, b,i) => {
                 if (a != b)result = false;
@@ -251,7 +251,7 @@
         }
 
         static equal(v1: Vector2, v2: Vector2): boolean {
-            return VectorBase.elementEqual(v1, v2, v1.getFactory());
+            return VectorBase.elementEqual(v1, v2);
         }
 
         dotWith(v: Vector2): number {
@@ -336,7 +336,7 @@
         }
 
         static equal(v1: Vector3, v2: Vector3): boolean {
-            return VectorBase.elementEqual(v1, v2, v1.getFactory());
+            return VectorBase.elementEqual(v1, v2);
         }
 
         dotWith(v: Vector3): number {
@@ -427,7 +427,7 @@
         }
 
         static equal(v1: Vector4, v2: Vector4): boolean {
-            return VectorBase.elementEqual(v1, v2, v1.getFactory());
+            return VectorBase.elementEqual(v1, v2);
         }
 
 
