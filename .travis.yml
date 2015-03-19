@@ -1,6 +1,3 @@
-install:
-        - npm install grunt
-
 language: node_js
 
 node_js:

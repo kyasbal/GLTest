@@ -7,8 +7,7 @@ module.exports = function(grunt) {
 				src:['WebGLTest/glLib.ts'],
 				dest:'final.js',
 				options:{
-					comments:true,
-					target:'es5'
+					comments:true
 				}
 				
 			}
