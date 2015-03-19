@@ -3,7 +3,7 @@
 module jThree.Collections {
     import Action1 = jThree.Delegates.Action1;
     import Action2 = jThree.Delegates.Action2;
-    /**
+    import Action3 = jThree.Delegates.Action3; /**
      * The interface to support simple iteration for generic types.
      */
     export interface IEnumrator<T> {
@@ -52,10 +52,12 @@ module jThree.Collections {
         /**
          * provides simple collection iteration like C# foreach syntax.
          */
-        public static foreach<T>(collection: IEnumerable<T>, act: Action1<T>): void {
+        public static foreach<T>(collection: IEnumerable<T>, act: Action2<T,number>): void {
             var enumerator: IEnumrator<T> = collection.getEnumrator();
+            var index: number = 0;
             while (enumerator.next()) {
-                act(enumerator.getCurrent());
+                act(enumerator.getCurrent(), index);
+                index++;
             }
         }
         /**
@@ -63,11 +65,13 @@ module jThree.Collections {
          * if the length of passed collection is different with the other collection, this method will stop when run out all elements in short collection.
          */
 
-        public static foreachPair<T>(col1: IEnumerable<T>, col2: IEnumerable<T>, act: Action2<T, T>) {
+        public static foreachPair<T>(col1: IEnumerable<T>, col2: IEnumerable<T>, act: Action3<T, T,number>) {
             var en1: IEnumrator<T> = col1.getEnumrator();
             var en2: IEnumrator<T> = col2.getEnumrator();
+            var index: number = 0;
             while (en1.next() && en2.next()) {
-                act(en1.getCurrent(), en2.getCurrent());
+                act(en1.getCurrent(), en2.getCurrent(), index);
+                index++;
             }
         }
     } 

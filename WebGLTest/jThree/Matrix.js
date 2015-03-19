@@ -11,6 +11,14 @@ var jThree;
     (function (_Matrix) {
         var JThreeObject = jThree.Base.jThreeObject;
         var Vector4 = jThree.Mathematics.Vector.Vector4;
+        var MatrixFactory = (function () {
+            function MatrixFactory() {
+            }
+            MatrixFactory.prototype.fromArray = function (array) {
+                return new Matrix(array);
+            };
+            return MatrixFactory;
+        })();
         var MatrixEnumerator = (function (_super) {
             __extends(MatrixEnumerator, _super);
             function MatrixEnumerator(targetMat) {
@@ -38,7 +46,7 @@ var jThree;
                 throw new Error("Not implemented");
             };
             return MatrixBase;
-        })(JThreeObject);
+        })(jThree.Mathematics.Vector.VectorBase);
         _Matrix.MatrixBase = MatrixBase;
         var Matrix = (function (_super) {
             __extends(Matrix, _super);
@@ -78,11 +86,25 @@ var jThree;
             Matrix.prototype.getRow = function (row) {
                 return new Vector4(this.elements[row * 4], this.elements[row * 4 + 1], this.elements[row * 4 + 2], this.elements[row * 4 + 3]);
             };
+            Matrix.prototype.isNaN = function () {
+                var result = false;
+                jThree.Collections.Collection.foreach(this, function (a) {
+                    if (isNaN(a))
+                        result = true;
+                });
+                return result;
+            };
             Matrix.prototype.toString = function () {
                 return "|{0} {1} {2} {3}|\n|{4} {5} {6} {7}|\n|{8} {9} {10} {11}|\n|{12} {13} {14} {15}|".format(this.getBySingleIndex(0), this.getBySingleIndex(1), this.getBySingleIndex(2), this.getBySingleIndex(3), this.getBySingleIndex(4), this.getBySingleIndex(5), this.getBySingleIndex(6), this.getBySingleIndex(7), this.getBySingleIndex(8), this.getBySingleIndex(9), this.getBySingleIndex(10), this.getBySingleIndex(11), this.getBySingleIndex(12), this.getBySingleIndex(13), this.getBySingleIndex(14), this.getBySingleIndex(15));
             };
             Matrix.prototype.getEnumrator = function () {
                 return new MatrixEnumerator(this);
+            };
+            Matrix.prototype.elementCount = function () {
+                return 16;
+            };
+            Matrix.prototype.getFactory = function () {
+                throw new Error("Not implemented");
             };
             return Matrix;
         })(MatrixBase);

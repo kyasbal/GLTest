@@ -44,38 +44,38 @@ var jThree;
                     return dot;
                 };
                 VectorBase.elementAdd = function (a, b, factory) {
-                    var result = [];
-                    Collection.foreachPair(a, b, function (a, b) {
-                        result.push(a + b);
+                    var result = new Float32Array(a.elementCount());
+                    Collection.foreachPair(a, b, function (a, b, i) {
+                        result[i] = a + b;
                     });
                     return factory.fromArray(result);
                 };
                 VectorBase.elementSubtract = function (a, b, factory) {
-                    var result = [];
-                    Collection.foreachPair(a, b, function (a, b) {
-                        result.push(a - b);
+                    var result = new Float32Array(a.elementCount());
+                    Collection.foreachPair(a, b, function (a, b, i) {
+                        result[i] = a - b;
                     });
                     return factory.fromArray(result);
                 };
                 VectorBase.elementScholarMultiply = function (a, s, factory) {
-                    var result = [];
-                    Collection.foreach(a, function (a) {
-                        result.push(a * s);
+                    var result = new Float32Array(a.elementCount());
+                    Collection.foreach(a, function (a, i) {
+                        result[i] = a * s;
                     });
                     return factory.fromArray(result);
                 };
                 VectorBase.elementEqual = function (a, b, factory) {
                     var result = true;
-                    Collection.foreachPair(a, b, function (a, b) {
+                    Collection.foreachPair(a, b, function (a, b, i) {
                         if (a != b)
                             result = false;
                     });
                     return result;
                 };
                 VectorBase.elementInvert = function (a, factory) {
-                    var result = [];
-                    Collection.foreach(a, function (a) {
-                        result.push(-a);
+                    var result = new Float32Array(a.elementCount());
+                    Collection.foreach(a, function (a, i) {
+                        result[i] = -a;
                     });
                     return factory.fromArray(result);
                 };

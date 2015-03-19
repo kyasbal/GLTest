@@ -45,8 +45,10 @@ var jThree;
              */
             Collection.foreach = function (collection, act) {
                 var enumerator = collection.getEnumrator();
+                var index = 0;
                 while (enumerator.next()) {
-                    act(enumerator.getCurrent());
+                    act(enumerator.getCurrent(), index);
+                    index++;
                 }
             };
             /**
@@ -56,8 +58,10 @@ var jThree;
             Collection.foreachPair = function (col1, col2, act) {
                 var en1 = col1.getEnumrator();
                 var en2 = col2.getEnumrator();
+                var index = 0;
                 while (en1.next() && en2.next()) {
-                    act(en1.getCurrent(), en2.getCurrent());
+                    act(en1.getCurrent(), en2.getCurrent(), index);
+                    index++;
                 }
             };
             return Collection;

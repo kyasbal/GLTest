@@ -5,6 +5,12 @@ module jThree.Matrix {
     import Enumrator = jThree.Collections.IEnumrator;
     import Func1 = jThree.Delegates.Func1;
     import Vector4 = jThree.Mathematics.Vector.Vector4;
+    class MatrixFactory implements Mathematics.Vector.ILinearObjectFactory<Matrix> {
+        fromArray(array: Float32Array): Matrix {
+            return new Matrix(array);
+        }
+    }
+
 
     class MatrixEnumerator extends JThreeObject implements Enumrator<number> {
         private targetMat: Matrix;
@@ -27,11 +33,11 @@ module jThree.Matrix {
         }
     }
 
-    export class MatrixBase extends JThreeObject implements Enumerable<number> {
+    export class MatrixBase extends jThree.Mathematics.Vector.VectorBase implements Enumerable<number> {
         getEnumrator(): jThree.Collections.IEnumrator<number> { throw new Error("Not implemented"); }
     }
 
-    export class Matrix extends MatrixBase {
+    export class Matrix extends MatrixBase implements Mathematics.Vector.ILinearObjectGenerator<Matrix> {
         public static zero(): Matrix {
             return new Matrix(this.zeroElements());
         }
@@ -87,6 +93,14 @@ module jThree.Matrix {
             return new Vector4(this.elements[row * 4], this.elements[row * 4 + 1], this.elements[row * 4 + 2], this.elements[row * 4 + 3]);
         }
 
+        isNaN(): boolean {
+            var result: boolean = false;
+            Collections.Collection.foreach<number>(this, (a) => {
+                if (isNaN(a))result = true;
+            });
+            return result;
+        }
+
         toString(): string {
             return "|{0} {1} {2} {3}|\n|{4} {5} {6} {7}|\n|{8} {9} {10} {11}|\n|{12} {13} {14} {15}|".format(this.getBySingleIndex(0),this.getBySingleIndex(1),this.getBySingleIndex(2),this.getBySingleIndex(3),this.getBySingleIndex(4),this.getBySingleIndex(5),this.getBySingleIndex(6),this.getBySingleIndex(7),this.getBySingleIndex(8),this.getBySingleIndex(9),this.getBySingleIndex(10),this.getBySingleIndex(11),this.getBySingleIndex(12),this.getBySingleIndex(13),this.getBySingleIndex(14),this.getBySingleIndex(15));
         }
@@ -94,5 +108,9 @@ module jThree.Matrix {
         getEnumrator(): jThree.Collections.IEnumrator<number> {
             return new MatrixEnumerator(this);
         }
+
+        elementCount(): number { return 16; }
+
+        getFactory(): jThree.Mathematics.Vector.ILinearObjectFactory<Matrix> { throw new Error("Not implemented"); }
     }
 } 

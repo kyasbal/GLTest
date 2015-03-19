@@ -5,12 +5,12 @@
     import Collection = jThree.Collections.Collection;
     import Enumrator = jThree.Collections.IEnumrator;
 
-    export interface IVectorFactory<T extends VectorBase> {
-        fromArray(array:number[]):T;
+    export interface ILinearObjectFactory<T extends VectorBase> {
+        fromArray(array:Float32Array):T;
     }
 
-    export interface IVectorGenerator<T extends VectorBase> {
-        getFactory():IVectorFactory<T>;
+    export interface ILinearObjectGenerator<T extends VectorBase> {
+        getFactory():ILinearObjectFactory<T>;
     }
 
     export class VectorBase implements Enumerable<number> {
@@ -49,42 +49,42 @@
             return dot;
         }
 
-        protected static elementAdd<T extends VectorBase>(a: T, b: T, factory: IVectorFactory<T>): T {
-            var result: number[]=[];
-            Collection.foreachPair<number>(a, b, (a, b) => {
-                result.push(a + b);
+        protected static elementAdd<T extends VectorBase>(a: T, b: T, factory: ILinearObjectFactory<T>): T {
+            var result: Float32Array = new Float32Array(a.elementCount());
+            Collection.foreachPair<number>(a, b, (a, b,i) => {
+                result[i] = a + b;
             });
             return factory.fromArray(result);
         }
 
-        protected static elementSubtract<T extends VectorBase>(a: T, b: T, factory: IVectorFactory<T>): T {
-            var result: number[]=[];
-            Collection.foreachPair<number>(a, b,(a, b) => {
-                result.push(a - b);
+        protected static elementSubtract<T extends VectorBase>(a: T, b: T, factory: ILinearObjectFactory<T>): T {
+            var result: Float32Array = new Float32Array(a.elementCount());
+            Collection.foreachPair<number>(a, b,(a, b,i) => {
+                result[i] = a - b;
             });
             return factory.fromArray(result);
         }
 
-        protected static elementScholarMultiply<T extends VectorBase>(a: T, s: number, factory: IVectorFactory<T>): T {
-            var result: number[]=[];
-            Collection.foreach<number>(a, a => {
-                result.push(a * s);
+        protected static elementScholarMultiply<T extends VectorBase>(a: T, s: number, factory: ILinearObjectFactory<T>): T {
+            var result: Float32Array = new Float32Array(a.elementCount());
+            Collection.foreach<number>(a,( a,i) => {
+                result[i] = a * s;
             });
             return factory.fromArray(result);
         }
 
-        protected static elementEqual<T extends VectorBase>(a: T, b: T, factory: IVectorFactory<T>) {
+        protected static elementEqual<T extends VectorBase>(a: T, b: T, factory: ILinearObjectFactory<T>) {
             var result: boolean = true;
-            Collection.foreachPair<number>(a,b,(a, b) => {
+            Collection.foreachPair<number>(a,b,(a, b,i) => {
                 if (a != b)result = false;
             });
             return result;
         }
 
-        protected static elementInvert<T extends VectorBase>(a: T,factory:IVectorFactory<T>) {
-            var result: number[] = [];
-            Collection.foreach<Number>(a, a => {
-                result.push(-a);
+        protected static elementInvert<T extends VectorBase>(a: T,factory:ILinearObjectFactory<T>) {
+            var result: Float32Array = new Float32Array(a.elementCount());
+            Collection.foreach<Number>(a, (a,i) => {
+                result[i] = -a;
             });
             return factory.fromArray(result);
         }
@@ -173,7 +173,7 @@
         }
     }
 
-    class Vector2Factory implements IVectorFactory<Vector2> {
+    class Vector2Factory implements ILinearObjectFactory<Vector2> {
         static instance:Vector2Factory;
 
         static getInstance(): Vector2Factory {
@@ -181,12 +181,12 @@
             return this.instance;
         }
 
-        fromArray(array: number[]): Vector2 {
+        fromArray(array: Float32Array): Vector2 {
             return new Vector2(array[0], array[1]);
         }
     }
 
-    class Vector3Factory implements IVectorFactory<Vector3> {
+    class Vector3Factory implements ILinearObjectFactory<Vector3> {
         static instance: Vector3Factory;
 
         static getInstance(): Vector3Factory {
@@ -194,12 +194,12 @@
             return this.instance;
         }
 
-        fromArray(array: number[]): Vector3 {
+        fromArray(array:Float32Array): Vector3 {
             return new Vector3(array[0], array[1],array[2]);
         }
     }
 
-    class Vector4Factory implements IVectorFactory<Vector4> {
+    class Vector4Factory implements ILinearObjectFactory<Vector4> {
         static instance: Vector4Factory;
 
         static getInstance(): Vector4Factory {
@@ -207,12 +207,12 @@
             return this.instance;
         }
 
-        fromArray(array: number[]): Vector4 {
+        fromArray(array: Float32Array): Vector4 {
             return new Vector4(array[0], array[1],array[2],array[3]);
         }
     }
 
-    export class Vector2 extends VectorBase implements IVectorGenerator<Vector2>{
+    export class Vector2 extends VectorBase implements ILinearObjectGenerator<Vector2>{
         constructor(x: number, y: number) {
             super();
             this.x = x;
@@ -288,10 +288,10 @@
 
         elementCount(): number { return 2; }
 
-        getFactory(): IVectorFactory<Vector2> { return Vector2Factory.getInstance(); }
+        getFactory(): ILinearObjectFactory<Vector2> { return Vector2Factory.getInstance(); }
     }
 
-    export class Vector3 extends VectorBase implements IVectorGenerator<Vector3> {
+    export class Vector3 extends VectorBase implements ILinearObjectGenerator<Vector3> {
         constructor(x: number, y: number,z:number) {
             super();
             this.x = x;
@@ -373,10 +373,10 @@
 
         elementCount(): number { return 3; }
 
-        getFactory(): IVectorFactory<Vector3> { return Vector3Factory.getInstance(); }
+        getFactory(): ILinearObjectFactory<Vector3> { return Vector3Factory.getInstance(); }
     }
 
-    export class Vector4 extends VectorBase implements IVectorGenerator<Vector4>{
+    export class Vector4 extends VectorBase implements ILinearObjectGenerator<Vector4>{
         constructor(x: number, y: number, z: number, w: number) {
             super();
             this.x = x;
@@ -464,6 +464,6 @@
             return "Vector4(x={0},y={1},z={2},w={3}".format(this.x, this.y, this.z, this.w);
         }
 
-        getFactory(): IVectorFactory<Vector4> { return Vector4Factory.getInstance(); }
+        getFactory(): ILinearObjectFactory<Vector4> { return Vector4Factory.getInstance(); }
     }
 }
