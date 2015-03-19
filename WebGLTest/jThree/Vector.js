@@ -133,9 +133,9 @@ var jThree;
                 Vector2Enumerator.prototype.getCurrent = function () {
                     switch (this.currentIndex) {
                         case 0:
-                            return this.vector.getX();
+                            return this.vector.X;
                         case 1:
-                            return this.vector.getY();
+                            return this.vector.Y;
                         default:
                             throw new jThree.Exceptions.IrregularElementAccessException(this.currentIndex);
                     }
@@ -150,11 +150,11 @@ var jThree;
                 Vector3Enumerator.prototype.getCurrent = function () {
                     switch (this.currentIndex) {
                         case 0:
-                            return this.vector.getX();
+                            return this.vector.X;
                         case 1:
-                            return this.vector.getY();
+                            return this.vector.Y;
                         case 2:
-                            return this.vector.getZ();
+                            return this.vector.Z;
                         default:
                             throw new jThree.Exceptions.IrregularElementAccessException(this.currentIndex);
                     }
@@ -169,13 +169,13 @@ var jThree;
                 Vector4Enumerator.prototype.getCurrent = function () {
                     switch (this.currentIndex) {
                         case 0:
-                            return this.vector.getX();
+                            return this.vector.X;
                         case 1:
-                            return this.vector.getY();
+                            return this.vector.Y;
                         case 2:
-                            return this.vector.getZ();
+                            return this.vector.Z;
                         case 3:
-                            return this.vector.getW();
+                            return this.vector.W;
                         default:
                             throw new jThree.Exceptions.IrregularElementAccessException(this.currentIndex);
                     }
@@ -225,12 +225,20 @@ var jThree;
                     this.x = x;
                     this.y = y;
                 }
-                Vector2.prototype.getX = function () {
-                    return this.x;
-                };
-                Vector2.prototype.getY = function () {
-                    return this.y;
-                };
+                Object.defineProperty(Vector2.prototype, "X", {
+                    get: function () {
+                        return this.x;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector2.prototype, "Y", {
+                    get: function () {
+                        return this.y;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Vector2.dot = function (v1, v2) {
                     return VectorBase.elementDot(v1, v2);
                 };
@@ -290,15 +298,27 @@ var jThree;
                     this.y = y;
                     this.z = z;
                 }
-                Vector3.prototype.getX = function () {
-                    return this.x;
-                };
-                Vector3.prototype.getY = function () {
-                    return this.y;
-                };
-                Vector3.prototype.getZ = function () {
-                    return this.z;
-                };
+                Object.defineProperty(Vector3.prototype, "X", {
+                    get: function () {
+                        return this.x;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector3.prototype, "Y", {
+                    get: function () {
+                        return this.y;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector3.prototype, "Z", {
+                    get: function () {
+                        return this.z;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Vector3.dot = function (v1, v2) {
                     return VectorBase.elementDot(v1, v2);
                 };
@@ -359,18 +379,34 @@ var jThree;
                     this.z = z;
                     this.w = w;
                 }
-                Vector4.prototype.getX = function () {
-                    return this.x;
-                };
-                Vector4.prototype.getY = function () {
-                    return this.y;
-                };
-                Vector4.prototype.getZ = function () {
-                    return this.z;
-                };
-                Vector4.prototype.getW = function () {
-                    return this.w;
-                };
+                Object.defineProperty(Vector4.prototype, "X", {
+                    get: function () {
+                        return this.x;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector4.prototype, "Y", {
+                    get: function () {
+                        return this.y;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector4.prototype, "Z", {
+                    get: function () {
+                        return this.z;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector4.prototype, "W", {
+                    get: function () {
+                        return this.w;
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Vector4.dot = function (v1, v2) {
                     return this.elementDot(v1, v2);
                 };

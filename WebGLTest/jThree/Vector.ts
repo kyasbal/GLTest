@@ -136,9 +136,9 @@
         getCurrent(): number {
             switch (this.currentIndex) {
                 case 0:
-                    return this.vector.getX();
+                    return this.vector.X;
                 case 1:
-                    return this.vector.getY();
+                    return this.vector.Y;
                 default:
                     throw new Exceptions.IrregularElementAccessException(this.currentIndex);
             }
@@ -155,11 +155,11 @@
         getCurrent(): number {
             switch (this.currentIndex) {
                 case 0:
-                    return this.vector.getX();
+                    return this.vector.X;
                 case 1:
-                    return this.vector.getY();
+                    return this.vector.Y;
                 case 2:
-                    return this.vector.getZ();
+                    return this.vector.Z;
                 default:
                     throw new Exceptions.IrregularElementAccessException(this.currentIndex);            }
         }
@@ -174,13 +174,13 @@
         getCurrent(): number {
             switch (this.currentIndex) {
                 case 0:
-                    return this.vector.getX();
+                    return this.vector.X;
                 case 1:
-                    return this.vector.getY();
+                    return this.vector.Y;
                 case 2:
-                    return this.vector.getZ();
+                    return this.vector.Z;
                 case 3:
-                    return this.vector.getW();
+                    return this.vector.W;
                 default:
                     throw new Exceptions.IrregularElementAccessException(this.currentIndex);            }
         }
@@ -235,11 +235,11 @@
         private x: number;
         private y: number;
 
-        getX(): number {
+        get X(): number {
             return this.x;
         }
 
-        getY(): number {
+        get Y(): number {
             return this.y;
         }
 
@@ -316,15 +316,15 @@
         private y: number;
         private z: number;
 
-        getX(): number {
+        get X(): number {
             return this.x;
         }
 
-        getY(): number {
+        get Y(): number {
             return this.y;
         }
 
-        getZ(): number {
+        get Z(): number {
             return this.z;
         }
 
@@ -403,19 +403,19 @@
         private z: number;
         private w: number;
 
-        getX() {
+        get X() {
             return this.x;
         }
 
-        getY() {
+        get Y() {
             return this.y;
         }
 
-        getZ() {
+        get Z() {
             return this.z;
         }
 
-        getW() {
+        get W() {
             return this.w;
         }
 
