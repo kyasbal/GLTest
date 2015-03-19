@@ -1,8 +1,5 @@
-before_script:
-        - npm install grunt -save-dev
-
-script:
-        - "npm test"
+install:
+        - npm install grunt
 
 language: node_js
 
