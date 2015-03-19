@@ -14,7 +14,8 @@ module jThreeTest {
         testVec32: Vector3 = new Vector3(3, 5, 4);
 
         testVec41:Vector4=new Vector4(1,2,3,4);
-        testVec42:Vector4=new Vector4(2,3,5,7);
+        testVec42: Vector4 = new Vector4(2, 3, 5, 7);
+
         eqaulTest() {
             this.isTrue(Vector2.equal(this.testVec21, new Vector2(1, 2)));
             this.isTrue(Vector3.equal(this.testVec31, new Vector3(1, 2, 3)));

@@ -5,6 +5,7 @@ module jThree.Matrix {
     import Enumrator = jThree.Collections.IEnumrator;
     import Func1 = jThree.Delegates.Func1;
     import Vector4 = jThree.Mathematics.Vector.Vector4;
+
     class MatrixFactory implements Mathematics.Vector.ILinearObjectFactory<Matrix> {
         fromArray(array: Float32Array): Matrix {
             return new Matrix(array);
@@ -101,6 +102,14 @@ module jThree.Matrix {
             return result;
         }
 
+        static add(m1: Matrix, m2: Matrix): Matrix {
+            return this.elementAdd(m1, m2,m1.getFactory());
+        }
+
+        static subtract(m1: Matrix, m2: Matrix): Matrix {
+            return this.elementSubtract(m1, m2, m1.getFactory());
+        }
+
         toString(): string {
             return "|{0} {1} {2} {3}|\n|{4} {5} {6} {7}|\n|{8} {9} {10} {11}|\n|{12} {13} {14} {15}|".format(this.getBySingleIndex(0),this.getBySingleIndex(1),this.getBySingleIndex(2),this.getBySingleIndex(3),this.getBySingleIndex(4),this.getBySingleIndex(5),this.getBySingleIndex(6),this.getBySingleIndex(7),this.getBySingleIndex(8),this.getBySingleIndex(9),this.getBySingleIndex(10),this.getBySingleIndex(11),this.getBySingleIndex(12),this.getBySingleIndex(13),this.getBySingleIndex(14),this.getBySingleIndex(15));
         }
@@ -111,6 +120,11 @@ module jThree.Matrix {
 
         elementCount(): number { return 16; }
 
-        getFactory(): jThree.Mathematics.Vector.ILinearObjectFactory<Matrix> { throw new Error("Not implemented"); }
+        private static factoryCache:MatrixFactory;
+
+        getFactory(): jThree.Mathematics.Vector.ILinearObjectFactory<Matrix> {
+            Matrix.factoryCache = Matrix.factoryCache || new MatrixFactory();
+            return Matrix.factoryCache;
+        }
     }
 } 
