@@ -1,9 +1,9 @@
 before_install:
-	- npm install -g npm
+ - npm install -g npm
 install:
-	- npm install grunt -save-dev
+ - npm install grunt -save-dev
 
 language: node_js
 
 node_js:
-        - 0.6
+ - 0.6
