@@ -38,6 +38,6 @@ var jThree;
     jThree.CanvasRenderer = CanvasRenderer;
 })(jThree || (jThree = {}));
 window.onload = function (e) {
-    alert("{0}".format(jThree.Matrix.Matrix.transpose(jThree.Matrix.Matrix.identity())));
+    alert("{0}".format(jThree.Matrix.Matrix.transpose(jThree.Matrix.Matrix.translate(new jThree.Mathematics.Vector.Vector3(1, 2, 3)))));
 };
 //# sourceMappingURL=glLib.js.map

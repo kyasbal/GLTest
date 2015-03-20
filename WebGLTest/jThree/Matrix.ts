@@ -4,6 +4,9 @@ module jThree.Matrix {
     import Enumerable = jThree.Collections.IEnumerable;
     import Enumrator = jThree.Collections.IEnumrator;
     import Func2 = jThree.Delegates.Func2;
+    import Vector3 = jThree.Mathematics.Vector.Vector3;
+    import Collection = jThree.Collections.Collection;
+    import Vector4 = jThree.Mathematics.Vector.Vector4;
 
     export interface IMatrixFactory<T> {
         fromFunc(f:Func2<number,number, number>): T;
@@ -63,7 +66,7 @@ module jThree.Matrix {
             return 0;
         }
 
-        getAt(colmun: number, row: number): number {
+        getAt(row: number,colmun:number): number {
             throw new Error("Not implemented");
         }
 
@@ -83,20 +86,23 @@ module jThree.Matrix {
 
         private static zeroElements(): Float32Array {
             return new Float32Array(
-                    [0, 0, 0, 0,
-                    0, 0, 0, 0,
-                    0, 0, 0, 0,
-                    0, 0, 0, 0]);
+            [
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0
+            ]);
         }
 
         private static identityElements(): Float32Array {
             return new Float32Array(
-                    [1, 0, 0, 0,
+                [
+                    1, 0, 0, 0,
                     0, 1, 0, 0,
                     0, 0, 1, 0,
                     0, 0, 0, 1
-                    ]
-                 );
+                ]
+            );
         }
 
         private elements: Float32Array = Matrix.zeroElements();
@@ -106,21 +112,26 @@ module jThree.Matrix {
             return true;
         }
 
-        constructor(arr:Float32Array) {
+        constructor(arr: Float32Array) {
             super();
             if (!this.isValidArray(arr))throw new jThree.Exceptions.InvalidArgumentException("Invalid matrix source was passed.");
             this.elements = arr;
         }
-        getAt(colmun: number, row: number): number {
-            return this.elements.get(colmun + row * 4);
+
+        getAt(row: number, colmun: number): number {
+            return this.elements[colmun + row * 4];
+        }
+
+        private setAt(colmun: number, row: number, val: number) {
+            this.elements.set[colmun + row * 4]= val;
         }
 
         getBySingleIndex(index: number): number {
             return this.elements[index];
         }
 
-        getColmun(col: number):jThree.Mathematics.Vector.Vector4 {
-            return new jThree.Mathematics.Vector.Vector4(this.elements[col],this.elements[col+4],this.elements[col+8],this.elements[col+12]);
+        getColmun(col: number): jThree.Mathematics.Vector.Vector4 {
+            return new jThree.Mathematics.Vector.Vector4(this.elements[col], this.elements[col + 4], this.elements[col + 8], this.elements[col + 12]);
         }
 
         getRow(row: number): jThree.Mathematics.Vector.Vector4 {
@@ -134,20 +145,21 @@ module jThree.Matrix {
             });
             return result;
         }
+
         static eqaul(m1: Matrix, m2: Matrix): boolean {
             return this.elementEqual(m1, m2);
         }
 
         static add(m1: Matrix, m2: Matrix): Matrix {
-            return this.elementAdd(m1, m2,m1.getFactory());
+            return this.elementAdd(m1, m2, m1.getFactory());
         }
 
         static subtract(m1: Matrix, m2: Matrix): Matrix {
             return this.elementSubtract(m1, m2, m1.getFactory());
         }
 
-        static scalarMultiply(s:number,m:Matrix): Matrix {
-            return this.elementScalarMultiply(m, s,m.getFactory());
+        static scalarMultiply(s: number, m: Matrix): Matrix {
+            return this.elementScalarMultiply(m, s, m.getFactory());
         }
 
         static invert(m: Matrix): Matrix {
@@ -155,10 +167,56 @@ module jThree.Matrix {
         }
 
         static transpose(m: Matrix): Matrix {
-            return this.elementTranspose(m,m.getFactory());
+            return this.elementTranspose(m, m.getFactory());
         }
 
-        toString(): string {
+        static transformPoint(m: Matrix, v: Vector3): Vector3 {
+            var result: Float32Array = new Float32Array(3);
+            for (var i = 0; i < 3; i++) {
+                result[i] = 0;
+                Collection.foreachPair(m.getRow(i), v, (r, v, index) => {
+                    result[i] += r * v;
+                });
+            }
+            for (var i = 0; i < 3; i++) {
+                result[i] += m.getAt(i,3);
+            }
+            return v.getFactory().fromArray(result);
+        }
+
+        static transformNormal(m: Matrix, v: Vector3): Vector3 {
+            var result: Float32Array = new Float32Array(3);
+            for (var i = 0; i < 3; i++) {
+                result[i] = 0;
+                Collection.foreachPair(m.getRow(i), v, (r, v, index) => {
+                    result[i] += r * v;
+                });
+            }
+            return v.getFactory().fromArray(result);
+        }
+
+        static transform(m: Matrix, v: Vector4):Vector4 {
+            var result: Float32Array = new Float32Array(4);
+            for (var i = 0; i < 4; i++) {
+                result[i] = 0;
+                Collection.foreachPair(m.getRow(i), v,(r, v, index) => {
+                    result[i] += r * v;
+                });
+            }
+            return v.getFactory().fromArray(result);
+        }
+        
+        static translate(v: Vector3): Matrix {
+            var m: Matrix = new Matrix(new Float32Array([
+                1, 0, 0, v.X,
+                0, 1, 0, v.Y,
+                0, 0, 1, v.Z,
+                0, 0, 0, 1
+            ]));
+            return m;
+        }
+
+    toString(): string {
             return "|{0} {1} {2} {3}|\n|{4} {5} {6} {7}|\n|{8} {9} {10} {11}|\n|{12} {13} {14} {15}|".format(this.getBySingleIndex(0),this.getBySingleIndex(1),this.getBySingleIndex(2),this.getBySingleIndex(3),this.getBySingleIndex(4),this.getBySingleIndex(5),this.getBySingleIndex(6),this.getBySingleIndex(7),this.getBySingleIndex(8),this.getBySingleIndex(9),this.getBySingleIndex(10),this.getBySingleIndex(11),this.getBySingleIndex(12),this.getBySingleIndex(13),this.getBySingleIndex(14),this.getBySingleIndex(15));
         }
 

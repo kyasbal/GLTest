@@ -3,6 +3,7 @@
 module jThreeTest {
     import TestClass = tsUnit.TestClass;
     import Matrix = jThree.Matrix.Matrix;
+    import Vector3 = jThree.Mathematics.Vector.Vector3;
 
     export class MatrixTest extends TestClass {
         m1: Matrix = new Matrix(new Float32Array(
@@ -17,6 +18,9 @@ module jThreeTest {
             3, 5, 7, 9,
             3, 6, 8, 9
             ]));
+
+        v31: Vector3=new Vector3(1,2,3);
+
 
         eqaulTest() {
             this.isTrue(Matrix.eqaul(this.m1, new Matrix(new Float32Array([
@@ -70,12 +74,30 @@ module jThreeTest {
         }
 
         transposeTest() {
+            console.log(Matrix.transpose(this.m1).toString());
             this.isTrue(Matrix.eqaul(Matrix.transpose(this.m1), new Matrix(new Float32Array(
                 [1, 1, 1, 1,
                     2, 2, 2, 2,
                     3, 3, 3, 3,
                     4, 4, 4, 4
                 ]))));
+        }
+
+        translateTest() {
+            this.isTrue(Matrix.eqaul(Matrix.translate(new Vector3(1, 2, 3)), new Matrix(new Float32Array([
+                1, 0, 0, 1,
+                0, 1, 0, 2,
+                0, 0, 1, 3,
+                0, 0, 0, 1
+            ]))));
+        }
+
+        transformPointTest() {
+            this.isTrue(Vector3.equal(Matrix.transformPoint(this.m1,this.v31),new Vector3(18,18,18)));
+        }
+
+        transformNormalTest() {
+            this.isTrue(Vector3.equal(Matrix.transformNormal(this.m1, this.v31), new Vector3(14,14,14)));
         }
     }
 } 

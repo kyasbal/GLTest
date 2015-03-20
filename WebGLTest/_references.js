@@ -1,4 +1,5 @@
 ///<reference path="jThree/Delegates.ts"/> 
+///<reference path="jThree/Collections.ts"/>
 ///<reference path="glLib.ts"/>
 ///<reference path="jThree/Base.ts"/>
 ///<reference path="jThree/Math.ts"/>
