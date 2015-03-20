@@ -4,6 +4,7 @@ module jThreeTest {
     import TestClass = tsUnit.TestClass;
     import Matrix = jThree.Matrix.Matrix;
     import Vector3 = jThree.Mathematics.Vector.Vector3;
+    import Vector4 = jThree.Mathematics.Vector.Vector4;
 
     export class MatrixTest extends TestClass {
         m1: Matrix = new Matrix(new Float32Array(
@@ -19,7 +20,9 @@ module jThreeTest {
             3, 6, 8, 9
             ]));
 
-        v31: Vector3=new Vector3(1,2,3);
+        v31: Vector3 = new Vector3(1, 2, 3);
+
+        v41:Vector4=new Vector4(1,2,3,4);
 
 
         eqaulTest() {
@@ -98,6 +101,10 @@ module jThreeTest {
 
         transformNormalTest() {
             this.isTrue(Vector3.equal(Matrix.transformNormal(this.m1, this.v31), new Vector3(14,14,14)));
+        }
+
+        transformTest() {
+            this.isTrue(Vector4.equal(Matrix.transform(this.m1, this.v41), new Vector4(30, 30, 30, 30)));
         }
     }
 } 

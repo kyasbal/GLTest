@@ -11,6 +11,7 @@ var jThreeTest;
     var TestClass = tsUnit.TestClass;
     var Matrix = jThree.Matrix.Matrix;
     var Vector3 = jThree.Mathematics.Vector.Vector3;
+    var Vector4 = jThree.Mathematics.Vector.Vector4;
     var MatrixTest = (function (_super) {
         __extends(MatrixTest, _super);
         function MatrixTest() {
@@ -18,6 +19,7 @@ var jThreeTest;
             this.m1 = new Matrix(new Float32Array([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]));
             this.m2 = new Matrix(new Float32Array([3, 5, 7, 9, 3, 5, 7, 9, 3, 5, 7, 9, 3, 6, 8, 9]));
             this.v31 = new Vector3(1, 2, 3);
+            this.v41 = new Vector4(1, 2, 3, 4);
         }
         MatrixTest.prototype.eqaulTest = function () {
             this.isTrue(Matrix.eqaul(this.m1, new Matrix(new Float32Array([
@@ -166,6 +168,9 @@ var jThreeTest;
         };
         MatrixTest.prototype.transformNormalTest = function () {
             this.isTrue(Vector3.equal(Matrix.transformNormal(this.m1, this.v31), new Vector3(14, 14, 14)));
+        };
+        MatrixTest.prototype.transformTest = function () {
+            this.isTrue(Vector4.equal(Matrix.transform(this.m1, this.v41), new Vector4(30, 30, 30, 30)));
         };
         return MatrixTest;
     })(TestClass);
