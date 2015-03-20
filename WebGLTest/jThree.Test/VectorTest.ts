@@ -1,76 +1,91 @@
 ﻿ ///<reference path="_testReferences.ts"/>
 ///<reference path="../_references.ts"/>
-
-module jThreeTest {
+///<reference path="../Scripts/typings/qunit/qunit.d.ts"/>
     import Vector2 = jThree.Mathematics.Vector.Vector2;
     import Vector3 = jThree.Mathematics.Vector.Vector3;
     import Vector4 = jThree.Mathematics.Vector.Vector4;
+    QUnit.module("VectorTest");
 
-    export class VectorTest extends tsUnit.TestClass {
-        testVec21: Vector2 = new Vector2(1, 2);
-        testVec22: Vector2 = new Vector2(3, 4);
+    var testVec21: Vector2 = new Vector2(1, 2);
+    var testVec22: Vector2 = new Vector2(3, 4);
 
-        testVec31: Vector3 = new Vector3(1, 2, 3);
-        testVec32: Vector3 = new Vector3(3, 5, 4);
+    var testVec31: Vector3 = new Vector3(1, 2, 3);
+   var testVec32: Vector3 = new Vector3(3, 5, 4);
 
-        testVec41:Vector4=new Vector4(1,2,3,4);
-        testVec42: Vector4 = new Vector4(2, 3, 5, 7);
+    var testVec41: Vector4 = new Vector4(1, 2, 3, 4);
+    var testVec42: Vector4 = new Vector4(2, 3, 5, 7);
+    /**
+     * Vector equal unit tests
+     */
+    QUnit.test("equal test", () => {
+    QUnit.equal(Vector2.equal(testVec21, new Vector2(1, 2)), true);
+    QUnit.equal(Vector3.equal(testVec31, new Vector3(1, 2, 3)), true);
+    QUnit.equal(Vector2.equal(testVec21, new Vector2(1, 3)), false);
+    QUnit.equal(Vector3.equal(testVec31, new Vector3(1, 4, 3)), false);
+    QUnit.equal(Vector4.equal(testVec41, new Vector4(1, 2, 3, 4)), true);
+    QUnit.equal(Vector4.equal(testVec41, new Vector4(1, 2, 3, 5)), false);
+    });
+    /**
+     * Vector add unit tests
+     */
+    QUnit.test("add test", () => {
+        QUnit.equal(Vector2.equal(Vector2.add(testVec21, testVec22), new Vector2(4, 6)), true);
+        QUnit.equal(Vector3.equal(Vector3.add(testVec31, testVec32), new Vector3(4, 7, 7)), true);
+         QUnit.equal(Vector4.equal(Vector4.add(testVec41, testVec42), new Vector4(3, 5, 8, 11)), true); 
+    });
+    /**
+     * Vector subtract unit tests
+     */
+    QUnit.test("subtract test", () => {
+        QUnit.equal(Vector2.equal(Vector2.subtract(testVec21, testVec22), new Vector2(-2, -2)), true);
+        QUnit.equal(Vector3.equal(Vector3.subtract(testVec31, testVec32), new Vector3(-2, -3, -1)), true);
+        QUnit.equal(Vector4.equal(Vector4.subtract(testVec41, testVec42), new Vector4(-1, -1, -2, -3)), true);
+    });
+    /**
+     * Vector dot unit tests
+     */
+    QUnit.test("dot test", () => {
+        QUnit.equal(Vector2.dot(testVec21, testVec22), 11);
+        QUnit.equal(Vector3.dot(testVec31, testVec32), 25);
+        QUnit.equal(Vector4.dot(testVec41, testVec42), 51);
 
-        eqaulTest() {
-            this.isTrue(Vector2.equal(this.testVec21, new Vector2(1, 2)));
-            this.isTrue(Vector3.equal(this.testVec31, new Vector3(1, 2, 3)));
-            this.isFalse(Vector2.equal(this.testVec21, new Vector2(1, 3)));
-            this.isFalse(Vector3.equal(this.testVec31, new Vector3(1, 4, 3)));
-            this.isTrue(Vector4.equal(this.testVec41, new Vector4(1, 2, 3, 4)));
-            this.isFalse(Vector4.equal(this.testVec41, new Vector4(1, 2, 3, 5)));
-        }
+    });
+    /**
+     * Vector multiply scalar unit tests
+     */
+    QUnit.test("multiply test", () => {
+        QUnit.equal(Vector2.equal(Vector2.multiply(2, testVec21), new Vector2(2, 4)), true);
+        QUnit.equal(Vector3.equal(Vector3.multiply(2, testVec31), new Vector3(2, 4, 6)), true);
+        QUnit.equal(Vector4.equal(Vector4.multiply(2, testVec41), new Vector4(2, 4, 6, 8)), true);
+    });
+    /**
+     * Vector magnitude unit tests
+     */
+    QUnit.test("magnitude test", () => {
+        QUnit.equal(Math.sqrt(5), testVec21.magnitude);
+        QUnit.equal(Math.sqrt(14), testVec31.magnitude);
+        QUnit.equal(Math.sqrt(30), testVec41.magnitude);
+        QUnit.equal(Math.sqrt(5), testVec21.magnitude);
+        QUnit.equal(Math.sqrt(14), testVec31.magnitude);
+        QUnit.equal(Math.sqrt(30), testVec41.magnitude);
+    });
+    /**
+     * Vector magnitude Squared unit tests
+     */
+    QUnit.test("magnitude Squared test", () => {
+        QUnit.equal(5, testVec21.magnitudeSquared);
+        QUnit.equal(14, testVec31.magnitudeSquared);
+        QUnit.equal(30, testVec41.magnitudeSquared);
+        QUnit.equal(5, testVec21.magnitudeSquared);
+        QUnit.equal(14, testVec31.magnitudeSquared);
+        QUnit.equal(30, testVec41.magnitudeSquared);
+    });
 
-        sumTest() {
-            this.isTrue(Vector2.equal(Vector2.add(this.testVec21, this.testVec22), new Vector2(4, 6)),"vector 2 add failed");
-            this.isTrue(Vector3.equal(Vector3.add(this.testVec31, this.testVec32), new Vector3(4, 7, 7)),"vector 3 add failed");
-            this.isTrue(Vector4.equal(Vector4.add(this.testVec41, this.testVec42), new Vector4(3,5,8,11)),"vector 4 add failed");
-        }
-
-        subtractTest() {
-            this.isTrue(Vector2.equal(Vector2.subtract(this.testVec21, this.testVec22), new Vector2(-2,-2)),"vector2 subtract failed");
-            this.isTrue(Vector3.equal(Vector3.subtract(this.testVec31, this.testVec32), new Vector3(-2, -3, -1)),"vector3 subtract failed");
-            this.isTrue(Vector4.equal(Vector4.subtract(this.testVec41, this.testVec42), new Vector4(-1, -1, -2, -3)),"vector4 subtract failed");
-        }
-
-        dotTest() {
-            this.areIdentical(Vector2.dot(this.testVec21, this.testVec22), 11);
-            this.areIdentical(Vector3.dot(this.testVec31, this.testVec32), 25);
-            this.areIdentical(Vector4.dot(this.testVec41, this.testVec42), 51);
-        }
-
-        multiplyScolarTest() {
-            this.isTrue(Vector2.equal(Vector2.multiply(2, this.testVec21), new Vector2(2, 4)));
-            this.isTrue(Vector3.equal(Vector3.multiply(2, this.testVec31), new Vector3(2, 4, 6)));
-            this.isTrue(Vector4.equal(Vector4.multiply(2, this.testVec41), new Vector4(2, 4, 6, 8)));
-        }
-
-        magnitudeTest() {
-            this.areIdentical(Math.sqrt(5), this.testVec21.magnitude);
-            this.areIdentical(Math.sqrt(14), this.testVec31.magnitude);
-            this.areIdentical(Math.sqrt(30), this.testVec41.magnitude);
-            this.areIdentical(Math.sqrt(5), this.testVec21.magnitude);
-            this.areIdentical(Math.sqrt(14), this.testVec31.magnitude);
-            this.areIdentical(Math.sqrt(30), this.testVec41.magnitude);
-        }
-
-        magnitudeSquaredTest() {
-            this.areIdentical(5, this.testVec21.magnitudeSquared);
-            this.areIdentical(14, this.testVec31.magnitudeSquared);
-            this.areIdentical(30, this.testVec41.magnitudeSquared);
-            this.areIdentical(5, this.testVec21.magnitudeSquared);
-            this.areIdentical(14, this.testVec31.magnitudeSquared);
-            this.areIdentical(30, this.testVec41.magnitudeSquared);
-        }
-
-        invertTest() {
-            this.isTrue(Vector2.equal(Vector2.invert(this.testVec21), new Vector2(-1, -2)));
-            this.isTrue(Vector3.equal(Vector3.invert(this.testVec31), new Vector3(-1, -2, -3)));
-            this.isTrue(Vector4.equal(Vector4.invert(this.testVec41), new Vector4(-1,-2,-3,-4)));
-        }
-    }
-}
+    /**
+     * Vector invert unit tests
+     */
+    QUnit.test("invert test", () => {
+        QUnit.equal(Vector2.equal(Vector2.invert(testVec21), new Vector2(-1, -2)), true);
+        QUnit.equal(Vector3.equal(Vector3.invert(testVec31), new Vector3(-1, -2, -3)), true);
+        QUnit.equal(Vector4.equal(Vector4.invert(testVec41), new Vector4(-1, -2, -3, -4)), true);
+    });

@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebGLTest", "WebGLTest\WebG
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{959B8F5C-DB62-4D3F-B95E-45D8D6F505B9}"
 	ProjectSection(SolutionItems) = preProject
+		final.js = final.js
 		WebEssentials-Settings.json = WebEssentials-Settings.json
 	EndProjectSection
 EndProject

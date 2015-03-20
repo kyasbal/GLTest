@@ -1,5 +1,6 @@
 ﻿///<reference path="_testReferences.ts"/>
 ///<reference path="../_references.ts"/>
+///<reference path="../Scripts/typings/qunit/qunit.d.ts"/>
 module jThreeTest {
     import TestClass = tsUnit.TestClass;
     import Matrix = jThree.Matrix.Matrix;

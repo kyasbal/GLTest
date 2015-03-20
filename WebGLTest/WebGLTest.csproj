@@ -59,6 +59,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\qunit.css" />
+    <Content Include="final.js" />
     <Content Include="jThree.Test\Test.css" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
@@ -70,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Index.html" />
+    <Content Include="Scripts\qunit.js" />
     <Content Include="Test.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -90,6 +93,7 @@
     <TypeScriptCompile Include="jThree\Exceptions.ts" />
     <TypeScriptCompile Include="jThree\Math.ts" />
     <TypeScriptCompile Include="jThree\Matrix.ts" />
+    <TypeScriptCompile Include="Scripts\typings\qunit\qunit.d.ts" />
     <TypeScriptCompile Include="tsUnit\tsUnit.ts" />
     <TypeScriptCompile Include="_references.ts" />
     <TypeScriptCompile Include="jThree\Vector.ts" />
