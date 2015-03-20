@@ -10,11 +10,11 @@ module.exports = function(grunt) {
 					comments:true,
 					target:'es5'
 				}
-				
+
 			}
 		}
 	});
 	grunt.loadNpmTasks('grunt-typescript');
 
-	grunt.registerTask('default',['typescript']);
+	grunt.registerTask('type-compile',['typescript']);
 };
