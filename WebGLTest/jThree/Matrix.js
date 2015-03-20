@@ -152,7 +152,7 @@ var jThree;
                 });
                 return result;
             };
-            Matrix.eqaul = function (m1, m2) {
+            Matrix.equal = function (m1, m2) {
                 return this.elementEqual(m1, m2);
             };
             Matrix.add = function (m1, m2) {

@@ -728,6 +728,7 @@ var jThree;
     var Matrix;
     (function (_Matrix) {
         var JThreeObject = jThree.Base.jThreeObject;
+        var Collection = jThree.Collections.Collection;
         var MatrixFactory = (function () {
             function MatrixFactory() {
             }
@@ -777,7 +778,7 @@ var jThree;
             MatrixBase.prototype.getColmunCount = function () {
                 return 0;
             };
-            MatrixBase.prototype.getAt = function (colmun, row) {
+            MatrixBase.prototype.getAt = function (row, colmun) {
                 throw new Error("Not implemented");
             };
             MatrixBase.prototype.getBySingleIndex = function (index) {
@@ -802,18 +803,55 @@ var jThree;
                 return new Matrix(this.identityElements());
             };
             Matrix.zeroElements = function () {
-                return new Float32Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                return new Float32Array([
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ]);
             };
             Matrix.identityElements = function () {
-                return new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+                return new Float32Array([
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ]);
             };
             Matrix.prototype.isValidArray = function (arr) {
                 if (arr.length !== 16)
                     return false;
                 return true;
             };
-            Matrix.prototype.getAt = function (colmun, row) {
+            Matrix.prototype.getAt = function (row, colmun) {
                 return this.elements[colmun + row * 4];
+            };
+            Matrix.prototype.setAt = function (colmun, row, val) {
+                this.elements.set[colmun + row * 4] = val;
             };
             Matrix.prototype.getBySingleIndex = function (index) {
                 return this.elements[index];
@@ -832,7 +870,7 @@ var jThree;
                 });
                 return result;
             };
-            Matrix.eqaul = function (m1, m2) {
+            Matrix.equal = function (m1, m2) {
                 return this.elementEqual(m1, m2);
             };
             Matrix.add = function (m1, m2) {
@@ -849,6 +887,60 @@ var jThree;
             };
             Matrix.transpose = function (m) {
                 return this.elementTranspose(m, m.getFactory());
+            };
+            Matrix.transformPoint = function (m, v) {
+                var result = new Float32Array(3);
+                for (var i = 0; i < 3; i++) {
+                    result[i] = 0;
+                    Collection.foreachPair(m.getRow(i), v, function (r, v, index) {
+                        result[i] += r * v;
+                    });
+                }
+                for (var i = 0; i < 3; i++) {
+                    result[i] += m.getAt(i, 3);
+                }
+                return v.getFactory().fromArray(result);
+            };
+            Matrix.transformNormal = function (m, v) {
+                var result = new Float32Array(3);
+                for (var i = 0; i < 3; i++) {
+                    result[i] = 0;
+                    Collection.foreachPair(m.getRow(i), v, function (r, v, index) {
+                        result[i] += r * v;
+                    });
+                }
+                return v.getFactory().fromArray(result);
+            };
+            Matrix.transform = function (m, v) {
+                var result = new Float32Array(4);
+                for (var i = 0; i < 4; i++) {
+                    result[i] = 0;
+                    Collection.foreachPair(m.getRow(i), v, function (r, v, index) {
+                        result[i] += r * v;
+                    });
+                }
+                return v.getFactory().fromArray(result);
+            };
+            Matrix.translate = function (v) {
+                var m = new Matrix(new Float32Array([
+                    1,
+                    0,
+                    0,
+                    v.X,
+                    0,
+                    1,
+                    0,
+                    v.Y,
+                    0,
+                    0,
+                    1,
+                    v.Z,
+                    0,
+                    0,
+                    0,
+                    1
+                ]));
+                return m;
             };
             Matrix.prototype.toString = function () {
                 return "|{0} {1} {2} {3}|\n|{4} {5} {6} {7}|\n|{8} {9} {10} {11}|\n|{12} {13} {14} {15}|".format(this.getBySingleIndex(0), this.getBySingleIndex(1), this.getBySingleIndex(2), this.getBySingleIndex(3), this.getBySingleIndex(4), this.getBySingleIndex(5), this.getBySingleIndex(6), this.getBySingleIndex(7), this.getBySingleIndex(8), this.getBySingleIndex(9), this.getBySingleIndex(10), this.getBySingleIndex(11), this.getBySingleIndex(12), this.getBySingleIndex(13), this.getBySingleIndex(14), this.getBySingleIndex(15));

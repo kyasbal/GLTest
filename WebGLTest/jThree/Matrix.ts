@@ -146,7 +146,7 @@ module jThree.Matrix {
             return result;
         }
 
-        static eqaul(m1: Matrix, m2: Matrix): boolean {
+        static equal(m1: Matrix, m2: Matrix): boolean {
             return this.elementEqual(m1, m2);
         }
 
