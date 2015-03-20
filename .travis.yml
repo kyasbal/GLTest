@@ -1,5 +1,5 @@
 before_install:
-	- npm install -g npm@^2.7.1
+	- npm install -g npm
 install:
 	- npm install grunt -save-dev
 
