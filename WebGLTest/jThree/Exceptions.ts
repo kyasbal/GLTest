@@ -1,4 +1,4 @@
-﻿
+﻿///<reference path="../_references.ts"/>
 module jThree.Exceptions {
     import jThreeObject = Base.jThreeObject;
     /**
@@ -28,6 +28,12 @@ module jThree.Exceptions {
     export class InvalidArgumentException extends jThreeException {
         constructor(message: string) {
             super("Invalid argument was passed.", message);
+        }
+    }
+
+    export class SingularMatrixException extends jThreeException {
+        constructor(m: Matrix) {
+            super("Passed matrix is singular matrix", "passed matrix:{0}".format(m.toString()));
         }
     }
  }

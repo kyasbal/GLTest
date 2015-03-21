@@ -41,6 +41,14 @@ var jThree;
             return InvalidArgumentException;
         })(jThreeException);
         Exceptions.InvalidArgumentException = InvalidArgumentException;
+        var SingularMatrixException = (function (_super) {
+            __extends(SingularMatrixException, _super);
+            function SingularMatrixException() {
+                _super.apply(this, arguments);
+            }
+            return SingularMatrixException;
+        })(jThreeException);
+        Exceptions.SingularMatrixException = SingularMatrixException;
     })(Exceptions = jThree.Exceptions || (jThree.Exceptions = {}));
 })(jThree || (jThree = {}));
 //# sourceMappingURL=Exceptions.js.map
