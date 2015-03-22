@@ -39,7 +39,3 @@ module jThree
         }
     }
 }
-
-window.onload = (e) => {
-    alert("{0}".format(jThree.Matrix.Matrix.transpose(jThree.Matrix.Matrix.translate(new jThree.Mathematics.Vector.Vector3(1, 2, 3)))));
-};

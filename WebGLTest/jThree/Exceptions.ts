@@ -32,7 +32,7 @@ module jThree.Exceptions {
     }
 
     export class SingularMatrixException extends jThreeException {
-        constructor(m: Matrix) {
+        constructor(m: jThree.Matrix.Matrix) {
             super("Passed matrix is singular matrix", "passed matrix:{0}".format(m.toString()));
         }
     }

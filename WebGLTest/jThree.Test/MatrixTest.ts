@@ -108,4 +108,10 @@ module jThreeTest {
     QUnit.test("transformTest", () => {
         QUnit.equal(Vector4.equal(Matrix.transform(m1, v41), new Vector4(30, 30, 30, 30)),true);
     });
+
+    QUnit.test("determinant test",() => {
+        console.log(
+            Matrix.determinant(Matrix.translate(new Vector3(1, 2, 3))));
+        QUnit.equal(Matrix.determinant(Matrix.translate(new Vector3(1,2,3))),1);
+    });
 }

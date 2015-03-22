@@ -4,6 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
+///<reference path="../_references.ts"/>
 var jThree;
 (function (jThree) {
     var Exceptions;
@@ -43,8 +44,8 @@ var jThree;
         Exceptions.InvalidArgumentException = InvalidArgumentException;
         var SingularMatrixException = (function (_super) {
             __extends(SingularMatrixException, _super);
-            function SingularMatrixException() {
-                _super.apply(this, arguments);
+            function SingularMatrixException(m) {
+                _super.call(this, "Passed matrix is singular matrix", "passed matrix:{0}".format(m.toString()));
             }
             return SingularMatrixException;
         })(jThreeException);

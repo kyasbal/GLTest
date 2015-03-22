@@ -23,8 +23,4 @@
 //    test.addTestClass(new jThreeTest.MatrixTest(), "MatrixTest");
 //    test.showResults(document.getElementById("test-display"), test.run());
 //};
-QUnit.module("Collection");
-test("CollectionTest",function() {
-    equal(1, 1);
-    equal(1, 2);
-});
+QUnit.start();

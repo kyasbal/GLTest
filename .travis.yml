@@ -4,6 +4,9 @@ install:
  - npm install grunt-cli -save-dev
  - npm install
 
+script:
+ - grunt travis
+
 language: node_js
 
 node_js:

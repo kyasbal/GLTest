@@ -179,5 +179,9 @@ var jThreeTest;
     QUnit.test("transformTest", function () {
         QUnit.equal(Vector4.equal(Matrix.transform(m1, v41), new Vector4(30, 30, 30, 30)), true);
     });
+    QUnit.test("determinant test", function () {
+        console.log(Matrix.determinant(Matrix.translate(new Vector3(1, 2, 3))));
+        QUnit.equal(Matrix.determinant(Matrix.translate(new Vector3(1, 2, 3))), 1);
+    });
 })(jThreeTest || (jThreeTest = {}));
 //# sourceMappingURL=MatrixTest.js.map
