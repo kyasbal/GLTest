@@ -206,6 +206,9 @@ module jThree.Matrix {
             return v.getFactory().fromArray(result);
         }
         
+        /**
+         * Retrieve determinant of passed matrix
+         */
         static determinant(m: Matrix): number {
             var m00 = m.getAt(0, 0), m01 = m.getAt(0, 1), m02 = m.getAt(0, 2), m03 = m.getAt(0, 3);
             var m10 = m.getAt(1, 0), m11 = m.getAt(1, 1), m12 = m.getAt(1, 2), m13 = m.getAt(1, 3);
@@ -219,6 +222,9 @@ module jThree.Matrix {
             m02 * m10 * m21 * m33 - m00 * m12 * m21 * m33 - m01 * m10 * m22 * m33 + m00 * m11 * m22 * m33;
         }
 
+        /**
+         * Compute inverted passed matrix.
+         */
         static inverse(m: Matrix): Matrix {
             var det: number = Matrix.determinant(m);
             if (det == 0) throw new jThree.Exceptions.SingularMatrixException(m);

@@ -226,6 +226,14 @@
     }
 
     export class Vector2 extends VectorBase implements ILinearObjectGenerator<Vector2>{
+
+        public static get XUnit(): Vector2 {
+            return new Vector2(1, 0);
+        }
+
+        public static get YUnit(): Vector2 {
+            return new Vector2(0, 1);
+        }
         constructor(x: number, y: number) {
             super();
             this.x = x;
@@ -305,6 +313,18 @@
     }
 
     export class Vector3 extends VectorBase implements ILinearObjectGenerator<Vector3> {
+        public static get XUnit(): Vector3 {
+            return new Vector3(1, 0, 0);
+        }
+
+        public static get YUnit(): Vector3 {
+            return new Vector3(0, 1, 0);
+        }
+
+        public static get ZUnit(): Vector3 {
+            return new Vector3(0, 0, 1);
+        }
+
         constructor(x: number, y: number,z:number) {
             super();
             this.x = x;
@@ -390,6 +410,23 @@
     }
 
     export class Vector4 extends VectorBase implements ILinearObjectGenerator<Vector4>{
+
+        public static get XUnit():Vector4 {
+            return new Vector4(1,0,0,0);
+        }
+
+        public static get YUnit(): Vector4 {
+            return new Vector4(0, 1, 0, 0);
+        }
+
+        public static get ZUnit(): Vector4 {
+            return new Vector4(0, 0, 1, 0);
+        }
+
+        public static get WUnit(): Vector4 {
+            return new Vector4(0, 0, 0, 1);
+        }
+
         constructor(x: number, y: number, z: number, w: number) {
             super();
             this.x = x;

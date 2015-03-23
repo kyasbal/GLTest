@@ -229,6 +229,20 @@ var jThree;
                     this.x = x;
                     this.y = y;
                 }
+                Object.defineProperty(Vector2, "XUnit", {
+                    get: function () {
+                        return new Vector2(1, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector2, "YUnit", {
+                    get: function () {
+                        return new Vector2(0, 1);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Object.defineProperty(Vector2.prototype, "X", {
                     get: function () {
                         return this.x;
@@ -306,6 +320,27 @@ var jThree;
                     this.y = y;
                     this.z = z;
                 }
+                Object.defineProperty(Vector3, "XUnit", {
+                    get: function () {
+                        return new Vector3(1, 0, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector3, "YUnit", {
+                    get: function () {
+                        return new Vector3(0, 1, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector3, "ZUnit", {
+                    get: function () {
+                        return new Vector3(0, 0, 1);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Object.defineProperty(Vector3.prototype, "X", {
                     get: function () {
                         return this.x;
@@ -391,6 +426,34 @@ var jThree;
                     this.z = z;
                     this.w = w;
                 }
+                Object.defineProperty(Vector4, "XUnit", {
+                    get: function () {
+                        return new Vector4(1, 0, 0, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector4, "YUnit", {
+                    get: function () {
+                        return new Vector4(0, 1, 0, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector4, "ZUnit", {
+                    get: function () {
+                        return new Vector4(0, 0, 1, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector4, "WUnit", {
+                    get: function () {
+                        return new Vector4(0, 0, 0, 1);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Object.defineProperty(Vector4.prototype, "X", {
                     get: function () {
                         return this.x;
