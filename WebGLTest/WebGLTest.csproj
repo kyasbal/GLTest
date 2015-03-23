@@ -61,6 +61,7 @@
   <ItemGroup>
     <Content Include="Content\qunit.css" />
     <Content Include="final.js" />
+    <Content Include="jThree.js" />
     <Content Include="jThree.Test\Test.css" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
@@ -72,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Index.html" />
+    <Content Include="Scripts\qunit-1.17.1.css" />
     <Content Include="Scripts\qunit.js" />
     <Content Include="Test.html" />
     <Content Include="Web.config" />

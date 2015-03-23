@@ -23,4 +23,6 @@
 //    test.addTestClass(new jThreeTest.MatrixTest(), "MatrixTest");
 //    test.showResults(document.getElementById("test-display"), test.run());
 //};
-QUnit.start();
+window.onload=() => {
+    QUnit.start();
+}
