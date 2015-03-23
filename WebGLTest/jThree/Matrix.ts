@@ -162,8 +162,8 @@ module jThree.Matrix {
             return this.elementScalarMultiply(m, s, m.getFactory());
         }
 
-        static invert(m: Matrix): Matrix {
-            return this.elementInvert(m, m.getFactory());
+        static negate(m: Matrix): Matrix {
+            return this.elementNegate(m, m.getFactory());
         }
 
         static transpose(m: Matrix): Matrix {
@@ -261,6 +261,9 @@ module jThree.Matrix {
             return new Matrix(new Float32Array([m00,m01,m02,m03,m10,m11,m12,m13,m20,m21,m22,m23,m30,m31,m32,m33]));
         }
         
+        /**
+         * Generate linear translation transform matrix.
+         */
         static translate(v: Vector3): Matrix {
             var m: Matrix = new Matrix(new Float32Array([
                 1, 0, 0, v.X,
@@ -271,6 +274,9 @@ module jThree.Matrix {
             return m;
         }
 
+        /**
+         * Generate linear scaling transform matrix.
+         */
         static scale(v: Vector3): Matrix {
             return new Matrix(new Float32Array([
                 v.X, 0, 0, 0,

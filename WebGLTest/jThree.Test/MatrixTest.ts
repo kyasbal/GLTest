@@ -69,7 +69,7 @@ module jThreeTest {
     });
 
     QUnit.test("nvertTest", () => {
-        QUnit.equal(Matrix.equal(Matrix.invert(m1), new Matrix(new Float32Array([
+        QUnit.equal(Matrix.equal(Matrix.negate(m1), new Matrix(new Float32Array([
             -1, -2, -3, -4,
             -1, -2, -3, -4,
             -1, -2, -3, -4,

@@ -77,11 +77,11 @@ QUnit.test("magnitude Squared test", function () {
     QUnit.equal(30, testVec41.magnitudeSquared);
 });
 /**
- * Vector invert unit tests
+ * Vector negate unit tests
  */
-QUnit.test("invert test", function () {
-    QUnit.equal(Vector2.equal(Vector2.invert(testVec21), new Vector2(-1, -2)), true);
-    QUnit.equal(Vector3.equal(Vector3.invert(testVec31), new Vector3(-1, -2, -3)), true);
-    QUnit.equal(Vector4.equal(Vector4.invert(testVec41), new Vector4(-1, -2, -3, -4)), true);
+QUnit.test("negate test", function () {
+    QUnit.equal(Vector2.equal(jThree.Mathematics.Vector.Vector2.negate(testVec21), new Vector2(-1, -2)), true);
+    QUnit.equal(Vector3.equal(jThree.Mathematics.Vector.Vector3.negate(testVec31), new Vector3(-1, -2, -3)), true);
+    QUnit.equal(Vector4.equal(jThree.Mathematics.Vector.Vector4.negate(testVec41), new Vector4(-1, -2, -3, -4)), true);
 });
 //# sourceMappingURL=VectorTest.js.map

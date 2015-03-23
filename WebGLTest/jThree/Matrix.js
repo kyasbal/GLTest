@@ -164,8 +164,8 @@ var jThree;
             Matrix.scalarMultiply = function (s, m) {
                 return this.elementScalarMultiply(m, s, m.getFactory());
             };
-            Matrix.invert = function (m) {
-                return this.elementInvert(m, m.getFactory());
+            Matrix.negate = function (m) {
+                return this.elementNegate(m, m.getFactory());
             };
             Matrix.transpose = function (m) {
                 return this.elementTranspose(m, m.getFactory());
@@ -252,6 +252,9 @@ var jThree;
                 m33 /= det;
                 return new Matrix(new Float32Array([m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33]));
             };
+            /**
+             * Generate linear translation transform matrix.
+             */
             Matrix.translate = function (v) {
                 var m = new Matrix(new Float32Array([
                     1,
@@ -273,6 +276,9 @@ var jThree;
                 ]));
                 return m;
             };
+            /**
+             * Generate linear scaling transform matrix.
+             */
             Matrix.scale = function (v) {
                 return new Matrix(new Float32Array([
                     v.X,

@@ -51,7 +51,7 @@ var jThree;
                     });
                     return result;
                 };
-                LinearBase.elementInvert = function (a, factory) {
+                LinearBase.elementNegate = function (a, factory) {
                     var result = new Float32Array(a.ElementCount);
                     Collection.foreach(a, function (a, i) {
                         result[i] = -a;
@@ -255,8 +255,8 @@ var jThree;
                 Vector2.multiply = function (s, v) {
                     return VectorBase.elementScalarMultiply(v, s, v.getFactory());
                 };
-                Vector2.invert = function (v1) {
-                    return VectorBase.elementInvert(v1, v1.getFactory());
+                Vector2.negate = function (v1) {
+                    return VectorBase.elementNegate(v1, v1.getFactory());
                 };
                 Vector2.equal = function (v1, v2) {
                     return VectorBase.elementEqual(v1, v2);
@@ -273,8 +273,8 @@ var jThree;
                 Vector2.prototype.multiplyWith = function (s) {
                     return Vector2.multiply(s, this);
                 };
-                Vector2.prototype.invertThis = function () {
-                    return Vector2.invert(this);
+                Vector2.prototype.negateThis = function () {
+                    return Vector2.negate(this);
                 };
                 Vector2.prototype.equalWith = function (v) {
                     return Vector2.equal(this, v);
@@ -339,8 +339,8 @@ var jThree;
                 Vector3.multiply = function (s, v) {
                     return VectorBase.elementScalarMultiply(v, s, v.getFactory());
                 };
-                Vector3.invert = function (v1) {
-                    return VectorBase.elementInvert(v1, v1.getFactory());
+                Vector3.negate = function (v1) {
+                    return VectorBase.elementNegate(v1, v1.getFactory());
                 };
                 Vector3.equal = function (v1, v2) {
                     return VectorBase.elementEqual(v1, v2);
@@ -357,8 +357,8 @@ var jThree;
                 Vector3.prototype.multiplyWith = function (s) {
                     return Vector3.multiply(s, this);
                 };
-                Vector3.prototype.invertThis = function () {
-                    return Vector3.invert(this);
+                Vector3.prototype.negateThis = function () {
+                    return Vector3.negate(this);
                 };
                 Vector3.prototype.equalWith = function (v) {
                     return Vector3.equal(this, v);
@@ -431,8 +431,8 @@ var jThree;
                 Vector4.multiply = function (s, v) {
                     return VectorBase.elementScalarMultiply(v, s, v.getFactory());
                 };
-                Vector4.invert = function (v1) {
-                    return VectorBase.elementInvert(v1, v1.getFactory());
+                Vector4.negate = function (v1) {
+                    return VectorBase.elementNegate(v1, v1.getFactory());
                 };
                 Vector4.equal = function (v1, v2) {
                     return VectorBase.elementEqual(v1, v2);
@@ -449,8 +449,8 @@ var jThree;
                 Vector4.prototype.multiplyWith = function (s) {
                     return Vector4.multiply(s, this);
                 };
-                Vector4.prototype.invertThis = function () {
-                    return Vector4.invert(this);
+                Vector4.prototype.negateThis = function () {
+                    return Vector4.negate(this);
                 };
                 Vector4.prototype.equalWith = function (v) {
                     return Vector4.equal(this, v);

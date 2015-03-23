@@ -54,7 +54,7 @@
             return result;
         }
 
-        protected static elementInvert<T extends LinearBase>(a: T, factory: ILinearObjectFactory<T>) {
+        protected static elementNegate<T extends LinearBase>(a: T, factory: ILinearObjectFactory<T>) {
             var result: Float32Array = new Float32Array(a.ElementCount);
             Collection.foreach<Number>(a,(a, i) => {
                 result[i] = -a;
@@ -259,8 +259,8 @@
             return VectorBase.elementScalarMultiply(v, s, v.getFactory());
         }
 
-        static invert(v1: Vector2):Vector2 {
-            return VectorBase.elementInvert(v1, v1.getFactory());
+        static negate(v1: Vector2):Vector2 {
+            return VectorBase.elementNegate(v1, v1.getFactory());
         }
 
         static equal(v1: Vector2, v2: Vector2): boolean {
@@ -283,8 +283,8 @@
             return Vector2.multiply(s, this);
         }
 
-        invertThis(): Vector2 {
-            return Vector2.invert(this);
+        negateThis(): Vector2 {
+            return Vector2.negate(this);
         }
 
         equalWith(v: Vector2): boolean {
@@ -344,8 +344,8 @@
             return VectorBase.elementScalarMultiply(v, s, v.getFactory());
         }
 
-        static invert(v1: Vector3):Vector3 {
-            return VectorBase.elementInvert(v1, v1.getFactory());
+        static negate(v1: Vector3):Vector3 {
+            return VectorBase.elementNegate(v1, v1.getFactory());
         }
 
         static equal(v1: Vector3, v2: Vector3): boolean {
@@ -368,8 +368,8 @@
             return Vector3.multiply(s, this);
         }
 
-        invertThis(): Vector3 {
-            return Vector3.invert(this);
+        negateThis(): Vector3 {
+            return Vector3.negate(this);
         }
 
         equalWith(v: Vector3): boolean {
@@ -435,8 +435,8 @@
             return VectorBase.elementScalarMultiply(v, s, v.getFactory());
         }
 
-        static invert(v1: Vector4): Vector4 {
-            return VectorBase.elementInvert(v1, v1.getFactory());
+        static negate(v1: Vector4): Vector4 {
+            return VectorBase.elementNegate(v1, v1.getFactory());
         }
 
         static equal(v1: Vector4, v2: Vector4): boolean {
@@ -460,8 +460,8 @@
             return Vector4.multiply(s, this);
         }
 
-        invertThis(): Vector4 {
-            return Vector4.invert(this);
+        negateThis(): Vector4 {
+            return Vector4.negate(this);
         }
 
         equalWith(v: Vector4): boolean {
