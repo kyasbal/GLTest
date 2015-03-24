@@ -162,6 +162,16 @@ module jThree.Matrix {
             return this.elementScalarMultiply(m, s, m.getFactory());
         }
 
+        static multiply(m1: Matrix, m2: Matrix): Matrix {
+            return m1.getFactory().fromFunc((i, j) => {
+                var sum = 0;
+                Collection.foreachPair(m1.getRow(i), m2.getColmun(j), (i, j, k) => {
+                    sum += i * j;
+                });
+                return sum;
+            });
+        }
+
         static negate(m: Matrix): Matrix {
             return this.elementNegate(m, m.getFactory());
         }

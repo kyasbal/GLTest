@@ -164,6 +164,15 @@ var jThree;
             Matrix.scalarMultiply = function (s, m) {
                 return this.elementScalarMultiply(m, s, m.getFactory());
             };
+            Matrix.multiply = function (m1, m2) {
+                return m1.getFactory().fromFunc(function (i, j) {
+                    var sum = 0;
+                    Collection.foreachPair(m1.getRow(i), m2.getColmun(j), function (i, j, k) {
+                        sum += i * j;
+                    });
+                    return sum;
+                });
+            };
             Matrix.negate = function (m) {
                 return this.elementNegate(m, m.getFactory());
             };
