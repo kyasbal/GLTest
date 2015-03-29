@@ -18,8 +18,4 @@
 //    test.addTestClass(new jThreeTest.VectorTest(), "VectorTest");
 //    test.addTestClass(new jThreeTest.MatrixTest(), "MatrixTest");
 //    test.showResults(document.getElementById("test-display"), test.run());
-//};
-window.onload = function () {
-    QUnit.start();
-};
 //# sourceMappingURL=TestMain.js.map

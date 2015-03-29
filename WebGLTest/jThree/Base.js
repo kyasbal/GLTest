@@ -15,6 +15,9 @@ var jThree;
 (function (jThree) {
     var Base;
     (function (Base) {
+        /**
+         *
+         */
         var JsHack = (function () {
             function JsHack() {
             }

@@ -86,6 +86,9 @@ var jThree;
 (function (jThree) {
     var Base;
     (function (Base) {
+        /**
+         *
+         */
         var JsHack = (function () {
             function JsHack() {
             }
@@ -435,6 +438,20 @@ var jThree;
                     this.x = x;
                     this.y = y;
                 }
+                Object.defineProperty(Vector2, "XUnit", {
+                    get: function () {
+                        return new Vector2(1, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector2, "YUnit", {
+                    get: function () {
+                        return new Vector2(0, 1);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Object.defineProperty(Vector2.prototype, "X", {
                     get: function () {
                         return this.x;
@@ -512,6 +529,27 @@ var jThree;
                     this.y = y;
                     this.z = z;
                 }
+                Object.defineProperty(Vector3, "XUnit", {
+                    get: function () {
+                        return new Vector3(1, 0, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector3, "YUnit", {
+                    get: function () {
+                        return new Vector3(0, 1, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector3, "ZUnit", {
+                    get: function () {
+                        return new Vector3(0, 0, 1);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Object.defineProperty(Vector3.prototype, "X", {
                     get: function () {
                         return this.x;
@@ -597,6 +635,34 @@ var jThree;
                     this.z = z;
                     this.w = w;
                 }
+                Object.defineProperty(Vector4, "XUnit", {
+                    get: function () {
+                        return new Vector4(1, 0, 0, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector4, "YUnit", {
+                    get: function () {
+                        return new Vector4(0, 1, 0, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector4, "ZUnit", {
+                    get: function () {
+                        return new Vector4(0, 0, 1, 0);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
+                Object.defineProperty(Vector4, "WUnit", {
+                    get: function () {
+                        return new Vector4(0, 0, 0, 1);
+                    },
+                    enumerable: true,
+                    configurable: true
+                });
                 Object.defineProperty(Vector4.prototype, "X", {
                     get: function () {
                         return this.x;
@@ -781,12 +847,20 @@ var jThree;
                     return a.getAt(j, i);
                 });
             };
-            MatrixBase.prototype.getRowCount = function () {
-                return 0;
-            };
-            MatrixBase.prototype.getColmunCount = function () {
-                return 0;
-            };
+            Object.defineProperty(MatrixBase.prototype, "RowCount", {
+                get: function () {
+                    return 0;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(MatrixBase.prototype, "ColmunCount", {
+                get: function () {
+                    return 0;
+                },
+                enumerable: true,
+                configurable: true
+            });
             MatrixBase.prototype.getAt = function (row, colmun) {
                 throw new Error("Not implemented");
             };
@@ -891,6 +965,15 @@ var jThree;
             Matrix.scalarMultiply = function (s, m) {
                 return this.elementScalarMultiply(m, s, m.getFactory());
             };
+            Matrix.multiply = function (m1, m2) {
+                return m1.getFactory().fromFunc(function (i, j) {
+                    var sum = 0;
+                    Collection.foreachPair(m1.getRow(i), m2.getColmun(j), function (i, j, k) {
+                        sum += i * j;
+                    });
+                    return sum;
+                });
+            };
             Matrix.negate = function (m) {
                 return this.elementNegate(m, m.getFactory());
             };
@@ -930,6 +1013,9 @@ var jThree;
                 }
                 return v.getFactory().fromArray(result);
             };
+            /**
+             * Retrieve determinant of passed matrix
+             */
             Matrix.determinant = function (m) {
                 var m00 = m.getAt(0, 0), m01 = m.getAt(0, 1), m02 = m.getAt(0, 2), m03 = m.getAt(0, 3);
                 var m10 = m.getAt(1, 0), m11 = m.getAt(1, 1), m12 = m.getAt(1, 2), m13 = m.getAt(1, 3);
@@ -937,6 +1023,9 @@ var jThree;
                 var m30 = m.getAt(3, 0), m31 = m.getAt(3, 1), m32 = m.getAt(3, 2), m33 = m.getAt(3, 3);
                 return m03 * m12 * m21 * m30 - m02 * m13 * m21 * m30 - m03 * m11 * m22 * m30 + m01 * m13 * m22 * m30 + m02 * m11 * m23 * m30 - m01 * m12 * m23 * m30 - m03 * m12 * m20 * m31 + m02 * m13 * m20 * m31 + m03 * m10 * m22 * m31 - m00 * m13 * m22 * m31 - m02 * m10 * m23 * m31 + m00 * m12 * m23 * m31 + m03 * m11 * m20 * m32 - m01 * m13 * m20 * m32 - m03 * m10 * m21 * m32 + m00 * m13 * m21 * m32 + m01 * m10 * m23 * m32 - m00 * m11 * m23 * m32 - m02 * m11 * m20 * m33 + m01 * m12 * m20 * m33 + m02 * m10 * m21 * m33 - m00 * m12 * m21 * m33 - m01 * m10 * m22 * m33 + m00 * m11 * m22 * m33;
             };
+            /**
+             * Compute inverted passed matrix.
+             */
             Matrix.inverse = function (m) {
                 var det = Matrix.determinant(m);
                 if (det == 0)
@@ -979,6 +1068,9 @@ var jThree;
                 m33 /= det;
                 return new Matrix(new Float32Array([m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33]));
             };
+            /**
+             * Generate linear translation transform matrix.
+             */
             Matrix.translate = function (v) {
                 var m = new Matrix(new Float32Array([
                     1,
@@ -1000,6 +1092,29 @@ var jThree;
                 ]));
                 return m;
             };
+            /**
+             * Generate linear scaling transform matrix.
+             */
+            Matrix.scale = function (v) {
+                return new Matrix(new Float32Array([
+                    v.X,
+                    0,
+                    0,
+                    0,
+                    0,
+                    v.Y,
+                    0,
+                    0,
+                    0,
+                    0,
+                    v.Z,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1
+                ]));
+            };
             Matrix.prototype.toString = function () {
                 return "|{0} {1} {2} {3}|\n|{4} {5} {6} {7}|\n|{8} {9} {10} {11}|\n|{12} {13} {14} {15}|".format(this.getBySingleIndex(0), this.getBySingleIndex(1), this.getBySingleIndex(2), this.getBySingleIndex(3), this.getBySingleIndex(4), this.getBySingleIndex(5), this.getBySingleIndex(6), this.getBySingleIndex(7), this.getBySingleIndex(8), this.getBySingleIndex(9), this.getBySingleIndex(10), this.getBySingleIndex(11), this.getBySingleIndex(12), this.getBySingleIndex(13), this.getBySingleIndex(14), this.getBySingleIndex(15));
             };
@@ -1017,12 +1132,20 @@ var jThree;
                 Matrix.factoryCache = Matrix.factoryCache || new MatrixFactory();
                 return Matrix.factoryCache;
             };
-            Matrix.prototype.getRowCount = function () {
-                return 4;
-            };
-            Matrix.prototype.getColmunCount = function () {
-                return 4;
-            };
+            Object.defineProperty(Matrix.prototype, "RowCount", {
+                get: function () {
+                    return 4;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Matrix.prototype, "ColmunCount", {
+                get: function () {
+                    return 4;
+                },
+                enumerable: true,
+                configurable: true
+            });
             return Matrix;
         })(MatrixBase);
         _Matrix.Matrix = Matrix;

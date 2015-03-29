@@ -17,6 +17,9 @@ if (!String.prototype.format) {
 
 
 module jThree.Base {
+    /**
+     * 
+     */
     class JsHack {
         public static getObjectName(obj: any): string {
             var funcNameRegex = /function (.{1,})\(/;

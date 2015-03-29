@@ -54,12 +54,20 @@ var jThree;
                     return a.getAt(j, i);
                 });
             };
-            MatrixBase.prototype.getRowCount = function () {
-                return 0;
-            };
-            MatrixBase.prototype.getColmunCount = function () {
-                return 0;
-            };
+            Object.defineProperty(MatrixBase.prototype, "RowCount", {
+                get: function () {
+                    return 0;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(MatrixBase.prototype, "ColmunCount", {
+                get: function () {
+                    return 0;
+                },
+                enumerable: true,
+                configurable: true
+            });
             MatrixBase.prototype.getAt = function (row, colmun) {
                 throw new Error("Not implemented");
             };
@@ -331,12 +339,20 @@ var jThree;
                 Matrix.factoryCache = Matrix.factoryCache || new MatrixFactory();
                 return Matrix.factoryCache;
             };
-            Matrix.prototype.getRowCount = function () {
-                return 4;
-            };
-            Matrix.prototype.getColmunCount = function () {
-                return 4;
-            };
+            Object.defineProperty(Matrix.prototype, "RowCount", {
+                get: function () {
+                    return 4;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            Object.defineProperty(Matrix.prototype, "ColmunCount", {
+                get: function () {
+                    return 4;
+                },
+                enumerable: true,
+                configurable: true
+            });
             return Matrix;
         })(MatrixBase);
         _Matrix.Matrix = Matrix;

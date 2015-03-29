@@ -58,11 +58,11 @@ module jThree.Matrix {
             });
         }
 
-        getRowCount(): number {
+        get RowCount(): number {
             return 0;
         }
 
-        getColmunCount(): number {
+        get ColmunCount(): number {
             return 0;
         }
 
@@ -159,6 +159,7 @@ module jThree.Matrix {
         }
 
         static scalarMultiply(s: number, m: Matrix): Matrix {
+            
             return this.elementScalarMultiply(m, s, m.getFactory());
         }
 
@@ -314,15 +315,16 @@ module jThree.Matrix {
 
         get ElementCount(): number { return 16; }
 
-        private static factoryCache:MatrixFactory;
+        private static factoryCache: MatrixFactory;
+
 
         getFactory():MatrixFactory {
             Matrix.factoryCache = Matrix.factoryCache || new MatrixFactory();
             return Matrix.factoryCache;
         }
 
-        getRowCount(): number { return 4; }
+        get RowCount(): number { return 4; }
 
-        getColmunCount(): number { return 4; }
+        get ColmunCount(): number { return 4; }
     }
 } 

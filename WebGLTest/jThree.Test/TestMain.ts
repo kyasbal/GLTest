@@ -22,7 +22,3 @@
 //    test.addTestClass(new jThreeTest.VectorTest(), "VectorTest");
 //    test.addTestClass(new jThreeTest.MatrixTest(), "MatrixTest");
 //    test.showResults(document.getElementById("test-display"), test.run());
-//};
-window.onload=() => {
-    QUnit.start();
-}

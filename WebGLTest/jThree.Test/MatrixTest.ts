@@ -7,6 +7,23 @@ module jThreeTest {
     import Matrix = jThree.Matrix.Matrix;
     import Vector3 = jThree.Mathematics.Vector.Vector3;
     import Vector4 = jThree.Mathematics.Vector.Vector4;
+    import VectorBase = jThree.Mathematics.Vector.VectorBase;
+
+    function matEqual(actual: Matrix, expect: Matrix): void {
+        QUnit.equal(Matrix.equal(actual, expect), true, "actual:\n{0}\n,expected:\n{1}\n".format(actual, expect));
+    }
+
+    function matNotEqaual(actual: Matrix, expect: Matrix) {
+        QUnit.equal(Matrix.equal(actual, expect), false, "actual:\n{0}\n,expected:\n{1}\n".format(actual, expect));
+    }
+
+    function vec3Equal(actual: Vector3, expect: Vector3): void {
+        QUnit.equal(Vector3.equal(actual, expect), true,"actual:\n{0},expected:\n{1}\n".format(actual,expect));
+    }
+
+    function vec4Equal(actual:Vector4,expect:Vector4) {
+        QUnit.equal(Vector4.equal(actual, expect), true, "actual:\n{0},expected:\n{1}\n".format(actual, expect));
+    }
 
         var m1: Matrix = new Matrix(new Float32Array(
             [1, 2, 3, 4,
@@ -27,91 +44,90 @@ module jThreeTest {
 
 
     QUnit.test("equalTest", () => {
-        QUnit.equal(Matrix.equal(m1, new Matrix(new Float32Array([
+        matEqual(m1, new Matrix(new Float32Array([
             1, 2, 3, 4,
             1, 2, 3, 4,
             1, 2, 3, 4,
             1, 2, 3, 4
-        ]))),true);
-        QUnit.equal(Matrix.equal(m1, new Matrix(new Float32Array([
-            1, 2, 3, 4,
-            1, 2, 3, 4,
-            1, 2, 4, 4,
-            1, 2, 3, 4
-        ]))),false);
+        ])));
+        matNotEqaual(m1, new Matrix(new Float32Array([
+                1, 2, 3, 4,
+                1, 2, 3, 4,
+                1, 2, 4, 4,
+                1, 2, 3, 4
+            ]
+        )));
     });
 
     QUnit.test("addTest", () => {
-        QUnit.equal(Matrix.equal(Matrix.add(m1, m2), new Matrix(new Float32Array([
+        matEqual(Matrix.add(m1, m2), new Matrix(new Float32Array([
             4, 7, 10, 13,
             4, 7, 10, 13,
             4, 7, 10, 13,
             4, 8, 11, 13
-        ]))),true);
+        ])));
     });
 
     QUnit.test("subtractTest", () => {
-        QUnit.equal(Matrix.equal(Matrix.subtract(m1, m2), new Matrix(new Float32Array([
+        matEqual(Matrix.subtract(m1, m2), new Matrix(new Float32Array([
             -2, -3, -4, -5,
             -2, -3, -4, -5,
             -2, -3, -4, -5,
             -2, -4, -5, -5
-        ]))),true);
+        ])));
     });
 
     QUnit.test("scalarMultiplyTest", () => {
-        QUnit.equal(Matrix.equal(Matrix.scalarMultiply(2, m1), new Matrix(new Float32Array([
+        matEqual(Matrix.scalarMultiply(2, m1), new Matrix(new Float32Array([
             2, 4, 6, 8,
             2, 4, 6, 8,
             2, 4, 6, 8,
             2, 4, 6, 8
-        ]))),true);
+        ])));
     });
 
     QUnit.test("nvertTest", () => {
-        QUnit.equal(Matrix.equal(Matrix.negate(m1), new Matrix(new Float32Array([
+        matEqual(Matrix.negate(m1), new Matrix(new Float32Array([
             -1, -2, -3, -4,
             -1, -2, -3, -4,
             -1, -2, -3, -4,
             -1, -2, -3, -4
-        ]))),true);
+        ])));
     });
 
     QUnit.test("transposeTest", () => {
-        console.log(Matrix.transpose(m1).toString(),true);
-        QUnit.equal(Matrix.equal(Matrix.transpose(m1), new Matrix(new Float32Array(
+        matEqual(Matrix.transpose(m1), new Matrix(new Float32Array(
         [
             1, 1, 1, 1,
             2, 2, 2, 2,
             3, 3, 3, 3,
             4, 4, 4, 4
-        ]))),true);
+        ])));
     });
 
     QUnit.test("translateTest", () => {
-        QUnit.equal(Matrix.equal(Matrix.translate(new Vector3(1, 2, 3)), new Matrix(new Float32Array([
+        matEqual(Matrix.translate(new Vector3(1, 2, 3)), new Matrix(new Float32Array([
             1, 0, 0, 1,
             0, 1, 0, 2,
             0, 0, 1, 3,
             0, 0, 0, 1
-        ]))),true);
+        ])));
     });
 
     QUnit.test("transformPointTest", () => {
-        QUnit.equal(Vector3.equal(Matrix.transformPoint(m1, v31), new Vector3(18, 18, 18)),true);
-    });
+            vec3Equal(Matrix.transformPoint(m1, v31), new Vector3(18, 18, 18));
+        }
+    );
 
     QUnit.test("transformNormalTest", () => {
-        QUnit.equal(Vector3.equal(Matrix.transformNormal(m1, v31), new Vector3(14, 14, 14)),true);
+        vec3Equal(Matrix.transformNormal(m1, v31), new Vector3(14, 14, 14));
     });
 
     QUnit.test("transformTest", () => {
-        QUnit.equal(Vector4.equal(Matrix.transform(m1, v41), new Vector4(30, 30, 30, 30)),true);
+        vec4Equal(Matrix.transform(m1, v41), new Vector4(30, 30, 30, 30));
     });
 
     QUnit.test("determinant test",() => {
-        console.log(
-            Matrix.determinant(Matrix.translate(new Vector3(1, 2, 3))));
         QUnit.equal(Matrix.determinant(Matrix.translate(new Vector3(1,2,3))),1);
     });
 }
