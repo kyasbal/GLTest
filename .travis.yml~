@@ -5,7 +5,7 @@ install:
  - npm install
 
 script:
- - grunt travis
+        - grunt travis -verbose
 
 language: node_js
 
